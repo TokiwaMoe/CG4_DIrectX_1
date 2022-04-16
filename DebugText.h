@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0d41d70f63d2c2125799acdf629ebeb42d50e6b9d9cc3f6ed44dfcb447220598
-size 810
+#pragma once
+
+#include "Sprite.h"
+#include <Windows.h>
+#include <string>
+
+/// <summary>
+/// デバッグ用文字表示
+/// </summary>
+class DebugText
+{
+public:
+	// デバッグテキスト用のテクスチャ番号を指定
+	static const int maxCharCount = 256;	// 最大文字数
+	static const int fontWidth = 9;			// フォント画像内1文字分の横幅
+	static const int fontHeight = 18;		// フォント画像内1文字分の縦幅
+	static const int fontLineCount = 14;	// フォント画像内1行分の文字数
+
+	DebugText();
+	~DebugText();
+
+	void Initialize(UINT texnumber);
+
+	void Print(const std::string& text, float x, float y, float size);
+
+	void DrawAll(ID3D12GraphicsCommandList* cmdList);
+
+private:
+	// スプライトデータの配列
+	Sprite* spriteDatas[maxCharCount] = {};
+	// スプライトデータ配列の添え字番号
+	int spriteIndex = 0;
+};

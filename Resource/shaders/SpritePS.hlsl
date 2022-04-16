@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:31992632a616caded0dfb53d322785364688c0ff7d2abd7e3a03db082403f9fe
-size 271
+#include "Sprite.hlsli"
+
+Texture2D<float4> tex : register(t0);	//0番スロットに設定されたテクスチャ
+SamplerState smp : register(s0);		//0番スロットに設定されたサンプラー
+
+float4 main(VSOutput input) : SV_TARGET
+{
+	return float4(tex.Sample(smp,input.uv)) * color;
+}

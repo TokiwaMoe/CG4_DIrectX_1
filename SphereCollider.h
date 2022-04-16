@@ -1,3 +1,37 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2986dcf646856933adea352cdaa070c91ec8c3dbf66bf92e04eafe01946c6457
-size 714
+#pragma once
+
+#include"BaseCollider.h"
+#include"CollisionPrimitive.h"
+
+#include<DirectXMath.h>
+
+///<summary>
+///球衝突判定オブジェクト
+///</summary>
+class SphereCollider : public BaseCollider, public Sphere
+{
+private://エイリアス
+	//Direct::を省略
+	using XMVECTOR = DirectX::XMVECTOR;
+public:
+	SphereCollider(XMVECTOR offset = { 0,0,0,0 }, float radius = 1.0f) :
+		offset(offset),
+		radius(radius)
+	{
+		//球形状をセット
+		shapeType = COLLISIONSHAPE_SPHERE;
+	}
+
+	///<summary>
+	///更新
+	///</summary>
+	void Update() override;
+
+	inline void SetRadius(float radius) { this->radius = radius; }
+
+private:
+	//オブジェクト中心からのオフセット
+	XMVECTOR offset;
+	//半径
+	float radius;
+};

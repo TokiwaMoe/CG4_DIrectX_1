@@ -1,3 +1,76 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e5d954fdbac114bb1b38230d26c4fe5fc755c781d8de5dad4763e21e2ba1cd16
-size 2564
+#pragma once
+
+#include"CollisionPrimitive.h"
+
+///<summary>
+///当たり判定ヘルパークラス
+/// </summary>
+class Collision
+{
+private:
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+public:
+	///<summary>
+	///球と平面の当たり判定
+	/// </summary>
+	/// <param name="sphere">球</param>
+	/// <param name="plane">平面</param>
+	/// <param name="inter">交点(平面上の最近接点)</param>
+	/// <returns>交差しているか否か</param>
+	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane,
+		DirectX::XMVECTOR* inter = nullptr);
+
+	///<summary>
+	///点と三角形の最近接点を求める
+	/// </summary>
+	/// <param name="point">点</param>
+	/// <param name="triangle">三角形</param>
+	/// <param name="closest">最近接点(出力用)</param>
+	static bool ClosestPoint2Triangle(const DirectX::XMVECTOR& point,
+		const Triangle& triangle, DirectX::XMVECTOR* closest);
+
+	///<summary>
+	///球と法線付き三角形の当たり判定
+	/// </summary>
+	/// <param name="sphere">球</param>
+	/// <param name="triangle">三角形</param>
+	/// <param name="inter">交点(三角形上の最近接点)</param>
+	static bool CheckSphere2Triangle(const Sphere& sphere,
+		const Triangle& triangle, DirectX::XMVECTOR* inter = nullptr);
+
+	///<summary>
+	///レイと平面の当たり判定
+	/// </summary>
+	/// <param name="lay">レイ</param>
+	/// <param name="plane">平面</param>
+	/// <param name="inter">距離(出力用)</param>
+	/// <param name="inter">交点(出力用)</param>
+	/// <returns>交差しているか否か</param>
+	static bool CheckRay2Plane(const Ray& ray, const Plane& plane,
+		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+
+	///<summary>
+	///レイと法線付き三角形の当たり判定
+	/// </summary>
+	/// <param name="lay">レイ</param>
+	/// <param name="triangle">三角形</param>
+	/// <param name="inter">距離(出力用)</param>
+	/// <param name="inter">交点(出力用)</param>
+	/// <returns>交差しているか否か</param>
+	static bool CheckRay2Triangle(const Ray& ray, const Triangle& triangle,
+		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+
+	///<summary>
+	///レイと球の当たり判定
+	/// </summary>
+	/// <param name="lay">レイ</param>
+	/// <param name="sphere">球</param>
+	/// <param name="distance">距離(出力用)</param>
+	/// <param name="inter">交点(出力用)</param>
+	/// <returns>交差しているか否か</param>
+	static bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere,
+		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
+
+	//球と球
+	static bool CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Radius, float sphere2Radius);
+};

@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:718644d3fea7c20d2a863019e3000fdf4025efba2d3c20a4919958d24597e053
-size 270
+#include "OBJShaderHeader.hlsli"
+
+VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
+{
+	VSOutput output; // ピクセルシェーダーに渡す値
+	output.svpos = mul(mat, pos);
+	output.normal = normal;
+	output.uv = uv;
+	return output;
+}

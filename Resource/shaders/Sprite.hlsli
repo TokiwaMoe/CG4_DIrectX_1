@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:18624874dda9a288b6b900e8a2121933162c573306d5c9db6268296f8e77cc7e
-size 174
+cbuffer cbuff0 : register(b0)
+{
+	float4 color;
+	matrix mat;
+}
+
+struct VSOutput {
+	float4 svpos : SV_POSITION;	//システム用頂点座標
+	float2 uv : TEXCOORD;	//uv値
+};
