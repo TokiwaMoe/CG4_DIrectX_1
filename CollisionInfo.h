@@ -1,29 +1,3 @@
-#pragma once
-
-#include <DirectXMath.h>
-
-class Object3d;
-class BaseCollider;
-
-///<summary>
-///衝突情報
-///</summary>
-
-struct CollisionInfo
-{
-public:
-	CollisionInfo(Object3d* object, BaseCollider* collider,
-		const DirectX::XMVECTOR& inter)
-	{
-		this->object = object;
-		this->collider = collider;
-		this->inter = inter;
-	}
-
-	//衝突相手のオブジェクト
-	Object3d* object = nullptr;
-	//衝突相手のコライダー
-	BaseCollider* collider = nullptr;
-	//衝突点
-	DirectX::XMVECTOR inter;
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:096cbb54b587b0220e0dd0e07836f22e846d5142e9b6e4cc931cf18c66c45a00
+size 503

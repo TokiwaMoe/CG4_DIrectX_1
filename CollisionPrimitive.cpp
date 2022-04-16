@@ -1,13 +1,3 @@
-#include"CollisionPrimitive.h"
-
-using namespace DirectX;
-
-void Triangle::ComputeNormal()
-{
-	XMVECTOR p0_p1 = p1 - p0;
-	XMVECTOR p0_p2 = p2 - p0;
-
-	//外積により、2辺に垂直なベクトルを算出する
-	normal = XMVector3Cross(p0_p1, p0_p2);
-	normal = XMVector3Normalize(normal);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1317b4ac170b47e1edaffbcf88b7a9f4c885385c0e131f4aac29a692d00f8271
+size 284
