@@ -1,6 +1,8 @@
 ﻿#include "FbxLoader.h"
 #include<cassert>
 
+using namespace DirectX;
+
 /// <summary>
 /// 静的メンバ変数の実態
 /// </summary>
@@ -59,9 +61,20 @@ void FbxLoader::LoadMadelFromFile(
 
 void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode)
 {
+    //モデルにノードを追加
+    model->nodes.emplace_back();
+    Node& node = model->nodes.back();
     //ノード名を取得
     string name = fbxNode->GetName();
-    //モデルにノードを追加(Todo)
+
+    //FBXノードのローカル移動情報
+    FbxDouble3 rotation = fbxNode->LclRotation.Get();
+    FbxDouble3 scaling = fbxNode->LclScaling.Get();
+    FbxDouble3 translation = fbxNode->LclTranslation.Get();
+    //形式変換して代入
+    node.rotation = { (float)rotation[0], (float)rotation[1], (float)rotation[2], 0.0f };
+
+
     //FBXノードの情報を解析してノードに記録(Todo)
     //FBXノードのメッシュ情報を解析(Todo)
 
@@ -70,6 +83,7 @@ void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode)
     {
         ParseNodeRecursive(model, fbxNode->GetChild(i));
     }
+  
 }
 
 void FbxLoader::Finalize()
