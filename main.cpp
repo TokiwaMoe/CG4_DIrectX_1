@@ -19,7 +19,7 @@
 #include"WinApp.h"
 #include"DirectXCommon.h"
 #include"Object3d.h"
-#include"Model.h"
+#include"Object3dModel.h"
 #include"Sprite.h"
 #include"DebugText.h"
 #include"Collision.h"
@@ -27,6 +27,7 @@
 #include"ParticleManager.h"
 #include"DebugCamera.h"
 #include"fbxsdk.h"
+#include"FbxLoader.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -108,6 +109,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// カメラ注視点をセット
 	camera->SetTarget({ 0, 1, 0 });
 	camera->SetDistance(3.0f);
+
+	//FBX
+	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
+	//ファイル読み込み
+	FbxLoader::GetInstance()->LoadMadelFromFile("cube");
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
@@ -243,6 +249,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	SoundUnload(&soundData1);*/
 	//WindowAPIの終了処理
 	winApp->Finalize();
+	FbxLoader::GetInstance()->Finalize();
 	//WindowAPI解放
 	delete winApp;
 	//DirectX解放

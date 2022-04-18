@@ -5,7 +5,7 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <d3dx12.h>
-#include"Model.h"
+#include"Object3dModel.h"
 #include"CollisionInfo.h"
 #include "Camera.h"
 

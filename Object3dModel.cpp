@@ -1,4 +1,4 @@
-#include"Model.h"
+#include"Object3dModel.h"
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #include<fstream>
