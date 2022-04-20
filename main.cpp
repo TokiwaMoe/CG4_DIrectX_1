@@ -97,7 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
-	objSphere->SetPosition({ 0,20,0 });
+	objSphere->SetPosition({ -50,0,0 });
 	objSphere2->SetPosition({ 0,0,0 });
 
 	//パーティクル
@@ -122,9 +122,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	audio->Initialize();
 
 	XMFLOAT3 position = objSphere->GetPosition();
-	float vy = 1.0f;
-	float G = -9.8f / 60.0f;
-	
+	float speed = 1;
+	float furiction = 0.5;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -167,9 +166,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//	particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		//}
 
-		//落下--------------------------------------------------------
-		vy += G;
-		position.y += vy;
+		//摩擦--------------------------------------------------------
+		position.x += speed;
+
+		speed *= furiction;
 
 		objSphere->SetPosition(position);
 
@@ -219,7 +219,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "y : %f", position.x);
+		sprintf_s(str, "frame : %f", position.x);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
