@@ -97,7 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
-	objSphere->SetPosition({ -50,0,0 });
+	objSphere->SetPosition({ -80,0,0 });
 	objSphere2->SetPosition({ 0,0,0 });
 
 	//パーティクル
@@ -122,8 +122,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	audio->Initialize();
 
 	XMFLOAT3 position = objSphere->GetPosition();
-	float speed = 1;
-	float furiction = 0.5;
+	float vy = 3.0f;
+	float speed = 6;
+	float furiction = 0.8;
 	float weight = 30;
 	float gravity = 9.8 / 60.0f;
 
@@ -168,12 +169,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//	particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		//}
 
+		//重力-------------------------------------------------------
+		/*vy -= gravity;
+		position.y += vy;*/
+
 		//摩擦--------------------------------------------------------
-		float G = weight * g;
-		float friction_power = G * furiction;
+		float N = weight * gravity;
+		float friction_power = N * furiction;
 		float acceleration = friction_power / weight;
-		speed += acceleration;
 		position.x += speed;
+		speed -= acceleration;
+
+		if (speed <= 0)
+		{
+			speed = 0;
+			//acceleration = 0;
+		}
 
 		objSphere->SetPosition(position);
 
@@ -223,7 +234,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "position : %f", a);
+		sprintf_s(str, "%f %f", speed, acceleration);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
