@@ -124,6 +124,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	XMFLOAT3 position = objSphere->GetPosition();
 	float speed = 1;
 	float furiction = 0.5;
+	float weight = 30;
+	float gravity = 9.8 / 60.0f;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -167,9 +169,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//}
 
 		//–€ŽC--------------------------------------------------------
+		float G = weight * g;
+		float friction_power = G * furiction;
+		float acceleration = friction_power / weight;
+		speed += acceleration;
 		position.x += speed;
-
-		speed *= furiction;
 
 		objSphere->SetPosition(position);
 
@@ -219,7 +223,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "frame : %f", position.x);
+		sprintf_s(str, "position : %f", a);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
