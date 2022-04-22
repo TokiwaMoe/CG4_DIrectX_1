@@ -27,6 +27,15 @@ class FbxModel
 public:
 	//フレンドクラス
 	friend class FbxLoader;
+
+public://サブクラス
+	//頂点データ構造体
+	struct VertexPosNormalUv
+	{
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT3 normal;
+		DirectX::XMFLOAT2 uv;
+	};
 private:
 	//モデル名
 	std::string name;

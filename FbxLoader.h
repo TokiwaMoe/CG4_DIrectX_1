@@ -54,11 +54,27 @@ public:
 	///<param name="fbxNode">解析対象のノード</param>
 	void ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent = nullptr);
 
+	///<summary>
+	///メッシュ読み取り
+	///</summary>
+	///<param name="model">読み込み先モデルオブジェクト</param>
+	///<param name="fbxNode">解析対象のノード</param>
+	void ParseMesh(Model* model, FbxNode* fbxNode);
 
 	///<summary>
 	///後始末
 	///</summary>
 	void Finalize();
+
+private:
+	//頂点座標読み取り
+	void ParseMeshVertices(Model* model, FbxMesh* fbxMesh);
+	//面情報読み取り
+	void ParseMeshFaces(Model* model, FbxMesh* fbxMesh);
+	//マテリアル読み込み
+	void ParseMaterial(Model* model, FbxNode* fbxNode);
+	//テクスチャ読み込み
+	void LoadTexture(Model* model, const std::string& fullpath);
 	
 private:
 	//D3D12デバイス
