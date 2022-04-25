@@ -1,5 +1,6 @@
 #pragma once
 #include<DirectXMath.h>
+#include<DirectXTex.h>
 #include<string>
 #include<vector>
 
@@ -36,9 +37,25 @@ public://サブクラス
 		DirectX::XMFLOAT3 normal;
 		DirectX::XMFLOAT2 uv;
 	};
+public:
+	//アンビエント係数
+	DirectX::XMFLOAT3 ambient = { 1,1,1 };
+	//ディフューズ係数
+	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
+	//テクスチャメタデータ
+	DirectX::TexMetadata metadata = {};
+	//スクラッチイメージ
+	DirectX::ScratchImage scratchImg = {};
 private:
 	//モデル名
 	std::string name;
 	//ノード配列
 	std::vector<Node> nodes;
+protected:
+	//メッシュを持つノード
+	Node* meshNode = nullptr;
+	//頂点データ配列
+	std::vector<VertexPosNormalUv> vertices;
+	//頂点インデックス配列
+	std::vector<unsigned short> indices;
 };

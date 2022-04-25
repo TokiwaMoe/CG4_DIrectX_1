@@ -16,6 +16,8 @@ private://エイリアス
 public://定数
 	//モデル格納ルートパス
 	static const string baseDirectory;
+	//テクスチャがない場合の標準テクスチャファイル名
+	static const string dafaultTextureFileName;
 
 public:
 	/// <summary>
@@ -59,7 +61,7 @@ public:
 	///</summary>
 	///<param name="model">読み込み先モデルオブジェクト</param>
 	///<param name="fbxNode">解析対象のノード</param>
-	void ParseMesh(Model* model, FbxNode* fbxNode);
+	void ParseMesh(FbxModel* model, FbxNode* fbxNode);
 
 	///<summary>
 	///後始末
@@ -68,13 +70,15 @@ public:
 
 private:
 	//頂点座標読み取り
-	void ParseMeshVertices(Model* model, FbxMesh* fbxMesh);
+	void ParseMeshVertices(FbxModel* model, FbxMesh* fbxMesh);
 	//面情報読み取り
-	void ParseMeshFaces(Model* model, FbxMesh* fbxMesh);
+	void ParseMeshFaces(FbxModel* model, FbxMesh* fbxMesh);
 	//マテリアル読み込み
-	void ParseMaterial(Model* model, FbxNode* fbxNode);
+	void ParseMaterial(FbxModel* model, FbxNode* fbxNode);
 	//テクスチャ読み込み
-	void LoadTexture(Model* model, const std::string& fullpath);
+	void LoadTexture(FbxModel* model, const std::string& fullpath);
+	//ディレクトリを含んだファイルパスからファイル名を抽出する
+	std::string ExtractFileName(const std::string& path);
 	
 private:
 	//D3D12デバイス
