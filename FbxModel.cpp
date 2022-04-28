@@ -48,4 +48,63 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		std::copy(indices.begin(), indices.end(), indexMap);
 		indexBuff->Unmap(0, nullptr);
 	}
+
+	//インデックスバッファビュー(IBV)の作成
+	idView.BufferLocation =
+	indexBuff->GetGPUVirtualAddress();
+	idView.Format = DXGI_FORMAT_R16_UINT;
+	idView.SizeInBytes = sizeIB;
+
+	//テクスチャ画像データ
+	const DirectX::Image* img = scratchImg.GetImage(0, 0, 0);	//生データ抽出
+	assert(img);
+
+	//リソース設定
+	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+		metadata.format,
+		metadata.width,
+		(UINT)metadata.height,
+		(UINT16)metadata.arraySize,
+		(UINT16)metadata.mipLevels
+	);
+
+	//テクスチャ用バッファの生成
+	result = device->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
+			D3D12_MEMORY_POOL_L0),
+		D3D12_HEAP_FLAG_NONE,
+		&texresDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,	//テクスチャ用指定
+		nullptr,
+		IID_PPV_ARGS(&texbuff));
+
+	//テクスチャバッファにデータ転送
+	result = texbuff->WriteToSubresource(
+		0,
+		nullptr,		//全領域へコピー
+		img->pixels,	//元データアドレス
+		(UINT)img->rowPitch,	//1ラインサイズ
+		(UINT)img->slicePitch	//1枚サイズ
+	);
+
+	//SRV用デスクリプタヒープを生成
+	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
+	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
+	descHeapDesc.NumDescriptors = 1;
+	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeapSRV));//生成
+
+	//シェーダリソースビュー(SRV)作成
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};//設定構造体
+	D3D12_RESOURCE_DESC resDesc = texbuff->GetDesc();
+
+	srvDesc.Format = resDesc.Format;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+	srvDesc.Texture2D.MipLevels = 1;
+
+	device->CreateShaderResourceView(texbuff.Get(),		//ビューと関連付けるバッファ
+		&srvDesc,//テクスチャ設定情報
+		descHeapSRV->GetCPUDescriptorHandleForHeapStart()
+	);
 }

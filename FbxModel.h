@@ -85,7 +85,10 @@ private://メンバ変数
 public://メンバ関数
 	//バッファ生成
 	void CreateBuffers(ID3D12Device* device);
-
+	//描画
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+	//モデルの変形行列取得
+	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 protected:
 	//メッシュを持つノード
 	Node* meshNode = nullptr;
