@@ -28,6 +28,7 @@
 #include"DebugCamera.h"
 #include"fbxsdk.h"
 #include"FbxLoader.h"
+#include"FbxObject3d.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -114,6 +115,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
 	//ファイル読み込み
 	FbxLoader::GetInstance()->LoadMadelFromFile("cube");
+	//デバイスをセット
+	FbxObject3d::SetDevice(dxCommon->GetDev());
+	//カメラをセット
+	FbxObject3d::SetCamera(camera);
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
