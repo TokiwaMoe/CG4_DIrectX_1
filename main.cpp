@@ -119,6 +119,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	FbxObject3d::SetDevice(dxCommon->GetDev());
 	//カメラをセット
 	FbxObject3d::SetCamera(camera);
+	//グラフィックパイプライン生成
+	FbxObject3d::CreateGraphicsPipline();
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;

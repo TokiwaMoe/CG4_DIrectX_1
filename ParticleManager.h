@@ -82,7 +82,7 @@ public: // 静的メンバ関数
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
 	/// <returns>成否</returns>
-	void StaticInitialize(ID3D12Device* device, int window_width, int window_height);
+	void StaticInitialize(ID3D12Device* device, const int window_width, const int window_height);
 
 	/// <summary>
 	/// 描画前処理
@@ -99,7 +99,7 @@ public: // 静的メンバ関数
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns></returns>
-	static ParticleManager* Create(ID3D12Device* device, int window_width, int window_height);
+	static ParticleManager* Create(ID3D12Device* device, const int window_width, const int window_height);
 
 	/// <summary>
 	/// 視点座標の取得

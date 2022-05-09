@@ -40,13 +40,45 @@ public://メンバ変数
 	/// </summary>
 	void Initialize();
 
+	/// <summary>
+	/// グラフィックパイプラインの生成
+	/// </summary>
+	static void CreateGraphicsPipline();
+
+	/// <summary>
+	/// 毎フレーム処理
+	/// </summary>
+	void Update();
+
+	/// <summary>
+	/// モデルのセット
+	/// </summary>
+	/// <param name="model">モデル</param>
+	void SetModel(FbxModel* model) { this->model = model; }
+
 protected://メンバ変数
 	//定数バッファ
 	ComPtr<ID3D12Resource>  constBuffertransform;
+	//ルートシグネチャ
+	static ComPtr<ID3D12RootSignature> rootsignature;
+	//パイプラインステートオブジェクト
+	static ComPtr<ID3D12PipelineState> pipelinestate;
 
 private://静的メンバ変数
 	//デバイス
 	static ID3D12Device* device;
 	//カメラ
 	static Camera* camera;
+
+protected://メンバ変数
+	//ローカルスケール
+	XMFLOAT3 scale = { 1,1,1 };
+	//X,Y,Z軸回りのローカル回転角
+	XMFLOAT3 rotation = { 0,0,0 };
+	//ローカル座標
+	XMFLOAT3 position = { 0,0,0 };
+	//ローカルワールド変換行列
+	XMMATRIX matWorld;
+	//モデル
+	FbxModel* model = nullptr;
 };

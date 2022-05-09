@@ -13,157 +13,244 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\sound">
+      <UniqueIdentifier>{f662e4a5-9e64-4306-abfb-70486f6c362c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Base">
+      <UniqueIdentifier>{60e80e6b-634b-4d10-a9da-e4a85b3dc6ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D">
+      <UniqueIdentifier>{b5246c88-56fe-403e-965b-e709324b406a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{94bb61e4-31fc-4066-b9c9-8513d32c9958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\2d">
+      <UniqueIdentifier>{0b51e9bf-c268-4663-9c4b-103472dfe4e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{af6609c4-cb7f-4dac-822d-cd41ef50b223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera">
+      <UniqueIdentifier>{5930fb30-3634-426b-8e0d-30ef8fec83d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision\ヘッダー">
+      <UniqueIdentifier>{0fdacc39-1eb4-4907-bf63-80341f19dec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision\ソース">
+      <UniqueIdentifier>{ee99a93a-1065-4406-bc70-340f2e29e0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Base\ソース">
+      <UniqueIdentifier>{48045622-7b06-447b-8fb9-1eb7ad83b0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Base\ヘッダー">
+      <UniqueIdentifier>{2f07a9ba-cc66-4999-9a2a-97a8c8da7ffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Fbx">
+      <UniqueIdentifier>{ceefbe67-9f82-40b6-a3b6-6092f7c89829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Object">
+      <UniqueIdentifier>{306101f5-f8bf-4371-b79d-5e62a32ec7e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Particle">
+      <UniqueIdentifier>{10b45223-b77b-49d1-b0d5-d6b5a6a99631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Fbx\ソース">
+      <UniqueIdentifier>{ed4729b7-54f3-4097-b515-ef80a4b483b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Fbx\ヘッダー">
+      <UniqueIdentifier>{00dec8df-f711-4d87-b2b9-4d9df950851d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Object\ソース">
+      <UniqueIdentifier>{eaf84b20-24d9-4dcd-8dac-84f7d3740dcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3D\Object\ヘッダー">
+      <UniqueIdentifier>{c6179dde-b639-4f43-89c5-c88e0ee08cba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\2d\ソース">
+      <UniqueIdentifier>{3dfb07c5-70e5-4112-b459-ffe649d788b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\2d\ヘッダー">
+      <UniqueIdentifier>{5778f44c-5d06-4702-a731-6c7574002c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera\ソース">
+      <UniqueIdentifier>{fb8e7141-67c2-48f4-9052-270ee0a57cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Camera\ヘッダー">
+      <UniqueIdentifier>{ea7d3d53-8981-4a18-9103-af6683df999a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\OBJ">
+      <UniqueIdentifier>{009b8e47-6e23-4336-8414-4960705f063f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Particle">
+      <UniqueIdentifier>{17f998d0-5787-411f-a533-806ee3e09081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Sprite">
+      <UniqueIdentifier>{78ebe4a6-e8ea-4187-a680-72ab98595592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Fbx">
+      <UniqueIdentifier>{4a515b0a-a088-4456-a8be-4422202e6127}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>ソース ファイル\sound</Filter>
+    </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WinApp.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXCommon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Object3d.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Object3dModel.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Collision\ソース</Filter>
     </ClCompile>
     <ClCompile Include="CollisionPrimitive.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugText.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Collision\ソース</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Collision\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXCommon.cpp">
+      <Filter>ソース ファイル\Base\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="WinApp.cpp">
+      <Filter>ソース ファイル\Base\ソース</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\3D\Particle</Filter>
     </ClCompile>
     <ClCompile Include="FbxLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\3D\Fbx\ソース</Filter>
     </ClCompile>
     <ClCompile Include="FbxModel.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\3D\Fbx\ソース</Filter>
     </ClCompile>
     <ClCompile Include="FbxObject3d.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\3D\Fbx\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3d.cpp">
+      <Filter>ソース ファイル\3D\Object\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3dModel.cpp">
+      <Filter>ソース ファイル\3D\Object\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugText.cpp">
+      <Filter>ソース ファイル\2d\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>ソース ファイル\2d\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\Camera\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>ソース ファイル\Camera\ソース</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resource\shaders\SpritePS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resource\shaders\SpriteVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resource\shaders\ParticleGS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resource\shaders\ParticlePS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resource\shaders\ParticleVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Resource\shaders\OBJPixelShader.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\OBJ</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\OBJVertexShader.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\OBJ</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\ParticleGS.hlsl">
+      <Filter>リソース ファイル\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\ParticlePS.hlsl">
+      <Filter>リソース ファイル\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\ParticleVS.hlsl">
+      <Filter>リソース ファイル\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\SpritePS.hlsl">
+      <Filter>リソース ファイル\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\SpriteVS.hlsl">
+      <Filter>リソース ファイル\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\FBXVS.hlsl">
+      <Filter>リソース ファイル\Fbx</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\FBXPS.hlsl">
+      <Filter>リソース ファイル\Fbx</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\shaders\Sprite.hlsli">
-      <Filter>リソース ファイル</Filter>
+    <None Include="Resource\shaders\OBJShaderHeader.hlsli">
+      <Filter>リソース ファイル\OBJ</Filter>
     </None>
     <None Include="Resource\shaders\Particle.hlsli">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\Particle</Filter>
     </None>
-    <None Include="Resource\shaders\OBJShaderHeader.hlsli">
-      <Filter>リソース ファイル</Filter>
+    <None Include="Resource\shaders\Sprite.hlsli">
+      <Filter>リソース ファイル\Sprite</Filter>
+    </None>
+    <None Include="Resource\shaders\FBX.hlsli">
+      <Filter>リソース ファイル\Fbx</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="WinApp.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXCommon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Object3d.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Object3dModel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionPrimitive.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugText.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Audio.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionTypes.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\sound</Filter>
     </ClInclude>
     <ClInclude Include="BaseCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Collision\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionPrimitive.h">
+      <Filter>ソース ファイル\Collision\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="CollisionInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Collision\ヘッダー</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Collision.h">
+      <Filter>ソース ファイル\Collision\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTypes.h">
+      <Filter>ソース ファイル\Collision\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXCommon.h">
+      <Filter>ソース ファイル\Base\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ソース ファイル\Input</Filter>
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\3D\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>ソース ファイル\Collision\ヘッダー</Filter>
     </ClInclude>
-    <ClInclude Include="DebugCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="WinApp.h">
+      <Filter>ソース ファイル\Base\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="FbxLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\3D\Fbx\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="FbxModel.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\3D\Fbx\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="FbxObject3d.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\3D\Fbx\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3d.h">
+      <Filter>ソース ファイル\3D\Object\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3dModel.h">
+      <Filter>ソース ファイル\3D\Object\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugText.h">
+      <Filter>ソース ファイル\2d\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>ソース ファイル\2d\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\Camera\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCamera.h">
+      <Filter>ソース ファイル\Camera\ヘッダー</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
