@@ -45,7 +45,7 @@ const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::X
 	return result;
 }
 
-void ParticleManager::StaticInitialize(ID3D12Device * device, const int window_width, const int window_height)
+void ParticleManager::StaticInitialize(ID3D12Device * device, int window_width, int window_height)
 {
 	// nullptrチェック
 	assert(device);
@@ -103,7 +103,7 @@ void ParticleManager::PostDraw()
 	ParticleManager::cmdList = nullptr;
 }
 
-ParticleManager * ParticleManager::Create(ID3D12Device* device, const int window_width, const int window_height)
+ParticleManager * ParticleManager::Create(ID3D12Device* device, int window_width, int window_height)
 {
 	// 3Dオブジェクトのインスタンスを生成
 	ParticleManager* particleMan = new ParticleManager();

@@ -21,7 +21,7 @@ public: //静的メンバ関数
 	static void SetDevice(ID3D12Device* device) { Model::dev = device; }
 	void CreateBuffers();
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
-
+	
 private:
 	bool InitializeDescriptorHeap();
 	//マテリアル読み込み
