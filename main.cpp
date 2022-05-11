@@ -122,11 +122,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	audio->Initialize();
 
 	XMFLOAT3 position = objSphere->GetPosition();
-	float vy = 3.0f;
+	/*float vy = 3.0f;
 	float speed = 6;
 	float furiction = 0.8;
-	float weight = 30;
+	float weight = 30;*/
 	float gravity = 9.8 / 60.0f;
+	float speed = 2;
+	float time = 0;
+	float angle = 60;
+	float PI = 3.141592;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -174,7 +178,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		position.y += vy;*/
 
 		//–€ŽC--------------------------------------------------------
-		float N = weight * gravity;
+		/*float N = weight * gravity;
 		float friction_power = N * furiction;
 		float acceleration = friction_power / weight;
 		position.x += speed;
@@ -183,8 +187,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		if (speed <= 0)
 		{
 			speed = 0;
-			//acceleration = 0;
-		}
+		}*/
+
+		//‹ó‹C’ïR-----------------------------------------------------
+		float dy = speed * time;
+		float dx = speed * time;
+		position.x = dx * cos((PI / 180) * angle);
+		position.y = dy * sin((PI / 180) * angle) * (-gravity * (time / 60));
+		
+		time++;
 
 		objSphere->SetPosition(position);
 
@@ -234,7 +245,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "%f %f", speed, acceleration);
+		sprintf_s(str, "%f %f %f %f", position.x, position.y, dy, gravity);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
