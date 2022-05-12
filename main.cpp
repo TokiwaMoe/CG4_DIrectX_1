@@ -98,7 +98,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
 	objSphere->SetPosition({ -100,0,0 });
-	objSphere2->SetPosition({ 0,0,0 });
+	objSphere2->SetPosition({ -100,0,0 });
+	objSphere2->SetScale({ 1.5,1.5,1.5 });
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
@@ -122,6 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	audio->Initialize();
 
 	XMFLOAT3 position = objSphere->GetPosition();
+	XMFLOAT3 position2 = objSphere2->GetPosition();
 	/*float vy = 3.0f;
 	float speed = 6;
 	float furiction = 0.8;
@@ -131,6 +133,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float time = 0;
 	float angle = 30;
 	float PI = 3.141592;
+	float k = 2;
+	float m = 1;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -192,13 +196,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//空気抵抗-----------------------------------------------------
 		float dy = speed * time;
 		float dx = speed * time;
-		position.x = dx * cos((PI / 180) * angle);
-		position.y = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (time * time));
+		float g = k * speed / m;
+		float vx = dx * cos((PI / 180) * angle);
+		float vy = dy * sin((PI / 180) * angle) - 0.5 * (g * (time * time));
+		float vy2 = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (time * time));
+		position.x = vx;
+		position.y = vy;
+
+		position2.x = vx;
+		position2.y = vy2;
 
 		time++;
 
 		objSphere->SetPosition(position);
-
+		objSphere2->SetPosition(position2);
 		//更新--------------------------------------------------------
 		particleMan->Update();
 
@@ -233,7 +244,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//objGround->Draw();
 		//objFighter->Draw();
 		objSphere->Draw();
-		//objSphere2->Draw();
+		objSphere2->Draw();
 
 		Object3d::PostDraw();
 
