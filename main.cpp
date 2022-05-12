@@ -97,7 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
-	objSphere->SetPosition({ -80,0,0 });
+	objSphere->SetPosition({ -100,0,0 });
 	objSphere2->SetPosition({ 0,0,0 });
 
 	//パーティクル
@@ -129,7 +129,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float gravity = 9.8 / 60.0f;
 	float speed = 2;
 	float time = 0;
-	float angle = 60;
+	float angle = 30;
 	float PI = 3.141592;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
@@ -193,8 +193,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float dy = speed * time;
 		float dx = speed * time;
 		position.x = dx * cos((PI / 180) * angle);
-		position.y = dy * sin((PI / 180) * angle) * (-gravity * (time / 60));
-		
+		position.y = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (time * time));
+
 		time++;
 
 		objSphere->SetPosition(position);
@@ -245,7 +245,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "%f %f %f %f", position.x, position.y, dy, gravity);
+		sprintf_s(str, "%f %f %f %f", position.x, position.y, dy, time);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
