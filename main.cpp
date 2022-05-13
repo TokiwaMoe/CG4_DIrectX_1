@@ -82,6 +82,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
+	//グラフィックパイプライン生成
+	FbxObject3d::CreateGraphicsPipline();
 
 	//3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDev(), camera);
@@ -111,16 +113,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	camera->SetTarget({ 0, 1, 0 });
 	camera->SetDistance(3.0f);
 
+	FbxModel* model1 = nullptr;
+	FbxObject3d* object1 = nullptr;
+
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
-	//ファイル読み込み
-	FbxLoader::GetInstance()->LoadMadelFromFile("cube");
+	//モデル名を指定してファイル読み込み
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("cube");
 	//デバイスをセット
 	FbxObject3d::SetDevice(dxCommon->GetDev());
 	//カメラをセット
 	FbxObject3d::SetCamera(camera);
-	//グラフィックパイプライン生成
-	FbxObject3d::CreateGraphicsPipline();
+
+	object1 = new FbxObject3d;
+	object1->Initialize();
+	object1->SetModel(model1);
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
@@ -201,6 +208,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objFighter->Update();
 		objSphere->Update();
 		objSphere2->Update();
+		object1->Update();
 
 		//// ４．描画コマンドここから
 
@@ -223,11 +231,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D描画
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		objSkydome->Draw();
+		/*objSkydome->Draw();
 		objGround->Draw();
-		objFighter->Draw();
+		objFighter->Draw();*/
 		/*objSphere->Draw();
 		objSphere2->Draw();*/
+		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
 
@@ -261,6 +270,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete winApp;
 	//DirectX解放
 	delete dxCommon;
+	delete object1;
+	delete model1;
 
 
 	return 0;

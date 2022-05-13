@@ -56,9 +56,14 @@ public://メンバ変数
 	/// <param name="model">モデル</param>
 	void SetModel(FbxModel* model) { this->model = model; }
 
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+
 protected://メンバ変数
 	//定数バッファ
-	ComPtr<ID3D12Resource>  constBuffertransform;
+	ComPtr<ID3D12Resource>  constBuffTransform;
 	//ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	//パイプラインステートオブジェクト

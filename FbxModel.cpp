@@ -50,10 +50,10 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 	}
 
 	//インデックスバッファビュー(IBV)の作成
-	idView.BufferLocation =
+	ibView.BufferLocation =
 	indexBuff->GetGPUVirtualAddress();
-	idView.Format = DXGI_FORMAT_R16_UINT;
-	idView.SizeInBytes = sizeIB;
+	ibView.Format = DXGI_FORMAT_R16_UINT;
+	ibView.SizeInBytes = sizeIB;
 
 	//テクスチャ画像データ
 	const DirectX::Image* img = scratchImg.GetImage(0, 0, 0);	//生データ抽出
@@ -107,4 +107,21 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		&srvDesc,//テクスチャ設定情報
 		descHeapSRV->GetCPUDescriptorHandleForHeapStart()
 	);
+}
+
+void FbxModel::Draw(ID3D12GraphicsCommandList* cmdList)
+{
+	//頂点バッファをセット(VBV)
+	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	//インデックスバッファーをセット(IBV)
+	cmdList->IASetIndexBuffer(&ibView);
+
+	//デスクリプターヒープのセット
+	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
+	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	//シェーダリソースビューをセット
+	cmdList->SetGraphicsRootDescriptorTable(1, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
+
+	//描画コマンド
+	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 }

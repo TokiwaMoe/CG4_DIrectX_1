@@ -24,7 +24,7 @@ void FbxObject3d::Initialize()
 		&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataTransform) + 0xff) & ~0xff),
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffertransform));
+		IID_PPV_ARGS(&constBuffTransform));
 }
 
 void FbxObject3d::CreateGraphicsPipline()
@@ -78,4 +78,37 @@ void FbxObject3d::Update()
 	const XMMATRIX& matViewProjection = camera->GetViewProjectionMatrix();
 	//モデルのメッシュトランスフォーム
 	const XMMATRIX& modelTransform = model->GetModelTransform();
+	//カメラ座標
+	const XMFLOAT3& cameraPos = camera->GetEye();
+
+	HRESULT result;
+	//定数バッファへデータ転送
+	ConstBufferDataTransform* constMap = nullptr;
+	result = constBuffTransform->Map(0, nullptr, (void**)&constMap);
+	if (SUCCEEDED(result)) {
+		constMap->viewproj = matViewProjection;
+		constMap->world = modelTransform * matWorld;
+		constMap->cameraPos = cameraPos;
+		constBuffTransform->Unmap(0, nullptr);
+	}
+}
+
+void FbxObject3d::Draw(ID3D12GraphicsCommandList* cmdList)
+{
+	//モデルの割り当てがなければ描画しない
+	if (model == nullptr)
+	{
+		return;
+	}
+	//パイプラインステートの設定
+	cmdList->SetPipelineState(pipelinestate.Get());
+	//ルートシグネチャの設定
+	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	//プリミティブ形状を設定
+	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//定数バッファビューをセット
+	cmdList->SetGraphicsRootConstantBufferView(0, constBuffTransform->GetGPUVirtualAddress());
+
+	//モデル描画
+	model->Draw(cmdList);
 }

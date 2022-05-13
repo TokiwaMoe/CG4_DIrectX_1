@@ -74,7 +74,7 @@ private://メンバ変数
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView = {};
 	//インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW idView = {};
+	D3D12_INDEX_BUFFER_VIEW ibView = {};
 	//SRV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> descHeapSRV;
 	//モデル名
