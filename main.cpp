@@ -123,7 +123,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
 	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("cube");
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("boneTest");
 
 	object1 = new FbxObject3d;
 	object1->Initialize();
