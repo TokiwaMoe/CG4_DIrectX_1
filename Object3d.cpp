@@ -258,7 +258,6 @@ bool Object3d::InitializeGraphicsPipeline()
 }
 
 
-
 void Object3d::UpdateViewMatrix()
 {
 	// ビュー行列の更新

@@ -82,8 +82,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
-	//グラフィックパイプライン生成
-	FbxObject3d::CreateGraphicsPipline();
 
 	//3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDev(), camera);
@@ -116,14 +114,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	FbxModel* model1 = nullptr;
 	FbxObject3d* object1 = nullptr;
 
-	//FBX
-	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
-	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("cube");
 	//デバイスをセット
 	FbxObject3d::SetDevice(dxCommon->GetDev());
 	//カメラをセット
 	FbxObject3d::SetCamera(camera);
+	//グラフィックパイプライン生成
+	FbxObject3d::CreateGraphicsPipline();
+	//FBX
+	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
+	//モデル名を指定してファイル読み込み
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("cube");
 
 	object1 = new FbxObject3d;
 	object1->Initialize();
