@@ -1,5 +1,6 @@
 #pragma once
 #include"FbxModel.h"
+#include"FbxLoader.h"
 #include"Camera.h"
 
 #include<Windows.h>

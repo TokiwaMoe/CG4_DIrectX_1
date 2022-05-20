@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include "fbxsdk.h"
-#include"FbxModel.h"
+#include "FbxModel.h"
 
 #include <d3d12.h>
 #include <d3dx12.h>
-#include<string>
+#include <string>
 
 class FbxLoader
 {
@@ -31,7 +31,7 @@ public:
 	/// </summary>
 	/// <param name="dst">書き込み先</param>
 	/// <param name="src">元となるFBX行列</param>
-	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
+	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxMatrix& src);
 
 private:
 	// privateなコンストラクタ（シングルトンパターン）

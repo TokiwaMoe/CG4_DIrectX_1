@@ -271,7 +271,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//DirectX‰ð•ú
 	delete dxCommon;
 	delete object1;
-	delete model1;
+	//delete model1;
 
 
 	return 0;
