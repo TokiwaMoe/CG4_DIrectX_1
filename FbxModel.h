@@ -85,7 +85,9 @@ public:
 	DirectX::ScratchImage scratchImg = {};
 
 public://メンバ関数
-//バッファ生成
+	//デストラクタ
+	~FbxModel();
+	//バッファ生成
 	void CreateBuffers(ID3D12Device* device);
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
@@ -93,6 +95,7 @@ public://メンバ関数
 	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 	//gettter
 	std::vector<Bone>& GetBones() { return bones; }
+	FbxScene* GetFbxScene() { return fbxScene; }
 
 private://メンバ変数
 	//頂点バッファ
@@ -117,6 +120,8 @@ private://メンバ変数
 protected:
 	//メッシュを持つノード
 	Node* meshNode = nullptr;
+	//FBXシーン
+	FbxScene* fbxScene = nullptr;
 	//頂点データ配列
 	std::vector<VertexPosNormalUvSkin> vertices;
 	//頂点インデックス配列

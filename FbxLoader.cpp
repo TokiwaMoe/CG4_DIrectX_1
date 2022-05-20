@@ -75,7 +75,8 @@ FbxModel* FbxLoader::LoadMadelFromFile(
     //ルートノードから順に解析してモデルに流し込む
     ParseNodeRecursive(model, fbxScene->GetRootNode());
     //FBXシーン解放
-    fbxScene->Destroy();
+    //fbxScene->Destroy();
+    model->fbxScene = fbxScene;
     //バッファ生成
     model->CreateBuffers(device);
 
@@ -417,8 +418,60 @@ void FbxLoader::ParseSkin(FbxModel* model, FbxMesh* fbxMesh)
     {
         //FBXボーン情報
         FbxCluster* fbxCluster = fbxSkin->GetCluster(i);
-        //このボーンに影響を受ける
+        //このボーンに影響を受ける頂点の数
+        int controlPointIndicesCount = fbxCluster->GetControlPointIndicesCount();
+        //このボーンに影響を受ける頂点配列
+        int* controlPointIndices = fbxCluster->GetControlPointIndices();
+        double* controlPointWeights = fbxCluster->GetControlPointWeights();
 
+        //影響を受ける全頂点について
+        for (int j = 0; j < controlPointIndicesCount; j++)
+        {
+            //頂点番号
+            int vertIndex = controlPointIndices[j];
+            //スキンウェイト
+            float weight = (float)controlPointWeights[j];
+            //その頂点の影響を受けるボーンリストに、ボーンとウェイトのペアを追加
+            weightLists[vertIndex].emplace_back(WeightSet{ (UINT)i, weight });
+        }
+    }
+
+    //頂点配列書き換え用の参照
+    auto& vertices = model->vertices;
+    //各頂点について処理
+    for (int i = 0; i < vertices.size(); i++)
+    {
+        //頂点のウェイトから最も大きい4つを選択
+        auto& weightList = weightLists[i];
+        //大小比較用のラムダ式を指定して降順にソート
+        weightList.sort(
+            [](auto const& lhs, auto const& rhs)
+            {
+                //左の要素の方が大きければtrue それでなければfalseを返す
+                return lhs.weight > rhs.weight;
+            });
+
+        int weightArrayIndex = 0;
+        //降順ソート済みのウェイトリストから
+        for (auto &weightSet : weightList)
+        {
+            //頂点データに書き込み
+            vertices[i].boneIndex[weightArrayIndex] = weightSet.index;
+            vertices[i].boneWeight[weightArrayIndex] = weightSet.weight;
+            //4つに達したら終了
+            if (++weightArrayIndex >= FbxModel::MAX_BONE_INDICES)
+            {
+                float weight = 0.0f;
+                //2番目以降のウェイトを合計
+                for (int j = 0; j < FbxModel::MAX_BONE_INDICES; j++)
+                {
+                    weight += vertices[i].boneWeight[j];
+                }
+                //合計で1.0f(100%)になるように調整
+                vertices[i].boneWeight[0] = 1.0f - weight;
+                break;
+            }
+        }
     }
 }
 
