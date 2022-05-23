@@ -77,6 +77,11 @@ public://メンバ変数
 	/// </summary>
 	void PlayAnimation();
 
+	//setter
+	void SetPosition(XMFLOAT3 position) { this->position = position; }
+	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
+	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
+
 protected://メンバ変数
 	//定数バッファ
 	ComPtr<ID3D12Resource>  constBuffTransform;

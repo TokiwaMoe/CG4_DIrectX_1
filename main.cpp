@@ -29,6 +29,7 @@
 #include"fbxsdk.h"
 #include"FbxLoader.h"
 #include"FbxObject3d.h"
+#include"PostEffect.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -108,8 +109,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objSphere->SetPosition({ +1,1,0 });
 	objSphere2->SetPosition({ -1,1,0 });
 	// カメラ注視点をセット
-	camera->SetTarget({ 0, 1, 0 });
-	camera->SetDistance(3.0f);
+	camera->SetTarget({ 0, 2.5f, 0 });
+	camera->SetDistance(8.0f);
 
 	FbxModel* model1 = nullptr;
 	FbxObject3d* object1 = nullptr;
@@ -129,6 +130,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object1->Initialize();
 	object1->SetModel(model1);
 	object1->PlayAnimation();
+	object1->SetRotation({ 0, 90, 0 });
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
@@ -147,6 +149,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// 背景スプライト生成
 	Sprite* background = nullptr;
 	background = Sprite::Create(1, { 0.0f,0.0f });
+
+	//ポストエフェクト
+	PostEffect* postEffect = nullptr;
+	Sprite::LoadTexture(100, L"Resource/white1x1.png");
+	//ポストエフェクトの初期化
+	postEffect = new PostEffect();
+	postEffect->Initialize();
 
 	Audio* audio = nullptr;
 	audio = new Audio;
@@ -232,11 +241,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D描画
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		/*objSkydome->Draw();
+		objSkydome->Draw();
 		objGround->Draw();
-		objFighter->Draw();*/
-		/*objSphere->Draw();
-		objSphere2->Draw();*/
+		objFighter->Draw();
+		objSphere->Draw();
+		objSphere2->Draw();
 		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
@@ -251,7 +260,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		/*char str[256];
 		sprintf_s(str, "60");
 		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);*/
-
+		postEffect->Draw(dxCommon->GetCmdList());
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 #pragma endregion
@@ -273,6 +282,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	delete dxCommon;
 	delete object1;
 	//delete model1;
+	delete postEffect;
 
 
 	return 0;

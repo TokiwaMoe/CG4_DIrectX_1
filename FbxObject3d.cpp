@@ -43,6 +43,7 @@ void FbxObject3d::Initialize()
 		constMapSkin->bones[i] = XMMatrixIdentity();
 	}
 	constBuffSkin->Unmap(0, nullptr);
+
 	//1フレーム分の時間を60FPSで設定
 	frameTime.SetTime(0, 0, 0, 1, 0, FbxTime::EMode::eFrames60);
 }
@@ -214,9 +215,6 @@ void FbxObject3d::Update()
 		constBuffTransform->Unmap(0, nullptr);
 	}
 
-	//ボーン配列
-	std::vector<FbxModel::Bone>& bones = model->GetBones();
-
 	//アニメーション
 	if (isPlay)
 	{
@@ -228,6 +226,9 @@ void FbxObject3d::Update()
 			currentTime = startTime;
 		}
 	}
+
+	//ボーン配列
+	std::vector<FbxModel::Bone>& bones = model->GetBones();
 
 	//定数バッファへデータ転送
 	ConstBufferDataSkin* constMapSkin = nullptr;

@@ -147,6 +147,9 @@
     <ClCompile Include="DebugCamera.cpp">
       <Filter>ソース ファイル\Camera\ソース</Filter>
     </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>ソース ファイル\2d\ソース</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resource\shaders\OBJPixelShader.hlsl">
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="DebugCamera.h">
       <Filter>ソース ファイル\Camera\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect.h">
+      <Filter>ソース ファイル\2d\ヘッダー</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -41,7 +41,7 @@ public:
 	//座標取得
 	const XMFLOAT2& GetPosition() { return position; }
 
-private:
+protected:
 	//テクスチャの最大枚数
 	static const int srvCount = 512;
 	//頂点数
@@ -86,7 +86,7 @@ public:
 
 	void Draw();
 
-private:
+protected:
 	// 頂点バッファ
 	ComPtr<ID3D12Resource> vertBuff;
 	// 定数バッファ
