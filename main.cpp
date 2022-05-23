@@ -128,6 +128,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object1 = new FbxObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
+	object1->PlayAnimation();
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
