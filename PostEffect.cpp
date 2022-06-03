@@ -1,4 +1,5 @@
 #include "PostEffect.h"
+#include "WinApp.h"
 
 #include<d3dx12.h>
 
@@ -15,6 +16,63 @@ PostEffect::PostEffect()
 		false//上下反転
 	)
 {
+
+}
+
+void PostEffect::Initialize()
+{
+	HRESULT result;
+
+	//基底クラスとしての初期化
+	Sprite::Initialize();
+
+	//テクスチャリソース設定
+	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+		DXGI_FORMAT_R8G8_B8G8_UNORM,
+		WinApp::window_width,
+		(UINT)WinApp::window_height,
+		1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET
+	);
+
+	//テクスチャバッファの生成
+	result = dev->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
+			D3D12_MEMORY_POOL_L0),
+		D3D12_HEAP_FLAG_NONE,
+		&texresDesc,
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		nullptr,
+		IID_PPV_ARGS(&texBuff));
+	assert(SUCCEEDED(result));
+
+	{//テクスチャを赤クリア
+		//画素数(1280 × 720 = 921600ピクセル)
+		const UINT pixelCount = WinApp::window_width * WinApp::window_height;
+		//画素数1桁分のデータサイズ
+		const UINT rowPitch = sizeof(UINT) * WinApp::window_width;
+		//画像全体のデータサイズ
+		const UINT depthPitch = rowPitch * WinApp::window_height;
+		//画像イメージ
+		UINT* img = new UINT[pixelCount];
+		for (int i = 0; i < pixelCount; i++) { img[i] = 0xff0000ff; }
+
+		//テクスチャバッファーにデータ転送
+		result = texBuff->WriteToSubresource(0, nullptr,
+			img, rowPitch, depthPitch);
+		assert(SUCCEEDED(result));
+		delete[] img;
+	}
+
+	//SRV用デスクリプタヒープ設定
+	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
+	srvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	srvDescHeapDesc.NumDescriptors = 1;
+	//SRV用デスクリプタヒープを生成
+	result = dev->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV));
+	assert(SUCCEEDED(result));
+
+	//SRV設定
 
 }
 
