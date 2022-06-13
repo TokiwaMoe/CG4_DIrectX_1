@@ -91,6 +91,9 @@
     <Filter Include="リソース ファイル\Fbx">
       <UniqueIdentifier>{4a515b0a-a088-4456-a8be-4422202e6127}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\PostEffect">
+      <UniqueIdentifier>{873ad512-5698-4fe1-b04d-458cbaa0e42d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -179,6 +182,12 @@
     <FxCompile Include="Resource\shaders\FBXPS.hlsl">
       <Filter>リソース ファイル\Fbx</Filter>
     </FxCompile>
+    <FxCompile Include="Resource\shaders\PostEffectPS.hlsl">
+      <Filter>リソース ファイル\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\PostEffectVS.hlsl">
+      <Filter>リソース ファイル\PostEffect</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\shaders\OBJShaderHeader.hlsli">
@@ -192,6 +201,9 @@
     </None>
     <None Include="Resource\shaders\FBX.hlsli">
       <Filter>リソース ファイル\Fbx</Filter>
+    </None>
+    <None Include="Resource\shaders\PostEffect.hlsli">
+      <Filter>リソース ファイル\PostEffect</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

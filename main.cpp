@@ -152,7 +152,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//ポストエフェクト
 	PostEffect* postEffect = nullptr;
-	Sprite::LoadTexture(100, L"Resource/white1x1.png");
+	//Sprite::LoadTexture(100, L"Resource/background.png");
 	//ポストエフェクトの初期化
 	postEffect = new PostEffect();
 	postEffect->Initialize();
@@ -173,8 +173,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//DirectX毎フレーム処理　ここから
 		input->KeyUpdate();
 		input->MouseUpdate();
-		dxCommon->PreDraw();
-
 		//マウス座標
 		POINT mousePos;
 		GetCursorPos(&mousePos);
@@ -220,6 +218,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere2->Update();
 		object1->Update();
 
+		
+
 		//// ４．描画コマンドここから
 
 		//dxCommon->GetCmdList()->RSSetViewports(1, &CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height));
@@ -228,24 +228,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//dxCommon->GetCmdList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+		postEffect->PreDrawScene(dxCommon->GetCmdList());
 #pragma region 背景スプライト描画
-		Sprite::PreDraw(dxCommon->GetCmdList());
+		//Sprite::PreDraw(dxCommon->GetCmdList());
 
 		//background->Draw();
 
-		Sprite::PostDraw();
+		//Sprite::PostDraw();
 		// 深度バッファクリア
-		dxCommon->ClearDepthBuffer();
+		//dxCommon->ClearDepthBuffer();
 #pragma endregion
 
 #pragma region 3D描画
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		objSkydome->Draw();
+		/*objSkydome->Draw();
 		objGround->Draw();
 		objFighter->Draw();
 		objSphere->Draw();
-		objSphere2->Draw();
+		objSphere2->Draw();*/
 		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
@@ -255,15 +256,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion
 
 #pragma region 前景スプライト描画
+		
+
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		/*char str[256];
 		sprintf_s(str, "60");
 		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);*/
-		postEffect->Draw(dxCommon->GetCmdList());
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
+
+		
+		postEffect->PostDrawScene(dxCommon->GetCmdList());
+
+		
 #pragma endregion
+		dxCommon->PreDraw();
+		postEffect->Draw(dxCommon->GetCmdList());
 		// ４．描画コマンドここまで
 		dxCommon->PostDraw();
 
