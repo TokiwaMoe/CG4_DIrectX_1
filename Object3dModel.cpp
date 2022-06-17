@@ -11,22 +11,22 @@ using namespace Microsoft::WRL;
 using namespace std;
 
 //静的メンバ変数の実体
-ID3D12Device* Model::dev = nullptr;
-UINT Model::descriptorHandleIncrementSize = 0;
+ID3D12Device* Object3dModel::dev = nullptr;
+UINT Object3dModel::descriptorHandleIncrementSize = 0;
 
-Model* Model::LoadFromOBJ(const std::string& modelname)
+Object3dModel* Object3dModel::LoadFromOBJ(const std::string& Object3dModelname)
 {
-	//新たなModel型のインスタンスのメモリを確保
-	Model* model = new Model();
+	//新たなObject3dModel型のインスタンスのメモリを確保
+	Object3dModel* object3dModel = new Object3dModel();
 
 	//読み込み
-	model->InitializeDescriptorHeap();
-	model->LoadFromOBJInternal(modelname);
-	model->CreateBuffers();
-	return model;
+	object3dModel->InitializeDescriptorHeap();
+	object3dModel->LoadFromOBJInternal(Object3dModelname);
+	object3dModel->CreateBuffers();
+	return object3dModel;
 }
 
-void Model::loadMaterial(const std::string& directoryPath, const std::string& filename)
+void Object3dModel::loadMaterial(const std::string& directoryPath, const std::string& filename)
 {
 	//ファイルストリーム
 	std::ifstream file;
@@ -93,7 +93,7 @@ void Model::loadMaterial(const std::string& directoryPath, const std::string& fi
 	file.close();
 }
 
-bool Model::LoadTexture(const std::string& directoryPath, const std::string& filename)
+bool Object3dModel::LoadTexture(const std::string& directoryPath, const std::string& filename)
 {
 	HRESULT result = S_FALSE;
 
@@ -167,13 +167,13 @@ bool Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 	return true;
 }
 
-void Model::LoadFromOBJInternal(const std::string& modelname)
+void Object3dModel::LoadFromOBJInternal(const std::string& Object3dModelname)
 {
 	
 	//.objファイルを開く
 	std::ifstream file;
-	const string filename = modelname + ".obj";	//"triangle_mat.obj"
-	const string directoryPath = "Resource/" + modelname + "/";	//"Resources/triangle_mat/"
+	const string filename = Object3dModelname + ".obj";	//"triangle_mat.obj"
+	const string directoryPath = "Resource/" + Object3dModelname + "/";	//"Resources/triangle_mat/"
 	file.open(directoryPath + filename);	//"Resources/triangle_mat/triangle_mat.obj"
 	if (file.fail())
 	{
@@ -272,7 +272,7 @@ void Model::LoadFromOBJInternal(const std::string& modelname)
 	file.close();
 }
 
-bool Model::InitializeDescriptorHeap()
+bool Object3dModel::InitializeDescriptorHeap()
 {
 	HRESULT result = S_FALSE;
 
@@ -293,7 +293,7 @@ bool Model::InitializeDescriptorHeap()
 	return true;
 }
 
-void Model::CreateBuffers()
+void Object3dModel::CreateBuffers()
 {
 	HRESULT result = S_FALSE;
 
@@ -383,7 +383,7 @@ void Model::CreateBuffers()
 	constBuffB1->Unmap(0, nullptr);
 }
 
-void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
+void Object3dModel::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
 {
 	// nullptrチェック
 	assert(dev);

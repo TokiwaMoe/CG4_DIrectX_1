@@ -492,7 +492,7 @@ void Sprite::TransferVertices()
 	vertices[RT].pos = { right,	top,	0.0f }; // 右上
 
 	// テクスチャ情報取得
-	if (texBuff[texNumber])
+	if (!texBuff[texNumber])
 	{
 		D3D12_RESOURCE_DESC resDesc = texBuff[texNumber]->GetDesc();
 

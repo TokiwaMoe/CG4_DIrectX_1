@@ -5,7 +5,7 @@
 #include <DirectXMath.h>
 #include <d3dx12.h>
 
-class Model {
+class Object3dModel {
 private: // エイリアス
 // Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -16,9 +16,9 @@ private: // エイリアス
 	using XMMATRIX = DirectX::XMMATRIX;
 public: //静的メンバ関数
 	//OBJファイルから3dモデルを読み込み
-	static Model* LoadFromOBJ(const std::string& modelname);
+	static Object3dModel* LoadFromOBJ(const std::string& Object3dModelname);
 	//setter
-	static void SetDevice(ID3D12Device* device) { Model::dev = device; }
+	static void SetDevice(ID3D12Device* device) { Object3dModel::dev = device; }
 	void CreateBuffers();
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 	
@@ -31,7 +31,7 @@ private:
 	
 private: //非公開のメンバ関数
 	//OBJファイルから3Dモデルを読み込む(非公開)
-	void LoadFromOBJInternal(const std::string &modelname);
+	void LoadFromOBJInternal(const std::string &Object3dModelname);
 
 public: //サブクラス
 	//頂点データ構造体

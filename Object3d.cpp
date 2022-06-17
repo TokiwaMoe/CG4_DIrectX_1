@@ -59,7 +59,7 @@ bool Object3d::StaticInitialize(ID3D12Device* device, Camera* camera)
 	InitializeGraphicsPipeline();
 
 	//モデルにデバイスをセット
-	Model::SetDevice(device);
+	Object3dModel::SetDevice(device);
 
 	return true;
 }
@@ -344,7 +344,7 @@ void Object3d::Draw()
 	assert(device);
 	assert(Object3d::cmdList);
 
-	if (model == nullptr)
+	if (object3dModel == nullptr)
 	{
 		return;
 	}
@@ -355,7 +355,7 @@ void Object3d::Draw()
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
-	model->Draw(cmdList, 1);
+	object3dModel->Draw(cmdList, 1);
 }
 
 void Object3d::SetCollider(BaseCollider* collider)

@@ -212,7 +212,7 @@ public: // メンバ関数
 
 	virtual void Draw();
 
-	void SetModel(Model* model) { this->model = model; }
+	void SetObject3dModel(Object3dModel* Object3dModel) { this->object3dModel = Object3dModel; }
 
 	/// <summary>
 	/// ビルボードフラグのセット
@@ -254,7 +254,7 @@ protected:// メンバ変数
 	// 親オブジェクト
 	Object3d* parent = nullptr;
 
-	Model* model = nullptr;
+	Object3dModel* object3dModel = nullptr;
 
 	//クラス名(デバッグ用)
 	const char* name = nullptr;

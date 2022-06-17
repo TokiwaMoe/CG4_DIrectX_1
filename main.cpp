@@ -87,11 +87,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dxCommon->GetDev(), camera);
 	//3dオブジェクト生成
-	Model* modelSkydome = Model::LoadFromOBJ("skydome");
-	Model* modelGround = Model::LoadFromOBJ("ground");
-	Model* modelFighter = Model::LoadFromOBJ("chr_sword");
-	Model* modelSphere = Model::LoadFromOBJ("sphere");
-	Model* modelSphere2 = Model::LoadFromOBJ("sphere");
+	Object3dModel* Object3dModelSkydome = Object3dModel::LoadFromOBJ("skydome");
+	Object3dModel* Object3dModelGround = Object3dModel::LoadFromOBJ("ground");
+	Object3dModel* Object3dModelFighter = Object3dModel::LoadFromOBJ("chr_sword");
+	Object3dModel* Object3dModelSphere = Object3dModel::LoadFromOBJ("sphere");
+	Object3dModel* Object3dModelSphere2 = Object3dModel::LoadFromOBJ("sphere");
 
 	Object3d* objSkydome = Object3d::Create();
 	Object3d* objGround = Object3d::Create();
@@ -99,11 +99,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Object3d* objSphere = Object3d::Create();
 	Object3d* objSphere2 = Object3d::Create();
 
-	objSkydome->SetModel(modelSkydome);
-	objGround->SetModel(modelGround);
-	objFighter->SetModel(modelFighter);
-	objSphere->SetModel(modelSphere);
-	objSphere2->SetModel(modelSphere2);
+	objSkydome->SetObject3dModel(Object3dModelSkydome);
+	objGround->SetObject3dModel(Object3dModelGround);
+	objFighter->SetObject3dModel(Object3dModelFighter);
+	objSphere->SetObject3dModel(Object3dModelSphere);
+	objSphere2->SetObject3dModel(Object3dModelSphere2);
 
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetPosition({ +1,1,0 });
@@ -290,7 +290,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//DirectX解放
 	delete dxCommon;
 	delete object1;
-	//delete model1;
+	//delete Object3dModel1;
 	delete postEffect;
 
 
