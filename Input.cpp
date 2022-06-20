@@ -103,3 +103,8 @@ Input::MouseMove Input::GetMouseMove()
 	tmp.lZ = mouse.lZ;
 	return tmp;
 }
+
+Input* Input::GetInstance()
+{
+	return nullptr;
+}
