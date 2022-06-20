@@ -230,13 +230,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		postEffect->PreDrawScene(dxCommon->GetCmdList());
 #pragma region 背景スプライト描画
-		//Sprite::PreDraw(dxCommon->GetCmdList());
+		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		//background->Draw();
 
-		//Sprite::PostDraw();
-		// 深度バッファクリア
-		//dxCommon->ClearDepthBuffer();
+		Sprite::PostDraw();
+		 //深度バッファクリア
+		dxCommon->ClearDepthBuffer();
 #pragma endregion
 
 #pragma region 3D描画
