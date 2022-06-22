@@ -97,8 +97,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
-	objSphere->SetPosition({ -100,0,0 });
-	objSphere2->SetPosition({ -100,0,0 });
+	objSphere->SetPosition({ 0,0,0 });
+	objSphere2->SetPosition({ 0,0,0 });
 	objSphere2->SetScale({ 1.5,1.5,1.5 });
 
 	//パーティクル
@@ -194,7 +194,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}*/
 
 		//空気抵抗-----------------------------------------------------
-		float dy = speed * time;
+		/*float dy = speed * time;
 		float dx = speed * time;
 		float g = k * speed / m;
 		float vx = dx * cos((PI / 180) * angle);
@@ -206,7 +206,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		position2.x = vx;
 		position2.y = vy2;
 
-		time++;
+		time++;*/
+
+		//反発---------------------------------------------------------
+		float m1 = 0.5;
+		float m2 = 0.1;
+		float v1 = 1;
+		float v2 = 0;
+		bool hitFlag = false;
+
+		hitFlag = Collision::CheckSphere2(position, position2, 1.0f, 1.0f);
+
+		if (hitFlag)
+		{
+			char str2[256];
+			sprintf_s(str2, "HIT");
+			debugText.Print(str2, 10, 60, 1.0f);
+		}
+
+		if (input->PushKey(DIK_D))
+		{
+			position.x += v1;
+		}
+		if (input->PushKey(DIK_A))
+		{
+			position.x -= v1;
+		}
 
 		objSphere->SetPosition(position);
 		objSphere2->SetPosition(position2);
@@ -256,8 +281,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "%f %f %f %f", position.x, position.y, dy, time);
+		sprintf_s(str, "%f %f %f", position.x, position.y, position.z);
 		debugText.Print(str, 10, 10, 1.0f);
+
+		char str3[256];
+		sprintf_s(str, "%f %f %f", position2.x, position2.y, position2.z);
+		debugText.Print(str, 10, 30, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();

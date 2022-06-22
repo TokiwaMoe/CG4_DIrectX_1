@@ -226,4 +226,7 @@ bool Collision::CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Ra
 		{
 			return true;
 		}
+		else {
+			return false;
+		}
 }
