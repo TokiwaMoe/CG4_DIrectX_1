@@ -11,7 +11,7 @@ using namespace DirectX;
 //静的メンバ変数の実態						  Red    Blue  Green  Alpha
 const float PostEffect::clearColor[4] = { 0.25f, 0.1f, 0.5f, 0.0f };
 
-PostEffect::PostEffect()
+PostEffect::PostEffect(Input* input)
 	:Sprite(
 		100,//テクスチャ番号
 		{0, 0},//座標
@@ -22,7 +22,7 @@ PostEffect::PostEffect()
 		false//上下反転
 	)
 {
-
+	this->input = input;
 }
 
 void PostEffect::Initialize()
@@ -229,7 +229,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	// 描画コマンド
 	cmdList->DrawInstanced(4, 1, 0, 0);
 
-	if (Input::GetInstance()->TriggerKey(DIK_0))
+	if (input->TriggerKey(DIK_0))
 	{
 		//デスクリプタヒープにSRV作成
 		static int tex = 0;

@@ -1,5 +1,7 @@
 #pragma once
 #include "Sprite.h"
+#include "Input.h"
+
 class PostEffect :
     public Sprite
 {
@@ -11,7 +13,7 @@ public:
     ///<summary>
     ///コンストラクタ
     ///</summary>
-    PostEffect();
+    PostEffect(Input* input);
 
     ///<summary>
     ///初期化
@@ -60,5 +62,7 @@ protected:
 private:
     //画面クリアカラー
     static const float clearColor[4];
+
+    Input* input = nullptr;
 };
 

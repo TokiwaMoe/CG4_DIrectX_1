@@ -154,7 +154,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	PostEffect* postEffect = nullptr;
 	//Sprite::LoadTexture(100, L"Resource/background.png");
 	//ポストエフェクトの初期化
-	postEffect = new PostEffect();
+	postEffect = new PostEffect(input);
 	postEffect->Initialize();
 
 	Audio* audio = nullptr;

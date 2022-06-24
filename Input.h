@@ -53,8 +53,6 @@ public://メンバ関数
 	/// <returns>マウス移動量</returns>
 	MouseMove GetMouseMove();
 
-	static Input *GetInstance();
-
 private: //メンバ変数
 	//DirectInputのインスタンス
 	ComPtr<IDirectInput8> dinput;
