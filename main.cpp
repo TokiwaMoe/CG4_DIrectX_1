@@ -97,9 +97,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
-	objSphere->SetPosition({ 0,0,0 });
-	objSphere2->SetPosition({ 0,0,0 });
+	objSphere->SetPosition({ -20,0,0 });
+	objSphere2->SetPosition({ 20,0,0 });
 	objSphere2->SetScale({ 1.5,1.5,1.5 });
+	objSphere2->SetColor({ 1,0,0,1 });
 
 	//パーティクル
 	ParticleManager* particleMan = nullptr;
@@ -135,6 +136,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float PI = 3.141592;
 	float k = 2;
 	float m = 1;
+
+	float m1 = 0.5;
+	float m2 = 0.45;
+	float v1 = 1;
+	float v2 = 1;
+	bool hitFlag = false;
+	bool repulsion = false;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -209,32 +217,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		time++;*/
 
 		//反発---------------------------------------------------------
-		float m1 = 0.5;
-		float m2 = 0.1;
-		float v1 = 1;
-		float v2 = 0;
-		bool hitFlag = false;
 
-		hitFlag = Collision::CheckSphere2(position, position2, 1.0f, 1.0f);
-
-		if (hitFlag)
+		
+		if (input->PushKey(DIK_SPACE))
 		{
-			char str2[256];
-			sprintf_s(str2, "HIT");
-			debugText.Print(str2, 10, 60, 1.0f);
+			position.x = -20;
+			position2.x = 0;
+			repulsion = false;
+			hitFlag = false;
+		}
+		else {
+			hitFlag = Collision::CheckSphere2(position, position2, 1.0f, 1.0f);
+
+			if (hitFlag)
+			{
+				char str2[256];
+				sprintf_s(str2, "HIT");
+				debugText.Print(str2, 10, 90, 1.0f);
+				repulsion = true;
+			}
+
+			if (repulsion)
+			{
+				float a2 = m1 * v1 + m2 * v2;
+				float law2 = a2 / m2;
+				position2.x += law2;
+				float a1 = m1 * v1 + m2 * v2;
+				float law1 = a1 / m1;
+				position.x -= law1;
+
+				char str2[256];
+				sprintf_s(str2, "b1 : %f b2 : %f", law1, law2);
+				debugText.Print(str2, 10, 60, 1.0f);
+			}
+			else {
+				position.x += v1;
+				position2.x -= v2;
+			}
+
+			objSphere->SetPosition(position);
+			objSphere2->SetPosition(position2);
 		}
 
-		if (input->PushKey(DIK_D))
-		{
-			position.x += v1;
-		}
-		if (input->PushKey(DIK_A))
-		{
-			position.x -= v1;
-		}
 
-		objSphere->SetPosition(position);
-		objSphere2->SetPosition(position2);
 		//更新--------------------------------------------------------
 		particleMan->Update();
 
@@ -281,11 +306,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "%f %f %f", position.x, position.y, position.z);
+		sprintf_s(str, "obj1 : %f %f %f", position.x, position.y, position.z);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		char str3[256];
-		sprintf_s(str, "%f %f %f", position2.x, position2.y, position2.z);
+		sprintf_s(str, "obj2 : %f %f %f", position2.x, position2.y, position2.z);
 		debugText.Print(str, 10, 30, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());

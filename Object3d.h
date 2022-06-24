@@ -34,11 +34,11 @@ public: // サブクラス
 	};
 
 	// 定数バッファ用データ構造体
-	struct ConstBufferData
-	{
-		XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat;	// ３Ｄ変換行列
-	};
+	//struct ConstBufferData
+	//{
+	//	XMFLOAT4 color;	// 色 (RGBA)
+	//	XMMATRIX mat;	// ３Ｄ変換行列
+	//};
 
 	struct Material
 	{
@@ -61,6 +61,7 @@ public: // サブクラス
 	struct ConstBufferDataB0
 	{
 		XMMATRIX mat;	//3D変換行列
+		XMFLOAT4 color;
 	};
 
 	//定数バッファ用データ構造体B1
@@ -233,6 +234,8 @@ public: // メンバ関数
 
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 
+	void SetColor(XMFLOAT4 color) { this->color = color; }
+
 	virtual void Draw();
 
 	void SetModel(Model* model) { this->model = model; }
@@ -255,7 +258,7 @@ public: // メンバ関数
 	/// <param name="info">衝突情報</param>
 	virtual void OnCollision(const CollisionInfo& info) {}
 
-protected:// メンバ変数
+private:// メンバ変数
 //ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; // 定数バッファ
 	// 色
