@@ -74,11 +74,12 @@ public://サブクラス
 		//コンストラクタ
 		Bone(const std::string& name) { this->name = name; }
 	};
-public:
+protected:
 	//アンビエント係数
 	DirectX::XMFLOAT3 ambient = { 1,1,1 };
 	//ディフューズ係数
 	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
+public:
 	//テクスチャメタデータ
 	DirectX::TexMetadata metadata = {};
 	//スクラッチイメージ
@@ -96,6 +97,9 @@ public://メンバ関数
 	//gettter
 	std::vector<Bone>& GetBones() { return bones; }
 	FbxScene* GetFbxScene() { return fbxScene; }
+
+	void SetAmbient(XMFLOAT3 ambient) { this->ambient = ambient; }
+	void SetDiffuse(XMFLOAT3 diffuse) { this->diffuse = diffuse; }
 
 private://メンバ変数
 	//頂点バッファ
