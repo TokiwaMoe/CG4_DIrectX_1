@@ -141,6 +141,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float m2 = 0.45;
 	float v1 = 1;
 	float v2 = 1;
+	float e1; //”½”­ŒW”
+	float e2;
 	bool hitFlag = false;
 	bool repulsion = false;
 
@@ -217,9 +219,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		time++;*/
 
 		//”½”­---------------------------------------------------------
-
 		
-		if (input->PushKey(DIK_SPACE))
+		/*if (input->PushKey(DIK_SPACE))
 		{
 			position.x = -20;
 			position2.x = 0;
@@ -247,7 +248,50 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				position.x -= law1;
 
 				char str2[256];
-				sprintf_s(str2, "b1 : %f b2 : %f", law1, law2);
+				sprintf_s(str2, "e1 : %f e2 : %f", law1, law2);
+				debugText.Print(str2, 10, 60, 1.0f);
+			}
+			else {
+				position.x += v1;
+				position2.x -= v2;
+			}
+
+			objSphere->SetPosition(position);
+			objSphere2->SetPosition(position2);
+		}*/
+
+		//”½”­ŒW”----------------------------------------------------
+		if (input->PushKey(DIK_SPACE))
+		{
+			position.x = -20;
+			position2.x = 0;
+			repulsion = false;
+			hitFlag = false;
+		}
+		else {
+			hitFlag = Collision::CheckSphere2(position, position2, 1.0f, 1.0f);
+
+			if (hitFlag)
+			{
+				char str2[256];
+				sprintf_s(str2, "HIT");
+				debugText.Print(str2, 10, 90, 1.0f);
+				repulsion = true;
+			}
+
+			if (repulsion)
+			{
+				float a2 = m1 * v1 + m2 * v2;
+				float law2 = a2 / m2;
+				e2 = v2 / law2;
+				position2.x += v2 * e2;
+				float a1 = m1 * v1 + m2 * v2;
+				float law1 = a1 / m1;
+				e1 = v1 / law1;
+				position.x -= v1 * e1;
+
+				char str2[256];
+				sprintf_s(str2, "e1 : %f e2 : %f", law1, law2);
 				debugText.Print(str2, 10, 60, 1.0f);
 			}
 			else {
