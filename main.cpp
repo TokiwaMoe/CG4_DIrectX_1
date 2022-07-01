@@ -98,7 +98,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objFighter->SetPosition({ +1,0,0 });
 	objSphere->SetScale({ 1.5,1.5,1.5 });
 	objSphere->SetPosition({ -20,0,0 });
-	objSphere2->SetPosition({ 20,0,0 });
+	objSphere2->SetPosition({ 0,0,0 });
 	objSphere2->SetScale({ 1.5,1.5,1.5 });
 	objSphere2->SetColor({ 1,0,0,1 });
 
@@ -132,7 +132,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float gravity = 9.8 / 60.0f;
 	float speed = 2;
 	float time = 0;
-	float angle = 30;
+	float angle = 5;
 	float PI = 3.141592;
 	float k = 2;
 	float m = 1;
@@ -261,7 +261,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}*/
 
 		//”½”­ŒW”----------------------------------------------------
-		if (input->PushKey(DIK_SPACE))
+		/*if (input->PushKey(DIK_SPACE))
 		{
 			position.x = -20;
 			position2.x = 0;
@@ -301,8 +301,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			objSphere->SetPosition(position);
 			objSphere2->SetPosition(position2);
-		}
+		}*/
 
+		//‰~‰^“®----------------------------------------------------------
+		/*float m1 = 60;
+		float m2 = 45;*/
+
+		float length = 30.0f;
+		float centerX = position2.x;
+		float centerY = position2.y;
+
+		float rad = angle / time;
+
+		float radius = angle * PI / 180.0f;
+
+		float add_X = cos(radius) * length;
+		float add_Y = sin(radius) * length;
+
+		position.x = centerX + add_X;
+		position.y = centerY + add_Y;
+
+		angle += 5;
+		time ++;
+
+		objSphere->SetPosition(position);
+		objSphere2->SetPosition(position2);
 
 		//XV--------------------------------------------------------
 		particleMan->Update();
@@ -349,13 +372,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		char str[256];
-		sprintf_s(str, "obj1 : %f %f %f", position.x, position.y, position.z);
+		/*char str[256];
+		sprintf_s(str, "obj1 : %f %f rad : %f", position.x, position.y, rad);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		char str3[256];
 		sprintf_s(str, "obj2 : %f %f %f", position2.x, position2.y, position2.z);
-		debugText.Print(str, 10, 30, 1.0f);
+		debugText.Print(str, 10, 30, 1.0f);*/
 
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
