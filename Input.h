@@ -4,7 +4,7 @@
 #include<dinput.h>
 #include"WinApp.h"
 
-class Input 
+class Input final
 {
 public:
 	//マウス
@@ -23,6 +23,18 @@ public:
 private:
 	//WindowAPI
 	WinApp* winApp = nullptr;
+private:
+	//コンストラクタ
+	Input();
+	//デストラクタ
+	~Input();
+public:
+	//コピーコンストラクタを無効
+	Input(const Input& obj) = delete;
+	//代入演算子を無効
+	Input& operator=(const Input& obj) = delete;
+	//インスタンスにアクセス
+	static Input* GetInstance();
 public://メンバ関数
 	//初期化
 	void Initialize(WinApp *winApp);

@@ -248,7 +248,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	// 描画コマンド
 	cmdList->DrawInstanced(4, 1, 0, 0);
 
-	//if (input->TriggerKey(DIK_0))
+	//if (Input::GetInstance()->TriggerKey(DIK_0))
 	//{
 	//	//デスクリプタヒープにSRV作成
 	//	static int tex = 0;

@@ -71,9 +71,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon->Initialize(winApp);
 
 	//ポインタ置き場
-	Input* input = nullptr;
-	//入力の初期化
-	input = new Input();
+	Input* input = Input::GetInstance();
 	input->Initialize(winApp);
 	input->MouseInitialize(winApp);
 
