@@ -94,6 +94,12 @@
     <Filter Include="リソース ファイル\PostEffect">
       <UniqueIdentifier>{873ad512-5698-4fe1-b04d-458cbaa0e42d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameScene">
+      <UniqueIdentifier>{edd20c44-7ee3-45ad-9708-1b279d631390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Light">
+      <UniqueIdentifier>{22ff1854-ecf7-433b-9cdd-cc44e00ecb5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -152,6 +158,12 @@
     </ClCompile>
     <ClCompile Include="PostEffect.cpp">
       <Filter>ソース ファイル\2d\ソース</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>ソース ファイル\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソース ファイル\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +281,12 @@
     </ClInclude>
     <ClInclude Include="PostEffect.h">
       <Filter>ソース ファイル\2d\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>ソース ファイル\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ソース ファイル\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

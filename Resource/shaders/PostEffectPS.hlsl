@@ -6,8 +6,17 @@ SamplerState smp : register(s0);		//0番スロットに設定されたサンプラー
 
 float4 main(VSOutput input) : SV_TARGET
 {
-	float4 colortex0 = tex0.Sample(smp, input.uv);
+	//縞々
+	/*float4 colortex0 = tex0.Sample(smp, input.uv);
 	float4 colortex1 = tex1.Sample(smp, input.uv);
+
+	float4 color = colortex0;
+	if (fmod(input.uv.y, 0.1f) < 0.05f)
+	{
+		color = colortex1;
+	}
+
+	return float4(color.rbg, 1);*/
 
 	//ぼかし
 	//const float window_width = 1280;
@@ -21,15 +30,6 @@ float4 main(VSOutput input) : SV_TARGET
 	//		colortex0 += tex0.Sample(smp, input.uv + float2(u * x, v * y));
 	//}
 
-	float4 color = colortex0;
-	if (fmod(input.uv.y, 0.1f) < 0.05f)
-	{
-		color = colortex1;
-	}
-
-	return float4(color.rbg, 1);
-	
-
 	//return float4(color.rbg / float(11 * 11), 1);
 
 	//u値ずらし
@@ -41,4 +41,6 @@ float4 main(VSOutput input) : SV_TARGET
 	//return float4(color - texcolor.rgb, 1);
 	//明度変更
 	//return float4(texcolor.rbg * 2.0f, 1);
+
+	return tex0.Sample(smp, input.uv);
 }

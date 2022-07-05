@@ -35,6 +35,7 @@ std::vector<Object3d::VertexPosNormalUv> Object3d::vertices;
 std::vector<unsigned short> Object3d::indices;
 Object3d::Material Object3d::material;
 Camera* Object3d::camera = nullptr;
+Light* Object3d::light = nullptr;
 
 Object3d::~Object3d()
 {
@@ -356,6 +357,9 @@ void Object3d::Draw()
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
+	//ライト描画
+	light->Draw(cmdList, 3);
+
 	object3dModel->Draw(cmdList, 1);
 }
 

@@ -8,6 +8,7 @@
 #include"Object3dModel.h"
 #include"CollisionInfo.h"
 #include "Camera.h"
+#include"Light.h"
 
 class BaseCollider;
 
@@ -111,6 +112,12 @@ public: // 静的メンバ関数
 	/// <returns></returns>
 	static Object3d* Create();
 
+	/// <summary>
+	/// ライトのセット
+	/// </summary>
+	/// <param name="light">ライト</param>
+	static void SetLight(Light* light) { Object3d::light = light; }
+
 
 private: // 静的メンバ変数
 	// デバイス
@@ -156,6 +163,8 @@ private: // 静的メンバ変数
 	static Material material;
 	// カメラ
 	static Camera* camera;
+	//ライト
+	static Light* light;
 
 private:// 静的メンバ関数
 

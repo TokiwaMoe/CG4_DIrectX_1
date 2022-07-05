@@ -30,6 +30,7 @@
 #include"FbxLoader.h"
 #include"FbxObject3d.h"
 #include"PostEffect.h"
+#include"Light.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -107,7 +108,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objSphere->SetPosition({ +1,1,0 });
 	objSphere2->SetPosition({ -1,1,0 });
 	// カメラ注視点をセット
-	camera->SetTarget({ 0, 2.5f, 0 });
+	camera->SetTarget({ 0, 1, 0 });
 	camera->SetDistance(8.0f);
 
 	FbxModel* model1 = nullptr;
@@ -159,6 +160,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	audio = new Audio;
 	audio->Initialize();
 
+	Light::StaticInitialize(dxCommon->GetDev());
+	Light* light = nullptr;
+	//ライト生成
+	light = Light::Create();
+	//ライト色を設定
+	light->SetLightColor({ 1,1,1 });
+	//3Dオブジェクトにライトをセット
+	Object3d::SetLight(light);
+
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
 
@@ -174,6 +184,47 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//マウス座標
 		POINT mousePos;
 		GetCursorPos(&mousePos);
+
+		//audio->PlayWave("Resources/Alarm01.wav");
+	//オブジェクトの回転
+		{
+			/*XMFLOAT3 rot = objSphere->GetRotation();
+			rot.y += 1.0f;
+			objSphere->SetRotation(rot);
+			objSphere2->SetRotation(rot);*/
+		}
+
+		{
+			//光線方向初期化
+			static XMVECTOR lightDir = { 0,1,5,0 };
+
+			if (input->PushKey(DIK_W)) { lightDir.m128_f32[1] += 1.0f; }
+			else if (input->PushKey(DIK_S)) { lightDir.m128_f32[1] -= 1.0f; }
+			if (input->PushKey(DIK_D)) { lightDir.m128_f32[0] += 1.0f; }
+			else if (input->PushKey(DIK_A)) { lightDir.m128_f32[0] -= 1.0f; }
+
+			light->SetLightDir(lightDir);
+
+			std::ostringstream debugstr;
+			debugstr << "lightDirFactor("
+				<< std::fixed << std::setprecision(2)
+				<< lightDir.m128_f32[0] << ","
+				<< lightDir.m128_f32[1] << ","
+				<< lightDir.m128_f32[2] << ")",
+				debugText.Print(debugstr.str(), 50, 50, 1.0f);
+
+			debugstr.str("");
+			debugstr.clear();
+
+			const XMFLOAT3& cameraPos = camera->GetEye();
+			debugstr << "cameraPo("
+				<< std::fixed << std::setprecision(2)
+				<< cameraPos.x << ","
+				<< cameraPos.y << ","
+				<< cameraPos.z << ")",
+				debugText.Print(debugstr.str(), 50, 70, 1.0f);
+		}
+		
 
 		for (int i = 0; i < 10; i++) {
 			// X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
@@ -206,9 +257,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			<< cameraPos.y << ","
 			<< cameraPos.z << ")",
 			debugText.Print(debugstr.str(), 50, 70, 1.0f);
+
 		camera->Update();
 		particleMan->Update();
-
+		light->Update();
 		objSkydome->Update();
 		objGround->Update();
 		objFighter->Update();
@@ -218,15 +270,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//background->SetColor({ 0,0,0,1 });
 		background->Update();
-		
-
-		//// ４．描画コマンドここから
-
-		//dxCommon->GetCmdList()->RSSetViewports(1, &CD3DX12_VIEWPORT(0.0f, 0.0f, WinApp::window_width, WinApp::window_height));
-
-		//dxCommon->GetCmdList()->RSSetScissorRects(1, &CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height));
-
-		//dxCommon->GetCmdList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		postEffect->PreDrawScene(dxCommon->GetCmdList());
 #pragma region 背景スプライト描画
@@ -242,17 +285,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D描画
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		/*objSkydome->Draw();
+		objSkydome->Draw();
 		objGround->Draw();
-		objFighter->Draw();
+		//objFighter->Draw();
 		objSphere->Draw();
-		objSphere2->Draw();*/
+		objSphere2->Draw();
 		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
 
 		// パーティクルの描画
-		particleMan->Draw(dxCommon->GetCmdList());
+		//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
 
 #pragma region 前景スプライト描画

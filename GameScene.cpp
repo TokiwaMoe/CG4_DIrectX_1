@@ -49,7 +49,6 @@ void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxCommon, Input* input
 #pragma endregion
 
 #pragma region ƒTƒEƒ“ƒh
-	Audio* audio = nullptr;
 	audio = new Audio;
 	audio->Initialize();
 #pragma endregion

@@ -31,12 +31,13 @@ public:
 	void Delete();
 
 private:
+	WinApp* winApp = nullptr;
 	DirectXCommon* dxCommon = nullptr;
-	Input* input = Input::GetInstance();
+	Input* input;
 	ParticleManager* particleMan = nullptr;
 	Audio* audio = nullptr;
 	DebugText debugText;
-	WinApp* winApp = nullptr;
+	DebugCamera* camera = nullptr;
 
 	int debugTextTexNumber = 0;
 };
