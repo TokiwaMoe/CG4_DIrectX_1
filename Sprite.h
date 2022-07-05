@@ -68,13 +68,15 @@ public:
 
 	void Initialize();
 
+	void Update();
+
 	void SetPosition(XMFLOAT2 position);
 
 	void SetRotation(float rotation);
 
 	void SetSize(XMFLOAT2 size);
 
-	void SetLeftTop(XMFLOAT2 leftTop);
+	void SetTexBase(XMFLOAT2 texBase);
 
 	void SetAnchorPoint(XMFLOAT2 anchorpoint);
 
@@ -83,6 +85,8 @@ public:
 	void SetIsFlipY(bool isFlipY);
 
 	void SetTextureRect(XMFLOAT2 texBase, XMFLOAT2 texSize);
+
+	void SetColor(XMFLOAT4 color);
 
 	void Draw();
 

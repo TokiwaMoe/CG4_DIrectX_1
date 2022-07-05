@@ -216,6 +216,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere2->Update();
 		object1->Update();
 
+		//background->SetColor({ 0,0,0,1 });
+		background->Update();
 		
 
 		//// ４．描画コマンドここから
@@ -250,7 +252,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Object3d::PostDraw();
 
 		// パーティクルの描画
-		//particleMan->Draw(dxCommon->GetCmdList());
+		particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
 
 #pragma region 前景スプライト描画
@@ -271,6 +273,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion
 		dxCommon->PreDraw();
 		postEffect->Draw(dxCommon->GetCmdList());
+		
 		// ４．描画コマンドここまで
 		dxCommon->PostDraw();
 
