@@ -242,11 +242,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D•`‰æ
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		/*objSkydome->Draw();
+		objSkydome->Draw();
 		objGround->Draw();
 		objFighter->Draw();
 		objSphere->Draw();
-		objSphere2->Draw();*/
+		objSphere2->Draw();
 		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
@@ -260,9 +260,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		/*char str[256];
+		char str[256];
 		sprintf_s(str, "60");
-		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);*/
+		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 
