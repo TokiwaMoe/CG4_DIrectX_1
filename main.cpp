@@ -215,14 +215,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			debugstr.str("");
 			debugstr.clear();
-
-			const XMFLOAT3& cameraPos = camera->GetEye();
-			debugstr << "cameraPo("
-				<< std::fixed << std::setprecision(2)
-				<< cameraPos.x << ","
-				<< cameraPos.y << ","
-				<< cameraPos.z << ")",
-				debugText.Print(debugstr.str(), 50, 70, 1.0f);
 		}
 		
 
