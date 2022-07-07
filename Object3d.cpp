@@ -21,7 +21,7 @@ const float Object3d::prizmHeight = 8.0f;			// 柱の高さ
 ID3D12Device* Object3d::device = nullptr;
 ID3D12GraphicsCommandList* Object3d::cmdList = nullptr;
 ComPtr<ID3D12RootSignature> Object3d::rootsignature;
-ComPtr<ID3D12PipelineState> Object3d::pipelinestate;
+//ComPtr<ID3D12PipelineState> Object3d::pipelinestate;
 //ComPtr<ID3D12Resource> Object3d::vertBuff;
 //ComPtr<ID3D12Resource> Object3d::indexBuff;
 XMMATRIX Object3d::matView{};
@@ -55,9 +55,6 @@ bool Object3d::StaticInitialize(ID3D12Device* device, Camera* camera)
 
 	Object3d::device = device;
 	Object3d::camera = camera;
-
-	// パイプライン初期化
-	InitializeGraphicsPipeline();
 
 	//モデルにデバイスをセット
 	Object3dModel::SetDevice(device);
@@ -105,7 +102,7 @@ Object3d* Object3d::Create()
 	return object3d;
 }
 
-bool Object3d::InitializeGraphicsPipeline()
+bool Object3d::InitializeGraphicsPipeline(LPCWSTR vs, LPCWSTR ps)
 {
 	HRESULT result = S_FALSE;
 	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
@@ -114,7 +111,7 @@ bool Object3d::InitializeGraphicsPipeline()
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resource/shaders/OBJVS_Light.hlsl",	// シェーダファイル名
+		vs,	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -137,7 +134,7 @@ bool Object3d::InitializeGraphicsPipeline()
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resource/shaders/OBJPS_Light.hlsl",	// シェーダファイル名
+		ps,	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0",	// エントリーポイント名、シェーダーモデル指定

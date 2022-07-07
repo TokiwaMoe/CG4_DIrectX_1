@@ -128,8 +128,7 @@ private: // 静的メンバ変数
 	static ID3D12GraphicsCommandList* cmdList;
 	// ルートシグネチャ
 	static ComPtr<ID3D12RootSignature> rootsignature;
-	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	
 	// デスクリプタヒープ
 	//static ComPtr<ID3D12DescriptorHeap> descHeap;
 
@@ -168,11 +167,7 @@ private: // 静的メンバ変数
 
 private:// 静的メンバ関数
 
-	/// <summary>
-	/// グラフィックパイプライン生成
-	/// </summary>
-	/// <returns>成否</returns>
-	static bool InitializeGraphicsPipeline();
+	
 
 	/// <summary>
 	/// ビュー行列を更新
@@ -196,6 +191,12 @@ public: // メンバ関数
 	///</summary>
 	/// <returns>成否</returns>
 	virtual bool Initialize();
+
+	/// <summary>
+	/// グラフィックパイプライン生成
+	/// </summary>
+	/// <returns>成否</returns>
+	bool InitializeGraphicsPipeline(LPCWSTR vs, LPCWSTR ps);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -271,5 +272,10 @@ protected:// メンバ変数
 	BaseCollider* collider = nullptr;
 	// ビルボード
 	bool isBillboard = false;
+
+public:
+		// パイプラインステートオブジェクト
+		ComPtr<ID3D12PipelineState> pipelinestate;
+
 };
 

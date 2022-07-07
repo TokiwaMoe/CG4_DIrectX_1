@@ -100,6 +100,12 @@
     <Filter Include="ソース ファイル\Light">
       <UniqueIdentifier>{22ff1854-ecf7-433b-9cdd-cc44e00ecb5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\OBJ\light">
+      <UniqueIdentifier>{58aaa990-1aff-4f0e-a672-7b5001b673de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\OBJ\toon">
+      <UniqueIdentifier>{2a9cd41f-c101-4df0-a319-868ed48a44f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,10 +207,16 @@
       <Filter>リソース ファイル\PostEffect</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\OBJPS_Light.hlsl">
-      <Filter>リソース ファイル\OBJ</Filter>
+      <Filter>リソース ファイル\OBJ\light</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\OBJVS_Light.hlsl">
-      <Filter>リソース ファイル\OBJ</Filter>
+      <Filter>リソース ファイル\OBJ\light</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\ToonPS.hlsl">
+      <Filter>リソース ファイル\OBJ\toon</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\ToonVS.hlsl">
+      <Filter>リソース ファイル\OBJ\toon</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +236,10 @@
       <Filter>リソース ファイル\PostEffect</Filter>
     </None>
     <None Include="Resource\shaders\OBJ_Light.hlsli">
-      <Filter>リソース ファイル\OBJ</Filter>
+      <Filter>リソース ファイル\OBJ\light</Filter>
+    </None>
+    <None Include="Resource\shaders\Toon.hlsli">
+      <Filter>リソース ファイル\OBJ\toon</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

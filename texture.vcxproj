@@ -265,6 +265,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="Resource\shaders\ToonPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\ToonVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\shaders\FBX.hlsli" />
@@ -273,6 +281,7 @@
     <None Include="Resource\shaders\Particle.hlsli" />
     <None Include="Resource\shaders\PostEffect.hlsli" />
     <None Include="Resource\shaders\Sprite.hlsli" />
+    <None Include="Resource\shaders\Toon.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Audio.h" />

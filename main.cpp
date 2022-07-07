@@ -93,10 +93,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Object3dModel* Object3dModelSphere2 = Object3dModel::LoadFromOBJ("sphere");
 
 	Object3d* objSkydome = Object3d::Create();
+	objSkydome->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
 	Object3d* objGround = Object3d::Create();
+	objGround->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
 	Object3d* objFighter = Object3d::Create();
+	objFighter->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
 	Object3d* objSphere = Object3d::Create();
+	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
 	Object3d* objSphere2 = Object3d::Create();
+	objSphere2->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
 
 	objSkydome->SetObject3dModel(Object3dModelSkydome);
 	objGround->SetObject3dModel(Object3dModelGround);
@@ -105,10 +110,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objSphere2->SetObject3dModel(Object3dModelSphere2);
 
 	objFighter->SetPosition({ +1,0,0 });
-	objSphere->SetPosition({ +1,1,0 });
-	objSphere2->SetPosition({ -1,1,0 });
+	objSphere->SetPosition({ +1,0,0 });
+	objSphere2->SetPosition({ -10,0,0 });
+	objSkydome->SetScale({ 3,3,3 });
 	// カメラ注視点をセット
-	camera->SetTarget({ 0, 1, 0 });
+	camera->SetTarget({ 0, 2.5f, 0 });
 	camera->SetDistance(8.0f);
 
 	FbxModel* model1 = nullptr;
@@ -165,7 +171,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ライト生成
 	light = Light::Create();
 	//ライト色を設定
-	light->SetLightColor({ 1,1,1 });
+	light->SetLightColor({ 1,1,0 });
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(light);
 
@@ -204,17 +210,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			else if (input->PushKey(DIK_A)) { lightDir.m128_f32[0] -= 1.0f; }
 
 			light->SetLightDir(lightDir);
-
-			std::ostringstream debugstr;
-			debugstr << "lightDirFactor("
-				<< std::fixed << std::setprecision(2)
-				<< lightDir.m128_f32[0] << ","
-				<< lightDir.m128_f32[1] << ","
-				<< lightDir.m128_f32[2] << ")",
-				debugText.Print(debugstr.str(), 50, 50, 1.0f);
-
-			debugstr.str("");
-			debugstr.clear();
 		}
 		
 
@@ -239,16 +234,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			// 追加
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		}
-
-		std::ostringstream debugstr;
-
-		const XMFLOAT3& cameraPos = camera->GetEye();
-		debugstr << "cameraPo("
-			<< std::fixed << std::setprecision(2)
-			<< cameraPos.x << ","
-			<< cameraPos.y << ","
-			<< cameraPos.z << ")",
-			debugText.Print(debugstr.str(), 50, 70, 1.0f);
 
 		camera->Update();
 		particleMan->Update();
@@ -279,7 +264,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		objSkydome->Draw();
 		objGround->Draw();
-		//objFighter->Draw();
+		objFighter->Draw();
 		objSphere->Draw();
 		objSphere2->Draw();
 		object1->Draw(dxCommon->GetCmdList());
@@ -287,7 +272,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Object3d::PostDraw();
 
 		// パーティクルの描画
-		particleMan->Draw(dxCommon->GetCmdList());
+		//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
 
 #pragma region 前景スプライト描画
