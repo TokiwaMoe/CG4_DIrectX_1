@@ -24,6 +24,7 @@ public:
 	struct ConstBufferData {
 		XMFLOAT4 color;
 		XMMATRIX mat;
+		float time;
 	};
 
 public:
@@ -121,6 +122,8 @@ protected:
 	XMFLOAT2 texBase = { 0, 0 };
 	// テクスチャ幅、高さ
 	XMFLOAT2 texSize = { 100.0f, 100.0f };
+
+	float _Time = 0;
 
 private: // メンバ関数
 	/// <summary>

@@ -25,7 +25,7 @@ PostEffect::PostEffect(Input* input)
 	this->input = input;
 }
 
-void PostEffect::Initialize()
+void PostEffect::Initialize(LPCWSTR vs, LPCWSTR ps)
 {
 	HRESULT result;
 
@@ -195,7 +195,7 @@ void PostEffect::Initialize()
 		descHeapDSV->GetCPUDescriptorHandleForHeapStart());
 
 	//パイプライン生成
-	CreateGraphicsPipelineState();
+	CreateGraphicsPipelineState(vs, ps);
 }
 
 void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -205,12 +205,14 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	this->matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
 	this->matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
 
+	_Time += 0.1;
 	// 定数バッファにデータ転送
 	ConstBufferData* constMap = nullptr;
 	HRESULT result = this->constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 		constMap->color = this->color;
-		constMap->mat = XMMatrixIdentity();	// 行列の合成	
+		constMap->mat = XMMatrixIdentity();	// 行列の合成
+		constMap->time = _Time;
 		this->constBuff->Unmap(0, nullptr);
 	}
 
@@ -327,7 +329,7 @@ void PostEffect::PostDrawScene(ID3D12GraphicsCommandList* cmdList)
 	
 }
 
-void PostEffect::CreateGraphicsPipelineState()
+void PostEffect::CreateGraphicsPipelineState(LPCWSTR vs, LPCWSTR ps)
 {
 	// デスクリプタサイズを取得
 	descriptorHandleIncrementSize = dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
@@ -339,7 +341,7 @@ void PostEffect::CreateGraphicsPipelineState()
 
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resource/shaders/PostEffectVS.hlsl",	// シェーダファイル名
+		vs,	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "vs_5_0",	// エントリーポイント名、シェーダーモデル指定
@@ -362,7 +364,7 @@ void PostEffect::CreateGraphicsPipelineState()
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resource/shaders/PostEffectPS.hlsl",	// シェーダファイル名
+		ps,	// シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0",	// エントリーポイント名、シェーダーモデル指定

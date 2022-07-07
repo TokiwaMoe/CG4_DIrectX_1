@@ -369,6 +369,7 @@ void Sprite::Initialize()
 	if (SUCCEEDED(result)) {
 		constMap->color = color;
 		constMap->mat = matProjection;
+		constMap->time = 0;
 		constBuff->Unmap(0, nullptr);
 	}
 }
@@ -380,12 +381,15 @@ void Sprite::Update()
 	this->matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
 	this->matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
 
+	_Time++;
+
 	// 定数バッファにデータ転送
 	ConstBufferData* constMap = nullptr;
 	HRESULT result = this->constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 		constMap->color = this->color;
 		constMap->mat = this->matWorld * matProjection;	// 行列の合成	
+		constMap->time = _Time;
 		this->constBuff->Unmap(0, nullptr);
 	}
 }

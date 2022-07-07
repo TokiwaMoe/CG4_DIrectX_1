@@ -18,7 +18,7 @@ public:
     ///<summary>
     ///初期化
     ///</summary>
-    void Initialize();
+    void Initialize(LPCWSTR vs, LPCWSTR ps);
 
     ///<summary>
     ///描画コマンドの発行
@@ -41,7 +41,7 @@ public:
     /// <summary>
     /// パイプライン生成
     /// </summary>
-    void CreateGraphicsPipelineState();
+    void CreateGraphicsPipelineState(LPCWSTR vs, LPCWSTR ps);
 
 protected:
     //テクスチャバッファ
@@ -54,15 +54,19 @@ protected:
     ComPtr<ID3D12DescriptorHeap> descHeapRTV;
     //DSV用デスクリプタヒープ
     ComPtr<ID3D12DescriptorHeap> descHeapDSV;
-    //グラフィックパイプライン
-    ComPtr<ID3D12PipelineState> pipelineState;
     //ルートシグネチャ
     ComPtr<ID3D12RootSignature> rootSignature;
+
+public:
+    //グラフィックパイプライン
+    ComPtr<ID3D12PipelineState> pipelineState;
 
 private:
     //画面クリアカラー
     static const float clearColor[4];
 
     Input* input = nullptr;
+
+    float _Time = 0;
 };
 

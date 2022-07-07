@@ -1,9 +1,6 @@
 cbuffer cbuff0 : register(b0)
 {
-	float4 color;
-	matrix mat;
-	float time;
-}
+};
 
 struct VSOutput {
 	float4 svpos : SV_POSITION;	//システム用頂点座標
