@@ -295,7 +295,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Object3d::PostDraw();
 
 		// パーティクルの描画
-		//particleMan->Draw(dxCommon->GetCmdList());
+		particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
 
 #pragma region 前景スプライト描画
