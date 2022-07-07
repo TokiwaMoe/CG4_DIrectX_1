@@ -22,6 +22,22 @@ public: //静的メンバ関数
 	void CreateBuffers();
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 	
+	/// <summary>
+	/// OBJファイルからメッシュ生成
+	/// </summary>
+	/// <param name="modelname">モデル名</param>
+	/// <param name="modelname">エッジ平滑化フラグ</param>
+	//static Model* CreateFromOBJ(const std::string& modelname);
+	static Object3dModel* CreateFromOBJ(const std::string& madelname, bool smoothing = false);
+
+public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="modelname">モデル名</param>
+	/// <param name="modelname">エッジ平滑化フラグ</param>
+	void Initialize(const std::string& modelname, bool smoothing);
+
 private:
 	bool InitializeDescriptorHeap();
 	//マテリアル読み込み
