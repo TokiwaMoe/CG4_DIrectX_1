@@ -118,11 +118,20 @@
     <Filter Include="リソース ファイル\PostEffect\negapozi">
       <UniqueIdentifier>{3771f96c-e3f0-4616-bc19-1516e07097f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\PostEffect\mosaic_square">
-      <UniqueIdentifier>{9dcb87f6-676b-4b9a-91b7-65d4755fbdee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\PostEffect\noize_2">
       <UniqueIdentifier>{cdae9d75-cd5f-40b9-b8a1-345ddcdfa0a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\Whitenoize">
+      <UniqueIdentifier>{0c3d3039-0c96-4850-af66-070c363a63ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\mosaic">
+      <UniqueIdentifier>{9dcb87f6-676b-4b9a-91b7-65d4755fbdee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\monochrome">
+      <UniqueIdentifier>{e7c4033d-b178-470c-bf29-b8e22476b117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\Vignette">
+      <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -260,17 +269,35 @@
     <FxCompile Include="Resource\shaders\negapoziVS.hlsl">
       <Filter>リソース ファイル\PostEffect\negapozi</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\mosaic_squarePS.hlsl">
-      <Filter>リソース ファイル\PostEffect\mosaic_square</Filter>
+    <FxCompile Include="Resource\shaders\mosaicPS.hlsl">
+      <Filter>リソース ファイル\PostEffect\mosaic</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\mosaic_squareVS.hlsl">
-      <Filter>リソース ファイル\PostEffect\mosaic_square</Filter>
+    <FxCompile Include="Resource\shaders\mosaicVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\mosaic</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\noize_2PS.hlsl">
       <Filter>リソース ファイル\PostEffect\noize_2</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\noize_2VS.hlsl">
       <Filter>リソース ファイル\PostEffect\noize_2</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\WhiteNoizePS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Whitenoize</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\WhiteNoizeVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Whitenoize</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\monochromePS.hlsl">
+      <Filter>リソース ファイル\PostEffect\monochrome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\monochromeVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\monochrome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\VignettePS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Vignette</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\VignetteVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Vignette</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,11 +334,20 @@
     <None Include="Resource\shaders\negapozi.hlsli">
       <Filter>リソース ファイル\PostEffect\negapozi</Filter>
     </None>
-    <None Include="Resource\shaders\mosaic_square.hlsli">
-      <Filter>リソース ファイル\PostEffect\mosaic_square</Filter>
+    <None Include="Resource\shaders\mosaic.hlsli">
+      <Filter>リソース ファイル\PostEffect\mosaic</Filter>
     </None>
     <None Include="Resource\shaders\noize_2.hlsli">
       <Filter>リソース ファイル\PostEffect\noize_2</Filter>
+    </None>
+    <None Include="Resource\shaders\WhiteNoize.hlsli">
+      <Filter>リソース ファイル\PostEffect\Whitenoize</Filter>
+    </None>
+    <None Include="Resource\shaders\monochrome.hlsli">
+      <Filter>リソース ファイル\PostEffect\monochrome</Filter>
+    </None>
+    <None Include="Resource\shaders\Vignette.hlsli">
+      <Filter>リソース ファイル\PostEffect\Vignette</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

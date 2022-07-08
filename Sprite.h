@@ -25,6 +25,7 @@ public:
 		XMFLOAT4 color;
 		XMMATRIX mat;
 		float time;
+
 	};
 
 public:

@@ -21,10 +21,11 @@ float4 main(VSOutput input) : SV_TARGET
 	
 	float2 smpPoint = input.uv;
 	float4 Tex = tex0.Sample(smp, smpPoint);
+	//エフェクトがかからない部分を作るための計算
 	float sinv = sin(input.uv.y * 2 + time2 * -0.1);
 	float steped = step(0.99, sinv * sinv);
+	//走査線
 	Tex.rgb -= (1 - steped) * abs(sin(input.uv.y * 50.0 + time2 * 1.0)) * 0.05;
 	Tex.rgb -= (1 - steped) * abs(sin(input.uv.y * 100.0 + time2 * 2.0)) * 0.08;
-	Tex.rgb += steped * 0.1;
 	return Tex;
 }

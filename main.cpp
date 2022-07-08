@@ -251,9 +251,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//background->SetColor({ 0,0,0,1 });
 		background->Update();
 
-		if (input->TriggerKey(DIK_0))
+		if (input->TriggerKey(DIK_RIGHT))
 		{
 			postEffectFlag++;
+		}
+		if (input->TriggerKey(DIK_LEFT))
+		{
+			postEffectFlag--;
 		}
 
 		switch (postEffectFlag)
@@ -265,16 +269,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			postEffect->Initialize(L"Resource/shaders/sepiaVS.hlsl", L"Resource/shaders/sepiaPS.hlsl");
 			break;
 		case 3:
-			postEffect->Initialize(L"Resource/shaders/noizeVS.hlsl", L"Resource/shaders/noizePS.hlsl");
+			postEffect->Initialize(L"Resource/shaders/monochromeVS.hlsl", L"Resource/shaders/monochromePS.hlsl");
 			break;
 		case 4:
 			postEffect->Initialize(L"Resource/shaders/negapoziVS.hlsl", L"Resource/shaders/negapoziPS.hlsl");
 			break;
 		case 5:
-			postEffect->Initialize(L"Resource/shaders/mosaic_squareVS.hlsl", L"Resource/shaders/mosaic_squarePS.hlsl");
+			postEffect->Initialize(L"Resource/shaders/noizeVS.hlsl", L"Resource/shaders/noizePS.hlsl");
 			break;
 		case 6:
 			postEffect->Initialize(L"Resource/shaders/noize_2VS.hlsl", L"Resource/shaders/noize_2PS.hlsl");
+			break;
+		case 7:
+			postEffect->Initialize(L"Resource/shaders/WhiteNoizeVS.hlsl", L"Resource/shaders/WhiteNoizePS.hlsl");
+			break;
+		case 8:
+			postEffect->Initialize(L"Resource/shaders/mosaicVS.hlsl", L"Resource/shaders/mosaicPS.hlsl");
+			break;
+		case 9:
+			postEffect->Initialize(L"Resource/shaders/VignetteVS.hlsl", L"Resource/shaders/VignettePS.hlsl");
 			break;
 		default:
 			postEffect->Initialize(L"Resource/shaders/PostEffectVS.hlsl", L"Resource/shaders/PostEffectPS.hlsl");
