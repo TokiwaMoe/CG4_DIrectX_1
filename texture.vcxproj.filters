@@ -133,6 +133,15 @@
     <Filter Include="リソース ファイル\PostEffect\Vignette">
       <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\PostEffect\Gaussian">
+      <UniqueIdentifier>{2453b25f-73ab-42f9-8100-ae7dffeeab6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\Depth">
+      <UniqueIdentifier>{902f2754-c57e-4b23-aca2-3cc77cb4703f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\bloom">
+      <UniqueIdentifier>{4524f7ff-e948-4290-86eb-76b9089384e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -299,6 +308,24 @@
     <FxCompile Include="Resource\shaders\VignetteVS.hlsl">
       <Filter>リソース ファイル\PostEffect\Vignette</Filter>
     </FxCompile>
+    <FxCompile Include="Resource\shaders\GaussianVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\GaussianPS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\DepthPS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\DepthVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\Depth</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\bloomPS.hlsl">
+      <Filter>リソース ファイル\PostEffect\bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\BloomVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\bloom</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\shaders\OBJShaderHeader.hlsli">
@@ -348,6 +375,15 @@
     </None>
     <None Include="Resource\shaders\Vignette.hlsli">
       <Filter>リソース ファイル\PostEffect\Vignette</Filter>
+    </None>
+    <None Include="Resource\shaders\Gaussian.hlsli">
+      <Filter>リソース ファイル\PostEffect\Gaussian</Filter>
+    </None>
+    <None Include="Resource\shaders\Depth.hlsli">
+      <Filter>リソース ファイル\PostEffect\Depth</Filter>
+    </None>
+    <None Include="Resource\shaders\bloom.hlsli">
+      <Filter>リソース ファイル\PostEffect\bloom</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

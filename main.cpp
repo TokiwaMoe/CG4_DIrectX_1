@@ -289,6 +289,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		case 9:
 			postEffect->Initialize(L"Resource/shaders/VignetteVS.hlsl", L"Resource/shaders/VignettePS.hlsl");
 			break;
+		case 10:
+			postEffect->Initialize(L"Resource/shaders/GaussianVS.hlsl", L"Resource/shaders/GaussianPS.hlsl");
+			break;
+		case 11:
+			postEffect->Initialize(L"Resource/shaders/DepthVS.hlsl", L"Resource/shaders/DepthPS.hlsl");
+			break;
+		case 12:
+			postEffect->Initialize(L"Resource/shaders/bloomVS.hlsl", L"Resource/shaders/bloomPS.hlsl");
+			break;
 		default:
 			postEffect->Initialize(L"Resource/shaders/PostEffectVS.hlsl", L"Resource/shaders/PostEffectPS.hlsl");
 			postEffectFlag = 0;
