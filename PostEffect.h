@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "Input.h"
+#include "Object3d.h"
 
 class PostEffect :
     public Sprite
@@ -66,6 +67,8 @@ private:
     static const float clearColor[4];
 
     Input* input = nullptr;
+
+    Object3d* obj3d = nullptr;
 
     float _Time = 0;
 };

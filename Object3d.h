@@ -259,8 +259,7 @@ protected:// メンバ変数
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 0,0.0,0 };
-	// ローカルワールド変換行列
-	XMMATRIX matWorld;
+	
 	// 親オブジェクト
 	Object3d* parent = nullptr;
 
@@ -276,6 +275,8 @@ protected:// メンバ変数
 public:
 		// パイプラインステートオブジェクト
 		ComPtr<ID3D12PipelineState> pipelinestate;
+		// ローカルワールド変換行列
+		XMMATRIX matWorld;
 
 };
 
