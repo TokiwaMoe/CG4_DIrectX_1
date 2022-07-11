@@ -142,6 +142,9 @@
     <Filter Include="リソース ファイル\PostEffect\bloom">
       <UniqueIdentifier>{4524f7ff-e948-4290-86eb-76b9089384e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{8e1dc549-26fb-4c0b-b97e-368de5137e48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -206,6 +209,9 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Play.cpp">
+      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -455,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>ソース ファイル\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Play.h">
+      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

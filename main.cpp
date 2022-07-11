@@ -31,6 +31,7 @@
 #include"FbxObject3d.h"
 #include"PostEffect.h"
 #include"Light.h"
+#include"Play.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -76,9 +77,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	input->Initialize(winApp);
 	input->MouseInitialize(winApp);
 
-	DebugCamera* camera = nullptr;
+	Camera* camera = nullptr;
 	// カメラ生成
-	camera = new DebugCamera(WinApp::window_width, WinApp::window_height, input);
+	camera = new Camera(WinApp::window_width, WinApp::window_height);
 
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
@@ -88,7 +89,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//3dオブジェクト生成
 	Object3dModel* Object3dModelSkydome = Object3dModel::LoadFromOBJ("skydome");
 	Object3dModel* Object3dModelGround = Object3dModel::LoadFromOBJ("ground");
-	Object3dModel* Object3dModelFighter = Object3dModel::LoadFromOBJ("chr_sword");
 	Object3dModel* Object3dModelSphere = Object3dModel::LoadFromOBJ("sphere");
 	Object3dModel* Object3dModelSphere2 = Object3dModel::LoadFromOBJ("sphere");
 
@@ -96,8 +96,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objSkydome->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
 	Object3d* objGround = Object3d::Create();
 	objGround->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
-	Object3d* objFighter = Object3d::Create();
-	objFighter->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
 	Object3d* objSphere = Object3d::Create();
 	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
 	Object3d* objSphere2 = Object3d::Create();
@@ -105,17 +103,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	objSkydome->SetObject3dModel(Object3dModelSkydome);
 	objGround->SetObject3dModel(Object3dModelGround);
-	objFighter->SetObject3dModel(Object3dModelFighter);
 	objSphere->SetObject3dModel(Object3dModelSphere);
 	objSphere2->SetObject3dModel(Object3dModelSphere2);
 
-	objFighter->SetPosition({ +1,0,0 });
+	XMFLOAT3 playerPosition = { 1,0,0 };
 	objSphere->SetPosition({ +1,0,0 });
 	objSphere2->SetPosition({ -10,0,0 });
 	objSkydome->SetScale({ 3,3,3 });
-	// カメラ注視点をセット
-	camera->SetTarget({ 0, 2.5f, 0 });
-	camera->SetDistance(8.0f);
+	
 
 	FbxModel* model1 = nullptr;
 	FbxObject3d* object1 = nullptr;
@@ -176,8 +171,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(light);
 
-	int postEffectFlag = 0;
+	Play* player = new Play();
+	player->Initialize(dxCommon, input);
+	// カメラ注視点をセット
+	camera->SetTarget({0, 2.5f, 0});
+	camera->SetEye({ 0,1,15 });
 
+	int postEffectFlag = 0;
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
 
@@ -203,17 +203,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			objSphere2->SetRotation(rot);*/
 		}
 
-		{
-			//光線方向初期化
-			static XMVECTOR lightDir = { 0,1,5,0 };
+		//{
+		//	//光線方向初期化
+		//	static XMVECTOR lightDir = { 0,1.0f,5.0f,0 };
 
-			if (input->PushKey(DIK_W)) { lightDir.m128_f32[1] += 1.0f; }
-			else if (input->PushKey(DIK_S)) { lightDir.m128_f32[1] -= 1.0f; }
-			if (input->PushKey(DIK_D)) { lightDir.m128_f32[0] += 1.0f; }
-			else if (input->PushKey(DIK_A)) { lightDir.m128_f32[0] -= 1.0f; }
+		//	if (input->PushKey(DIK_W)) { lightDir.m128_f32[1] += 1.0f; }
+		//	else if (input->PushKey(DIK_S)) { lightDir.m128_f32[1] -= 1.0f; }
+		//	if (input->PushKey(DIK_D)) { lightDir.m128_f32[0] += 1.0f; }
+		//	else if (input->PushKey(DIK_A)) { lightDir.m128_f32[0] -= 1.0f; }
 
-			light->SetLightDir(lightDir);
-		}
+		//	light->SetLightDir(lightDir);
+		//}
 		
 
 		for (int i = 0; i < 10; i++) {
@@ -238,12 +238,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		}
 
+		if (input->PushKey(DIK_W)) {
+			playerPosition.z -= 1;
+			camera->Move({ 0,0,-1 });
+		}
+		if (input->PushKey(DIK_S)) {
+			playerPosition.z += 1;
+			camera->Move({ 0,0,1 });
+		}
+		if (input->PushKey(DIK_A)) {
+			playerPosition.x += 1;
+			camera->Move({ 1,0,0 });
+		}
+		if (input->PushKey(DIK_D)) {
+			playerPosition.x -= 1;
+			camera->Move({ -1,0,0 });
+		}
+
+		object1->SetPosition(playerPosition);
+		
+
+		player->Update(camera);
+
 		camera->Update();
 		particleMan->Update();
 		light->Update();
 		objSkydome->Update();
 		objGround->Update();
-		objFighter->Update();
 		objSphere->Update();
 		objSphere2->Update();
 		object1->Update();
@@ -316,17 +337,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion
 
 #pragma region 3D描画
+		
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
+		player->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
-		objFighter->Draw();
-		objSphere->Draw();
-		objSphere2->Draw();
+		//objFighter->Draw();
+		//objSphere->Draw();
+		//objSphere2->Draw();
 		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
-
+		
 		// パーティクルの描画
 		//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
