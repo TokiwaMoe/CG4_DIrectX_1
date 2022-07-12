@@ -210,7 +210,7 @@
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Play.cpp">
+    <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
@@ -462,7 +462,7 @@
     <ClInclude Include="Light.h">
       <Filter>ソース ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Play.h">
+    <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>

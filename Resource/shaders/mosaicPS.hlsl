@@ -7,7 +7,7 @@ SamplerState smp : register(s0);		//0番スロットに設定されたサンプラー
 float4 main(VSOutput input) : SV_TARGET
 {
 	float density = 50;
-	float col = tex0.Sample(smp, floor(input.uv *  density) / density);
+	float4 col = tex0.Sample(smp, floor(input.uv *  density) / density);
 
 	return col;
 }

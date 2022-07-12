@@ -31,7 +31,7 @@
 #include"FbxObject3d.h"
 #include"PostEffect.h"
 #include"Light.h"
-#include"Play.h"
+#include"Player.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -77,9 +77,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	input->Initialize(winApp);
 	input->MouseInitialize(winApp);
 
-	Camera* camera = nullptr;
+	DebugCamera* camera = nullptr;
 	// カメラ生成
-	camera = new Camera(WinApp::window_width, WinApp::window_height);
+	camera = new DebugCamera(WinApp::window_width, WinApp::window_height, input);
 
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
@@ -167,15 +167,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ライト生成
 	light = Light::Create();
 	//ライト色を設定
-	light->SetLightColor({ 1,1,0 });
+	light->SetLightColor({ 1,1,1 });
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLight(light);
 
-	Play* player = new Play();
-	player->Initialize(input);
+	Player* player = new Player();
+	player->Initialize();
 	// カメラ注視点をセット
 	camera->SetTarget({0, 2.5f, 0});
-	camera->SetEye({ 0,1,15 });
+	camera->SetDistance(8.0f);
 
 	int postEffectFlag = 0;
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
@@ -236,27 +236,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			// 追加
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
-		}/*
-
-		if (input->PushKey(DIK_W)) {
-			playerPosition.z -= 1;
-			camera->Move({ 0,0,-1 });
 		}
-		if (input->PushKey(DIK_S)) {
-			playerPosition.z += 1;
-			camera->Move({ 0,0,1 });
-		}
-		if (input->PushKey(DIK_A)) {
-			playerPosition.x += 1;
-			camera->Move({ 1,0,0 });
-		}
-		if (input->PushKey(DIK_D)) {
-			playerPosition.x -= 1;
-			camera->Move({ -1,0,0 });
-		}*/
-
-		object1->SetPosition(playerPosition);
-		
 
 		player->Update(camera);
 
@@ -344,7 +324,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSkydome->Draw();
 		objGround->Draw();
 		//objFighter->Draw();
-		//objSphere->Draw();
+		objSphere->Draw();
 		//objSphere2->Draw();
 		object1->Draw(dxCommon->GetCmdList());
 
