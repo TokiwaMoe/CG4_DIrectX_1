@@ -14,16 +14,12 @@ class Play {
 public:
 	Play();
 	~Play();
-	void Initialize(DirectXCommon* dxCommon, Input* input);
+	void Initialize(Input* input);
 
-	/// <summary>
-	/// ???t???[??????
-	/// </summary>
 	void Update(Camera* camera);
 
-	/// <summary>
-	/// ?`??
-	/// </summary>
+	void Move();
+
 	void Draw();
 
 	XMFLOAT3& GetPosition() { return position; }
@@ -32,9 +28,6 @@ public:
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* player = nullptr;
-
-private:
-	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
 
 	float speed = 0.5f;
@@ -44,6 +37,6 @@ private:
 	// X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position = { 0,0,0 };
+	XMFLOAT3 position = { 1,0,0 };
 
 };

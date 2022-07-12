@@ -172,7 +172,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Object3d::SetLight(light);
 
 	Play* player = new Play();
-	player->Initialize(dxCommon, input);
+	player->Initialize(input);
 	// カメラ注視点をセット
 	camera->SetTarget({0, 2.5f, 0});
 	camera->SetEye({ 0,1,15 });
@@ -236,7 +236,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			// 追加
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
-		}
+		}/*
 
 		if (input->PushKey(DIK_W)) {
 			playerPosition.z -= 1;
@@ -253,7 +253,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		if (input->PushKey(DIK_D)) {
 			playerPosition.x -= 1;
 			camera->Move({ -1,0,0 });
-		}
+		}*/
 
 		object1->SetPosition(playerPosition);
 		
