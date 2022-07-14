@@ -19,42 +19,84 @@ void Player::Initialize()
 {
 
 	playerModel = Object3dModel::LoadFromOBJ("chr_sword");
-	player = Object3d::Create();
-	player->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+	objPlayer = Object3d::Create();
+	objPlayer->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
-	player->SetObject3dModel(playerModel);
-	player->SetScale({ 0.5,0.5,0.5 });
-
-	speed = 0.5f;
+	objPlayer->SetObject3dModel(playerModel);
+	objPlayer->SetScale({ 0.5,0.5,0.5 });
 	
 }
 
 void Player::Update(Camera *camera)
 {
 	Move(camera);
-	player->Update();
+	Jump();
+	objPlayer->Update();
 }
 
 void Player::Move(Camera* camera)
 {
-	XMVECTOR forvardvec = {1,1,1,1};
+	XMVECTOR forvardvec = {0.1,0.1,0.1,0.1};
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		position.z += forvardvec.m128_f32[2];
+		objPlayer->SetRotation({ 0,0,0 });
 	}
 	if (Input::GetInstance()->PushKey(DIK_S)) {
 		position.z -= forvardvec.m128_f32[2];
+		objPlayer->SetRotation({ 0,180,0 });
 	}
 	if (Input::GetInstance()->PushKey(DIK_A)) {
 		position.x -= forvardvec.m128_f32[0];
+		objPlayer->SetRotation({ 0,90,0 });
 	}
 	if (Input::GetInstance()->PushKey(DIK_D)) {
 		position.x += forvardvec.m128_f32[0];
+		objPlayer->SetRotation({ 0,-90,0 });
 	}
 
-	player->SetPosition(position);
+	objPlayer->SetPosition(position);
+}
+
+void Player::defense()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_1))
+	{
+		defenceFlag = true;
+	}
+}
+
+void Player::Jump()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_2) && jumpFlag == false)
+	{
+		jumpFlag = true;
+	}
+
+	if (jumpFlag == true)
+	{
+		position.y += gravity / 60.0f;
+
+		if (position.y > 5)
+		{
+			gravityFlag = true;
+		}
+	}
+
+	if (gravityFlag == true)
+	{
+		jumpFlag = false;
+		position.y -= gravity / 60.0f;
+
+		if (position.y <= 0)
+		{
+			gravityFlag = false;
+		}
+	}
+
+	
 }
 
 void Player::Draw()
 {
-	player->Draw();
+	objPlayer->Draw();
 }

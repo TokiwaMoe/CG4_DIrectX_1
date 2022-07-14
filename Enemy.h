@@ -1,9 +1,11 @@
-#include <DirectXMath.h>
+#pragma once
 #include"DirectXCommon.h"
 #include"Camera.h"
 #include"Object3d.h"
 #include"Object3dModel.h"
-class Player {
+
+class Enemy
+{
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -11,24 +13,22 @@ class Player {
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
-	Player();
-	~Player();
+	Enemy();
+	~Enemy();
 	void Initialize();
 
-	void Update(Camera* camera);
+	void Update();
 
-	void Move(Camera* camera);
-
-	void defense();
-
-	void Jump();
+	void Move();
 
 	void Draw();
 
 
 public:
-	Object3dModel* playerModel = nullptr;
-	Object3d* objPlayer = nullptr;
+	Object3dModel* enemyModel = nullptr;
+	Object3d* objEnemy = nullptr;
+
+	float speed = 0.5f;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
@@ -36,14 +36,4 @@ public:
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 1,0,0 };
-
-private:
-	//ジャンプ関連の変数
-	bool jumpFlag = false;
-	const float gravity = 9.8;
-	bool gravityFlag = false;
-	//回避関連の変数
-	bool defenceFlag = false;
-	
-
 };

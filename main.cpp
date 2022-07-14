@@ -32,6 +32,7 @@
 #include"PostEffect.h"
 #include"Light.h"
 #include"Player.h"
+#include"Enemy.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -177,6 +178,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	camera->SetTarget({0, 2.5f, 0});
 	camera->SetDistance(8.0f);
 
+	Enemy* enemy = new Enemy();
+	enemy->Initialize();
+
 	int postEffectFlag = 0;
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -238,6 +242,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		}
 
+		enemy->Update();
 		player->Update(camera);
 
 		camera->Update();
@@ -321,6 +326,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
 		player->Draw();
+		enemy->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
 		//objFighter->Draw();
