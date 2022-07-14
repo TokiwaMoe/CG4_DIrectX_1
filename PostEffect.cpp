@@ -7,9 +7,11 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 using namespace DirectX;
+using namespace Microsoft::WRL;
 
 //Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ô						  Red    Blue  Green  Alpha
 const float PostEffect::clearColor[4] = { 0.25f, 0.1f, 0.5f, 0.0f };
+ComPtr<ID3D12DescriptorHeap> PostEffect::descHeap;
 
 PostEffect::PostEffect(Input* input)
 	:Sprite(

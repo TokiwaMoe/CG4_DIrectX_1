@@ -142,7 +142,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DebugText debugText;
 
 	int debugTextTexNumber = 0;
-	Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfont.png");
+	if (!Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfont.png")) {
+		assert(0);
+	}
 	Sprite::LoadTexture(1, L"Resource/Back.png");
 
 	debugText.Initialize(debugTextTexNumber);
@@ -254,7 +256,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		object1->Update();
 
 		//background->SetColor({ 0,0,0,1 });
-		background->Update();
 
 		if (input->TriggerKey(DIK_RIGHT))
 		{
@@ -335,7 +336,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 背景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		background->Draw();
+		//background->Draw();
 
 		Sprite::PostDraw();
 		//深度バッファクリア
@@ -348,8 +349,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
 		char str[256];
-		sprintf_s(str, "60");
-		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);
+		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
+		debugText.Print(str, 0, 10, 1.0f);
+
+		char str2[256];
+		sprintf_s(str2, "time : %f", player->time);
+		debugText.Print(str2, 0, 25, 1.0f);
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 #pragma endregion

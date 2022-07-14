@@ -47,11 +47,11 @@ void Player::Move(Camera* camera)
 	}
 	if (Input::GetInstance()->PushKey(DIK_A)) {
 		position.x -= forvardvec.m128_f32[0];
-		objPlayer->SetRotation({ 0,90,0 });
+		objPlayer->SetRotation({ 0,-90,0 });
 	}
 	if (Input::GetInstance()->PushKey(DIK_D)) {
 		position.x += forvardvec.m128_f32[0];
-		objPlayer->SetRotation({ 0,-90,0 });
+		objPlayer->SetRotation({ 0,90,0 });
 	}
 
 	objPlayer->SetPosition(position);
@@ -63,41 +63,41 @@ void Player::defense()
 	{
 		defenceFlag = true;
 	}
+
+	if (defenceFlag == true)
+	{
+		XMFLOAT3 oldPos = objPlayer->GetPosition();
+
+	}
 }
 
 void Player::Jump()
 {
 
-	float dy = speed * time;
-	float dx = speed * time;
-	float g = k * speed / m;
-	float vx = dx * cos((PI / 180) * angle);
-	float vy = dy * sin((PI / 180) * angle) - 0.5 * (g * (time * time));
-	float vy2 = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (time * time));
-
-	time += 0.1;
-
 	if (Input::GetInstance()->TriggerKey(DIK_2) && jumpFlag == false)
 	{
-		position.x = vx;
-		position.y = vy;
+		jumpFlag = true;
 	}
 
 	if (jumpFlag == true)
 	{
-		
-	}/*
+		position.y += 0.5f;
+		if (position.y >= 4)
+		{
+			gravityFlag = true;
+		}
+	}
 
 	if (gravityFlag == true)
 	{
 		jumpFlag = false;
 		position.y -= gravity / 60.0f;
 
-		if (position.y <= 0)
+		if (position.y < 0.5)
 		{
 			gravityFlag = false;
 		}
-	}*/
+	}
 
 	objPlayer->SetPosition(position);
 }

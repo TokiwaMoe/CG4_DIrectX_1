@@ -7,7 +7,7 @@ SamplerState smp : register(s0);
 struct PSOutput
 {
 	float4 target0 : SV_TARGET0;
-	float4 target1 : SV_TARGET1;
+	//float4 target1 : SV_TARGET1;
 };
 
 PSOutput main(VSOutput input) : SV_TARGET
@@ -22,6 +22,6 @@ PSOutput main(VSOutput input) : SV_TARGET
 	float4 shadecolor = float4(brightness, brightness, brightness, 1.0f);
 	//陰影とテクスチャの色を合成
 	output.target0 = shadecolor * texcolor;
-	output.target1 = float4(1 - (shadecolor * texcolor).rgb, 1);
+	//output.target1 = float4(1 - (shadecolor * texcolor).rgb, 1);
 	return output;
 }

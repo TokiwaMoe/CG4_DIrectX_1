@@ -148,6 +148,9 @@
     <Filter Include="ソース ファイル\Enemy">
       <UniqueIdentifier>{9dcdfb42-f41d-40b0-abfb-b523482c4e1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\easing">
+      <UniqueIdentifier>{853fe6c5-6601-4ac4-bc84-62512a919acb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Easing.cpp">
+      <Filter>ソース ファイル\easing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -473,6 +479,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="easing.h">
+      <Filter>ソース ファイル\easing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -83,12 +83,12 @@ bool Sprite::StaticInitialize(ID3D12Device* device, int window_width, int window
 
 	// 頂点レイアウト
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
-		{ // xy座標(1行で書いたほうが見やすい)
+		{ // xy座標
 			"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
-		{ // uv座標(1行で書いたほうが見やすい)
+		{ // uv座標
 			"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
@@ -368,28 +368,9 @@ void Sprite::Initialize()
 	result = constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 		constMap->color = color;
-		constMap->mat = this->matWorld * matProjection;
-		constBuff->Unmap(0, nullptr);
-	}
-}
-
-void Sprite::Update()
-{
-	// ワールド行列の更新
-	this->matWorld = XMMatrixIdentity();
-	this->matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
-	this->matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
-
-	_Time++;
-
-	// 定数バッファにデータ転送
-	ConstBufferData* constMap = nullptr;
-	HRESULT result = this->constBuff->Map(0, nullptr, (void**)&constMap);
-	if (SUCCEEDED(result)) {
-		constMap->color = this->color;
-		constMap->mat = this->matWorld * matProjection;	// 行列の合成	
+		constMap->mat = matProjection;
 		constMap->time = _Time;
-		this->constBuff->Unmap(0, nullptr);
+		constBuff->Unmap(0, nullptr);
 	}
 }
 
@@ -398,7 +379,7 @@ void Sprite::SetRotation(float rotation)
 	this->rotation = rotation;
 
 	// 頂点バッファへのデータ転送
-	Update();
+	TransferVertices();
 }
 
 void Sprite::SetPosition(XMFLOAT2 position)
@@ -406,7 +387,7 @@ void Sprite::SetPosition(XMFLOAT2 position)
 	this->position = position;
 
 	// 頂点バッファへのデータ転送
-	Update();
+	TransferVertices();
 }
 
 void Sprite::SetSize(XMFLOAT2 size)
@@ -414,13 +395,6 @@ void Sprite::SetSize(XMFLOAT2 size)
 	this->size = size;
 
 	// 頂点バッファへのデータ転送
-	TransferVertices();
-}
-
-void Sprite::SetTexBase(XMFLOAT2 texBase)
-{
-	this->texBase = texBase;
-
 	TransferVertices();
 }
 
@@ -457,15 +431,25 @@ void Sprite::SetTextureRect(XMFLOAT2 texBase, XMFLOAT2 texSize)
 	TransferVertices();
 }
 
-void Sprite::SetColor(XMFLOAT4 color)
-{
-	this->color = color;
-
-	Update();
-}
-
 void Sprite::Draw()
 {
+	// ワールド行列の更新
+	this->matWorld = XMMatrixIdentity();
+	this->matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
+	this->matWorld *= XMMatrixTranslation(position.x, position.y, 0.0f);
+
+	_Time++;
+
+	// 定数バッファにデータ転送
+	ConstBufferData* constMap = nullptr;
+	HRESULT result = this->constBuff->Map(0, nullptr, (void**)&constMap);
+	if (SUCCEEDED(result)) {
+		constMap->color = this->color;
+		constMap->mat = this->matWorld * matProjection;	// 行列の合成	
+		constMap->time = _Time;
+		this->constBuff->Unmap(0, nullptr);
+	}
+
 	// 頂点バッファの設定
 	cmdList->IASetVertexBuffers(0, 1, &this->vbView);
 

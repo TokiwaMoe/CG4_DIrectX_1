@@ -57,6 +57,8 @@ protected:
     ComPtr<ID3D12DescriptorHeap> descHeapDSV;
     //ルートシグネチャ
     ComPtr<ID3D12RootSignature> rootSignature;
+    // デスクリプタヒープ
+    static ComPtr<ID3D12DescriptorHeap> descHeap;
 
 public:
     //グラフィックパイプライン
