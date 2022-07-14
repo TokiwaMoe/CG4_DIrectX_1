@@ -142,8 +142,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DebugText debugText;
 
 	int debugTextTexNumber = 0;
-	Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfon.png");
-	Sprite::LoadTexture(1, L"Resource/back.png");
+	Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfont.png");
+	Sprite::LoadTexture(1, L"Resource/Back.png");
 
 	debugText.Initialize(debugTextTexNumber);
 
@@ -153,7 +153,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//ポストエフェクト
 	PostEffect* postEffect = nullptr;
-	//Sprite::LoadTexture(100, L"Resource/background.png");
 	//ポストエフェクトの初期化
 	postEffect = new PostEffect(input);
 	postEffect->Initialize(L"Resource/shaders/PostEffectVS.hlsl", L"Resource/shaders/PostEffectPS.hlsl");
@@ -310,17 +309,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			break;
 		}
 
+		
+
 		postEffect->PreDrawScene(dxCommon->GetCmdList());
-#pragma region 背景スプライト描画
-		Sprite::PreDraw(dxCommon->GetCmdList());
-
-		//background->Draw();
-
-		Sprite::PostDraw();
-		 //深度バッファクリア
-		dxCommon->ClearDepthBuffer();
-#pragma endregion
-
 #pragma region 3D描画
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
@@ -335,30 +326,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
-		
 		// パーティクルの描画
 		//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
-
-#pragma region 前景スプライト描画
-		
-
-		Sprite::PreDraw(dxCommon->GetCmdList());
-
-		/*char str[256];
-		sprintf_s(str, "60");
-		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);*/
-		debugText.DrawAll(dxCommon->GetCmdList());
-		Sprite::PostDraw();
-
-		
 		postEffect->PostDrawScene(dxCommon->GetCmdList());
 
-		
-#pragma endregion
 		dxCommon->PreDraw();
+#pragma region 背景スプライト描画
+		Sprite::PreDraw(dxCommon->GetCmdList());
+
+		background->Draw();
+
+		Sprite::PostDraw();
+		//深度バッファクリア
+		dxCommon->ClearDepthBuffer();
+#pragma endregion
+
 		postEffect->Draw(dxCommon->GetCmdList());
-		
+
+#pragma region 前景スプライト描画
+		Sprite::PreDraw(dxCommon->GetCmdList());
+
+		char str[256];
+		sprintf_s(str, "60");
+		debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);
+		debugText.DrawAll(dxCommon->GetCmdList());
+		Sprite::PostDraw();
+#pragma endregion
 		// ４．描画コマンドここまで
 		dxCommon->PostDraw();
 

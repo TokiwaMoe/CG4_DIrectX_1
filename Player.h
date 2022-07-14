@@ -42,6 +42,12 @@ private:
 	bool jumpFlag = false;
 	const float gravity = 9.8;
 	bool gravityFlag = false;
+	const float m = 1;	//•¨—Ê
+	const float k = 2;	//‹ó‹C’ïR
+	const float PI = 3.141592;
+	const float angle = 60;
+	float time = 0;
+	const float speed = 0.5;
 	//‰ñ”ğŠÖ˜A‚Ì•Ï”
 	bool defenceFlag = false;
 	

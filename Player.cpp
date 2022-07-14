@@ -67,20 +67,26 @@ void Player::defense()
 
 void Player::Jump()
 {
+
+	float dy = speed * time;
+	float dx = speed * time;
+	float g = k * speed / m;
+	float vx = dx * cos((PI / 180) * angle);
+	float vy = dy * sin((PI / 180) * angle) - 0.5 * (g * (time * time));
+	float vy2 = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (time * time));
+
+	time += 0.1;
+
 	if (Input::GetInstance()->TriggerKey(DIK_2) && jumpFlag == false)
 	{
-		jumpFlag = true;
+		position.x = vx;
+		position.y = vy;
 	}
 
 	if (jumpFlag == true)
 	{
-		position.y += gravity / 60.0f;
-
-		if (position.y > 5)
-		{
-			gravityFlag = true;
-		}
-	}
+		
+	}/*
 
 	if (gravityFlag == true)
 	{
@@ -91,9 +97,9 @@ void Player::Jump()
 		{
 			gravityFlag = false;
 		}
-	}
+	}*/
 
-	
+	objPlayer->SetPosition(position);
 }
 
 void Player::Draw()

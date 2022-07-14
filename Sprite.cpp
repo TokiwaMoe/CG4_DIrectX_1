@@ -368,8 +368,7 @@ void Sprite::Initialize()
 	result = constBuff->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) {
 		constMap->color = color;
-		constMap->mat = matProjection;
-		constMap->time = 0;
+		constMap->mat = this->matWorld * matProjection;
 		constBuff->Unmap(0, nullptr);
 	}
 }
