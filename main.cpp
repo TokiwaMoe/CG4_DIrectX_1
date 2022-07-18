@@ -98,7 +98,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Object3d* objGround = Object3d::Create();
 	objGround->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
 	Object3d* objSphere = Object3d::Create();
-	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
+	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 	Object3d* objSphere2 = Object3d::Create();
 	objSphere2->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
 
@@ -108,7 +108,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objSphere2->SetObject3dModel(Object3dModelSphere2);
 
 	XMFLOAT3 playerPosition = { 1,0,0 };
-	objSphere->SetPosition({ +1,0,0 });
+	objSphere->SetPosition({ +10,0,0 });
 	objSphere2->SetPosition({ -10,0,0 });
 	objSkydome->SetScale({ 3,3,3 });
 	
@@ -177,7 +177,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	player->Initialize();
 	// カメラ注視点をセット
 	camera->SetTarget({0, 2.5f, 0});
-	camera->SetDistance(8.0f);
+	camera->SetDistance(60.0f);
 
 	Enemy* enemy = new Enemy();
 	enemy->Initialize();
@@ -208,17 +208,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			objSphere2->SetRotation(rot);*/
 		}
 
-		//{
-		//	//光線方向初期化
-		//	static XMVECTOR lightDir = { 0,1.0f,5.0f,0 };
+		{
+			//光線方向初期化
+			static XMVECTOR lightDir = { 0,1.0f,5.0f,0 };
 
-		//	if (input->PushKey(DIK_W)) { lightDir.m128_f32[1] += 1.0f; }
-		//	else if (input->PushKey(DIK_S)) { lightDir.m128_f32[1] -= 1.0f; }
-		//	if (input->PushKey(DIK_D)) { lightDir.m128_f32[0] += 1.0f; }
-		//	else if (input->PushKey(DIK_A)) { lightDir.m128_f32[0] -= 1.0f; }
+			if (input->PushKey(DIK_W)) { lightDir.m128_f32[1] += 1.0f; }
+			else if (input->PushKey(DIK_S)) { lightDir.m128_f32[1] -= 1.0f; }
+			if (input->PushKey(DIK_D)) { lightDir.m128_f32[0] += 1.0f; }
+			else if (input->PushKey(DIK_A)) { lightDir.m128_f32[0] -= 1.0f; }
 
-		//	light->SetLightDir(lightDir);
-		//}
+			light->SetLightDir(lightDir);
+		}
 		
 
 		for (int i = 0; i < 10; i++) {
@@ -281,29 +281,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			postEffect->Initialize(L"Resource/shaders/negapoziVS.hlsl", L"Resource/shaders/negapoziPS.hlsl");
 			break;
 		case 5:
-			postEffect->Initialize(L"Resource/shaders/noizeVS.hlsl", L"Resource/shaders/noizePS.hlsl");
-			break;
-		case 6:
 			postEffect->Initialize(L"Resource/shaders/noize_2VS.hlsl", L"Resource/shaders/noize_2PS.hlsl");
 			break;
-		case 7:
-			postEffect->Initialize(L"Resource/shaders/WhiteNoizeVS.hlsl", L"Resource/shaders/WhiteNoizePS.hlsl");
-			break;
-		case 8:
+		case 6:
 			postEffect->Initialize(L"Resource/shaders/mosaicVS.hlsl", L"Resource/shaders/mosaicPS.hlsl");
 			break;
-		case 9:
-			postEffect->Initialize(L"Resource/shaders/VignetteVS.hlsl", L"Resource/shaders/VignettePS.hlsl");
-			break;
-		case 10:
+		case 7:
 			postEffect->Initialize(L"Resource/shaders/GaussianVS.hlsl", L"Resource/shaders/GaussianPS.hlsl");
 			break;
-		case 11:
+		//case 8:
+		//	postEffect->Initialize(L"Resource/shaders/VignetteVS.hlsl", L"Resource/shaders/VignettePS.hlsl");
+		//	break;
+		//case 9:
+		//	postEffect->Initialize(L"Resource/shaders/WhiteNoizeVS.hlsl", L"Resource/shaders/WhiteNoizePS.hlsl");
+		//	break;
+		/*case 10:
+			postEffect->Initialize(L"Resource/shaders/noizeVS.hlsl", L"Resource/shaders/noizePS.hlsl");
+			break;*/
+		/*case 11:
 			postEffect->Initialize(L"Resource/shaders/DepthVS.hlsl", L"Resource/shaders/DepthPS.hlsl");
 			break;
 		case 12:
 			postEffect->Initialize(L"Resource/shaders/bloomVS.hlsl", L"Resource/shaders/bloomPS.hlsl");
-			break;
+			break;*/
 		default:
 			postEffect->Initialize(L"Resource/shaders/PostEffectVS.hlsl", L"Resource/shaders/PostEffectPS.hlsl");
 			postEffectFlag = 0;
@@ -317,14 +317,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		player->Draw();
-		enemy->Draw();
+		//player->Draw();
+		//enemy->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
 		//objFighter->Draw();
 		objSphere->Draw();
-		//objSphere2->Draw();
-		object1->Draw(dxCommon->GetCmdList());
+		objSphere2->Draw();
+		//object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
 		// パーティクルの描画
@@ -348,13 +348,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 前景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		char str[256];
+		/*char str[256];
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
 
 		char str2[256];
 		sprintf_s(str2, "time : %f", player->time);
-		debugText.Print(str2, 0, 25, 1.0f);
+		debugText.Print(str2, 0, 25, 1.0f);*/
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 #pragma endregion
