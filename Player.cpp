@@ -128,7 +128,7 @@ void Player::defenseMove(XMFLOAT3 FinalPos)
 	if (time >= 0 && time <= easing->maxflame)
 	{
 		time += 0.1f;
-		position = easing->easeInOut(oldPos, FinalPos, time);
+		position = easing->ease(oldPos, FinalPos, time);
 	}
 
 	if (time >= easing->maxflame)

@@ -10,68 +10,112 @@ void Easing::Initialize()
 	time = 0;
 }
 
-//bool Easing::lerp(XMFLOAT3 start, XMFLOAT3 end, bool flag)
-//{
-//	float time = 0;
-//	time += 60.0f / 3600;
-//	position.x = start.x * (1.0f - time) + end.x * time;
-//	position.z = start.x * (1.0f - time) + end.x * time;
-//	return position;
-//}
-//
-
-XMFLOAT3 Easing::easeIn(XMFLOAT3 start, XMFLOAT3 end, float flame)
+XMFLOAT3 Easing::ease(XMFLOAT3 start, XMFLOAT3 end, float flame)
 {
-	XMFLOAT3 c = { end.x - start.x, end.y - start.y, end.z - start.z };
+	difference = { end.x - start.x, end.y - start.y, end.z - start.z };
 	time = flame / maxflame;
-	float v = easeInCubic(time);
-	position.x = c.x * v + start.x;
-	position.z = c.z * v + start.z;
+	float v = Cubic_inout(time);
+	position.x = difference.x * v + start.x;
+	position.z = difference.z * v + start.z;
 	return position;
 }
 
-float Easing::easeInCubic(float x)
+float Easing::Cubic_in(float x)
 {
 	return x * x * x;
 }
 
-XMFLOAT3 Easing::easeOut(XMFLOAT3 start, XMFLOAT3 end, float flame)
+float Easing::Cubic_out(float x)
 {
-	
-	XMFLOAT3 c = { end.x - start.x, end.y - start.y, end.z - start.z };
-	time = flame / maxflame;
-	time -= 0.1;
-	float v = easeOutCubic(time);
-	position.x = +c.x * v + start.x;
-	position.z = +c.z * v + start.z;
-	return position;
+	return 1 - pow(1 - x, 3);
 }
 
-float Easing::easeOutCubic(float x)
+float Easing::Cubic_inout(float x)
 {
-	return x * x * x + 0.1;
+	return x < 0.5 ? 4 * x * x * x : 1 - pow(-2 * x + 2, 3) / 2;
 }
 
-XMFLOAT3 Easing::easeInOut(XMFLOAT3 start, XMFLOAT3 end, float flame)
+float Easing::Sine_in(float x)
 {
-	XMFLOAT3 c = { end.x - start.x, end.y - start.y, end.z - start.z };
-	time = flame / (maxflame / 2.0f);
-	time -= 0.2;
-	float v = easeInOutCubic(time);
-
-	if (time < 1)
-	{
-		position.x = c.x / 2.0f * v + start.x;
-		position.z = c.z / 2.0f * v + start.z;
-		return position;
-	}
-
-	position.x = c.x / 2.0f * (v + 0.2) + start.x;
-	position.z = c.z / 2.0f * (v + 0.2) + start.z;
-	return position;
+	return 1 - cos((x * PI) / 2);
 }
 
-float Easing::easeInOutCubic(float x)
+float Easing::Sine_out(float x)
 {
-	return x * x * x;
+	return sin((x * PI) / 2);
+}
+
+float Easing::Sine_inout(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quad_in(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quad_out(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quad_inout(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quart_in(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quart_out(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quart_inout(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quint_in(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quint_out(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Quint_inout(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Expo(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Circ(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Back(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Elastic(float x)
+{
+	return 0.0f;
+}
+
+float Easing::Bounce(float x)
+{
+	return 0.0f;
 }
