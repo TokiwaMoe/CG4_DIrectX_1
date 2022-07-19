@@ -7,7 +7,7 @@ using XMMATRIX = DirectX::XMMATRIX;
 
 void Easing::Initialize()
 {
-	flame = 0;
+	time = 0;
 }
 
 //bool Easing::lerp(XMFLOAT3 start, XMFLOAT3 end, bool flag)
@@ -19,30 +19,59 @@ void Easing::Initialize()
 //	return position;
 //}
 //
-//bool Easing::easeIn(XMFLOAT3 start, XMFLOAT3 end, bool flag)
-//{
-//	float time = 0;
-//	time += 60.0f / 3600;
-//	position.x = start.x * (1.0f - time * time) + end.x * time * time;
-//	position.z = start.z * (1.0f - time * time) + end.z * time * time;
-//	return position;
-//}
 
-XMFLOAT3 Easing::easeOut(XMFLOAT3 start, XMFLOAT3 end, float time)
+XMFLOAT3 Easing::easeIn(XMFLOAT3 start, XMFLOAT3 end, float flame)
 {
-	float PI = 3.141592;
-	flame = static_cast<float>(time) / static_cast<float>(maxflame);
-	position.x = start.x + end.x * (sin(flame * PI / 2));
-	position.z = start.z + end.z * (sin(flame * PI / 2));
-	
+	XMFLOAT3 c = { end.x - start.x, end.y - start.y, end.z - start.z };
+	time = flame / maxflame;
+	float v = easeInCubic(time);
+	position.x = c.x * v + start.x;
+	position.z = c.z * v + start.z;
 	return position;
 }
 
-//bool Easing::easeInOut(XMFLOAT3 start, XMFLOAT3 end, bool flag)
-//{
-//	float time = 0;
-//	time += 60.0f / 3600;
-//	position.x = start.x * (1.0f - time * time * (3 - 2 * time)) + end.x * time * time * (3 - 2 * time);
-//	position.z = start.z * (1.0f - time * time * (3 - 2 * time)) + end.z * time * time * (3 - 2 * time);
-//	return position;
-//}
+float Easing::easeInCubic(float x)
+{
+	return x * x * x;
+}
+
+XMFLOAT3 Easing::easeOut(XMFLOAT3 start, XMFLOAT3 end, float flame)
+{
+	
+	XMFLOAT3 c = { end.x - start.x, end.y - start.y, end.z - start.z };
+	time = flame / maxflame;
+	time -= 0.1;
+	float v = easeOutCubic(time);
+	position.x = +c.x * v + start.x;
+	position.z = +c.z * v + start.z;
+	return position;
+}
+
+float Easing::easeOutCubic(float x)
+{
+	return x * x * x + 0.1;
+}
+
+XMFLOAT3 Easing::easeInOut(XMFLOAT3 start, XMFLOAT3 end, float flame)
+{
+	XMFLOAT3 c = { end.x - start.x, end.y - start.y, end.z - start.z };
+	time = flame / (maxflame / 2.0f);
+	time -= 0.2;
+	float v = easeInOutCubic(time);
+
+	if (time < 1)
+	{
+		position.x = c.x / 2.0f * v + start.x;
+		position.z = c.z / 2.0f * v + start.z;
+		return position;
+	}
+
+	position.x = c.x / 2.0f * (v + 0.2) + start.x;
+	position.z = c.z / 2.0f * (v + 0.2) + start.z;
+	return position;
+}
+
+float Easing::easeInOutCubic(float x)
+{
+	return x * x * x;
+}

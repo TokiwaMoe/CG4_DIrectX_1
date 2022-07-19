@@ -351,6 +351,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		char str[256];
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
+
+		char str2[256];
+		sprintf_s(str2, "oldpos x : %f y : %f z : %f", player->oldPos.x, player->oldPos.y, player->oldPos.z);
+		debugText.Print(str2, 0, 30, 1.0f);
+
+		char str3[256];
+		sprintf_s(str3, "storagepos x : %f y : %f z : %f", player->storagePos.x, player->storagePos.y, player->storagePos.z);
+		debugText.Print(str3, 0, 50, 1.0f);
+
+		char str4[256];
+		sprintf_s(str4, "end x : %f y : %f z : %f", player->endPos.x, player->endPos.y, player->endPos.z);
+		debugText.Print(str4, 0, 70, 1.0f);
+
+		char str5[256];
+		sprintf_s(str5, "distance x : %f y : %f z : %f", player->distance.x, player->distance.y, player->distance.z);
+		debugText.Print(str5, 0, 90, 1.0f);
+
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 #pragma endregion

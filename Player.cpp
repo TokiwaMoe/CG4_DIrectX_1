@@ -27,6 +27,10 @@ void Player::Initialize()
 
 	easing = new Easing();
 	easing->Initialize();
+
+	time = 0;
+	defence_direction = Previous;
+	distance = { 0,0,0 };
 }
 
 void Player::Update(Camera *camera)
@@ -39,7 +43,7 @@ void Player::Update(Camera *camera)
 
 void Player::Move(Camera* camera)
 {
-	XMVECTOR forvardvec = {0.1,0.1,0.1,0.1};
+	XMVECTOR forvardvec = {0.5,0.5,0.5,0.5};
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		position.z += forvardvec.m128_f32[2];
 		objPlayer->SetRotation({ 0,0,0 });
@@ -66,29 +70,73 @@ void Player::Move(Camera* camera)
 
 void Player::defense()
 {
-	float time = 0;
-	if (Input::GetInstance()->TriggerKey(DIK_1))
+	if (Input::GetInstance()->TriggerKey(DIK_1) && defenceFlag == false)
 	{
+		time = 0;
+		distance = { 0,0,0 };
 		defenceFlag = true;
+		oldPos = objPlayer->GetPosition();
 	}
 
-	XMFLOAT3 oldPos = objPlayer->GetPosition();
+	
 	if (defenceFlag)
 	{
-		if (defence_direction == Previous)
-		{
-			time += 0.1f;
-			position = easing->easeOut(oldPos, { oldPos.x, oldPos.y, oldPos.z + 10.0f }, time);
-
-			if (time >= easing->maxflame)
-			{
-				defenceFlag = false;
-			}
-		}
+		defenseKey();
+		
 	}
 	
 
 	objPlayer->SetPosition(position);
+}
+
+void Player::defenseKey()
+{
+	/*if (Input::GetInstance()->PushKey(DIK_W)) {
+		distance = { 0,0,5 };
+	}
+	if (Input::GetInstance()->PushKey(DIK_S)) {
+		distance = { 0,0,-5 };
+	}
+	if (Input::GetInstance()->PushKey(DIK_A)) {
+		distance = { -5,0,0 };
+	}
+	if (Input::GetInstance()->PushKey(DIK_D)) {
+		distance = { 5,0,0 };
+	}*/
+	if (defence_direction == Previous)
+	{
+		distance = { 0,0,5 };
+	}
+	else if (defence_direction == Back)
+	{
+		distance = { 0,0,-5 };
+	}
+	else if (defence_direction == Left)
+	{
+		distance = { -5,0,0 };
+	}
+	else if (defence_direction == Right)
+	{
+		distance = { 5,0,0 };
+	}
+	endPos = { oldPos.x + distance.x, oldPos.y + distance.y, oldPos.z + distance.z };
+	defenseMove(endPos);
+}
+
+void Player::defenseMove(XMFLOAT3 FinalPos)
+{
+	if (time >= 0 && time <= easing->maxflame)
+	{
+		time += 0.1f;
+		position = easing->easeInOut(oldPos, FinalPos, time);
+	}
+
+	if (time >= easing->maxflame)
+	{
+		distance = { 0,0,0 };
+		storagePos = position;
+		defenceFlag = false;
+	}
 }
 
 void Player::Jump()

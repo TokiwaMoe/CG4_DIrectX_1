@@ -22,6 +22,10 @@ public:
 
 	void defense();
 
+	void defenseKey();
+
+	void defenseMove(XMFLOAT3 FinalPos);
+
 	void Jump();
 
 	void Draw();
@@ -37,7 +41,10 @@ public:
 	// X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position = { 1,0,0 };
+	XMFLOAT3 position = { 0,0,0 };
+	XMFLOAT3 oldPos = { 0,0,0 };
+	XMFLOAT3 endPos = { 0,0,0 };
+	XMFLOAT3 storagePos = { 0,0,0 };
 
 	enum direction
 	{
@@ -63,5 +70,7 @@ private:
 
 public:
 	int defence_direction;
+	float time = 0;
+	XMFLOAT3 distance;
 
 };
