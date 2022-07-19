@@ -177,7 +177,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	player->Initialize();
 	// カメラ注視点をセット
 	camera->SetTarget({0, 2.5f, 0});
-	camera->SetDistance(60.0f);
+	camera->SetDistance(8.0f);
 
 	Enemy* enemy = new Enemy();
 	enemy->Initialize();
@@ -289,21 +289,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		case 7:
 			postEffect->Initialize(L"Resource/shaders/GaussianVS.hlsl", L"Resource/shaders/GaussianPS.hlsl");
 			break;
-		//case 8:
-		//	postEffect->Initialize(L"Resource/shaders/VignetteVS.hlsl", L"Resource/shaders/VignettePS.hlsl");
-		//	break;
-		//case 9:
-		//	postEffect->Initialize(L"Resource/shaders/WhiteNoizeVS.hlsl", L"Resource/shaders/WhiteNoizePS.hlsl");
-		//	break;
-		/*case 10:
+		case 8:
+			postEffect->Initialize(L"Resource/shaders/VignetteVS.hlsl", L"Resource/shaders/VignettePS.hlsl");
+			break;
+		case 9:
+			postEffect->Initialize(L"Resource/shaders/WhiteNoizeVS.hlsl", L"Resource/shaders/WhiteNoizePS.hlsl");
+			break;
+		case 10:
 			postEffect->Initialize(L"Resource/shaders/noizeVS.hlsl", L"Resource/shaders/noizePS.hlsl");
-			break;*/
-		/*case 11:
+			break;
+		case 11:
 			postEffect->Initialize(L"Resource/shaders/DepthVS.hlsl", L"Resource/shaders/DepthPS.hlsl");
 			break;
 		case 12:
 			postEffect->Initialize(L"Resource/shaders/bloomVS.hlsl", L"Resource/shaders/bloomPS.hlsl");
-			break;*/
+			break;
 		default:
 			postEffect->Initialize(L"Resource/shaders/PostEffectVS.hlsl", L"Resource/shaders/PostEffectPS.hlsl");
 			postEffectFlag = 0;
@@ -317,13 +317,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
 
-		//player->Draw();
+		player->Draw();
 		//enemy->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
 		//objFighter->Draw();
-		objSphere->Draw();
-		objSphere2->Draw();
+		//objSphere->Draw();
+		//objSphere2->Draw();
 		//object1->Draw(dxCommon->GetCmdList());
 
 		Object3d::PostDraw();
@@ -348,13 +348,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 前景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		/*char str[256];
+		char str[256];
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
-
-		char str2[256];
-		sprintf_s(str2, "time : %f", player->time);
-		debugText.Print(str2, 0, 25, 1.0f);*/
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 #pragma endregion

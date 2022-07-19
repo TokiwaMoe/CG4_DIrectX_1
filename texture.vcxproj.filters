@@ -130,9 +130,6 @@
     <Filter Include="リソース ファイル\PostEffect\monochrome">
       <UniqueIdentifier>{e7c4033d-b178-470c-bf29-b8e22476b117}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\PostEffect\Vignette">
-      <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\PostEffect\Gaussian">
       <UniqueIdentifier>{2453b25f-73ab-42f9-8100-ae7dffeeab6f}</UniqueIdentifier>
     </Filter>
@@ -150,6 +147,9 @@
     </Filter>
     <Filter Include="ソース ファイル\easing">
       <UniqueIdentifier>{853fe6c5-6601-4ac4-bc84-62512a919acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\sepia\Vignette">
+      <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -321,10 +321,10 @@
       <Filter>リソース ファイル\PostEffect\monochrome</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\VignettePS.hlsl">
-      <Filter>リソース ファイル\PostEffect\Vignette</Filter>
+      <Filter>リソース ファイル\PostEffect\sepia\Vignette</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\VignetteVS.hlsl">
-      <Filter>リソース ファイル\PostEffect\Vignette</Filter>
+      <Filter>リソース ファイル\PostEffect\sepia\Vignette</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\GaussianVS.hlsl">
       <Filter>リソース ファイル\PostEffect\Gaussian</Filter>
@@ -343,6 +343,12 @@
     </FxCompile>
     <FxCompile Include="Resource\shaders\BloomVS.hlsl">
       <Filter>リソース ファイル\PostEffect\bloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\PixelShader.hlsl">
+      <Filter>リソース ファイル\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\VertexShader.hlsl">
+      <Filter>リソース ファイル\PostEffect</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,7 +398,7 @@
       <Filter>リソース ファイル\PostEffect\monochrome</Filter>
     </None>
     <None Include="Resource\shaders\Vignette.hlsli">
-      <Filter>リソース ファイル\PostEffect\Vignette</Filter>
+      <Filter>リソース ファイル\PostEffect\sepia\Vignette</Filter>
     </None>
     <None Include="Resource\shaders\Gaussian.hlsli">
       <Filter>リソース ファイル\PostEffect\Gaussian</Filter>
@@ -402,6 +408,9 @@
     </None>
     <None Include="Resource\shaders\bloom.hlsli">
       <Filter>リソース ファイル\PostEffect\bloom</Filter>
+    </None>
+    <None Include="Resource\shaders\Header.hlsli">
+      <Filter>リソース ファイル\PostEffect</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -480,7 +489,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="easing.h">
+    <ClInclude Include="Easing.h">
       <Filter>ソース ファイル\easing</Filter>
     </ClInclude>
   </ItemGroup>

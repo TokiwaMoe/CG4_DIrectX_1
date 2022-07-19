@@ -24,13 +24,16 @@ void Player::Initialize()
 
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.5,0.5,0.5 });
-	
+
+	easing = new Easing();
+	easing->Initialize();
 }
 
 void Player::Update(Camera *camera)
 {
 	Move(camera);
 	Jump();
+	defense();
 	objPlayer->Update();
 }
 
@@ -40,18 +43,22 @@ void Player::Move(Camera* camera)
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		position.z += forvardvec.m128_f32[2];
 		objPlayer->SetRotation({ 0,0,0 });
+		defence_direction = Previous;
 	}
 	if (Input::GetInstance()->PushKey(DIK_S)) {
 		position.z -= forvardvec.m128_f32[2];
 		objPlayer->SetRotation({ 0,180,0 });
+		defence_direction = Back;
 	}
 	if (Input::GetInstance()->PushKey(DIK_A)) {
 		position.x -= forvardvec.m128_f32[0];
 		objPlayer->SetRotation({ 0,-90,0 });
+		defence_direction = Left;
 	}
 	if (Input::GetInstance()->PushKey(DIK_D)) {
 		position.x += forvardvec.m128_f32[0];
 		objPlayer->SetRotation({ 0,90,0 });
+		defence_direction = Right;
 	}
 
 	objPlayer->SetPosition(position);
@@ -59,16 +66,29 @@ void Player::Move(Camera* camera)
 
 void Player::defense()
 {
+	float time = 0;
 	if (Input::GetInstance()->TriggerKey(DIK_1))
 	{
 		defenceFlag = true;
 	}
 
-	if (defenceFlag == true)
+	XMFLOAT3 oldPos = objPlayer->GetPosition();
+	if (defenceFlag)
 	{
-		XMFLOAT3 oldPos = objPlayer->GetPosition();
+		if (defence_direction == Previous)
+		{
+			time += 0.1f;
+			position = easing->easeOut(oldPos, { oldPos.x, oldPos.y, oldPos.z + 10.0f }, time);
 
+			if (time >= easing->maxflame)
+			{
+				defenceFlag = false;
+			}
+		}
 	}
+	
+
+	objPlayer->SetPosition(position);
 }
 
 void Player::Jump()

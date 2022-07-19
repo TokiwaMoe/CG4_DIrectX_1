@@ -3,6 +3,7 @@
 #include"Camera.h"
 #include"Object3d.h"
 #include"Object3dModel.h"
+#include"Easing.h"
 class Player {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::
@@ -29,6 +30,7 @@ public:
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* objPlayer = nullptr;
+	Easing* easing = nullptr;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
@@ -36,6 +38,14 @@ public:
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 1,0,0 };
+
+	enum direction
+	{
+		Previous,
+		Back,
+		Right,
+		Left
+	};
 
 private:
 	//ジャンプ関連の変数
@@ -52,7 +62,6 @@ private:
 	bool defenceFlag = false;
 
 public:
-	float time = 0;
-	
+	int defence_direction;
 
 };
