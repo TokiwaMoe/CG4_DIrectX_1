@@ -140,32 +140,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	float speed = 6;
 	float furiction = 0.8;
 	float weight = 30;*/
-	float gravity = 9.8 / 60.0f;
-	float speed = 2;
-	float time = 0;
-	float angle = 5;
+	//float gravity = 9.8 / 60.0f;
+	//float speed = 2;
+	//float time = 0;
+	//float angle = 5;
+	//float PI = 3.141592;
+	//float k = 2;
+	//float m = 1;
+
+	//float m1 = 0.5;
+	//float m2 = 0.45;
+	//float v1 = 1;
+	//float v2 = 1;
+	//float e1; //”½”­ŒW”
+	//float e2;
+	//bool hitFlag = false;
+	//bool repulsion = false;
+
+	//XMFLOAT2 linePos = { 0,0 };
+	//XMFLOAT2 b = { 0,0 };
+
+	//float stiffness = 0.1;
+	//float damping = 0.9;
+	//float vel = 0.0;
+	//float target = 0;
+	//float old = 0;
+	//bool flag = false;
+
 	float PI = 3.141592;
-	float k = 2;
-	float m = 1;
-
-	float m1 = 0.5;
-	float m2 = 0.45;
-	float v1 = 1;
-	float v2 = 1;
-	float e1; //”½”­ŒW”
-	float e2;
-	bool hitFlag = false;
-	bool repulsion = false;
-
-	XMFLOAT2 linePos = { 0,0 };
+	float x;     // •R‚ðL‚Î‚µ‚ÄˆêŽü‚³‚¹‚½ê‡‚Éo—ˆ‚é‰~Žüã‚ÌÀ•WA‚O‚Í•R‚ªŽ²‚Ì^‰º‚É‚¢‚éˆÊ’u
+	float speed; // x‚Ì‘¬“x
+	float angle;
+	int    jiku_x = 320, jiku_y = 100; // Ž²‚ÌˆÊ’u
+	float nx, ny;
+	float LENGTH = 200;
+	float CLENGTH = (LENGTH * 2 * PI);
+	float MASS = 0.1346;
+	float G = 9.81;
 	XMFLOAT2 b = { 0,0 };
+	// ‰ŠúˆÊ’u‚ÍŽ²‚Ì^‰º‚©‚ç¶•ûŒü‚É45“xŒX‚¢‚½ˆÊ’u
+	x = CLENGTH / 8.0;
 
-	float stiffness = 0.1;
-	float damping = 0.9;
-	float vel = 0.0;
-	float target = 0;
-	float old = 0;
-	bool flag = false;
+	// ‰‘¬“x‚Í‚O
+	speed = 0.0;
 
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -354,7 +371,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere2->SetPosition(position2);*/
 
 		//“–‚½‚è”»’è--------------------------------------------------
-		line->Initialize();
+		/*line->Initialize();
 		cicre->Initialize();
 
 		float cicrePointX = 10.0f + 64.0f / 2;
@@ -395,13 +412,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			linePos.x += 1;
 		}
 
-		line->SetPosition(linePos);
+		line->SetPosition(linePos);*/
 
 		//˜AŒ‹----------------------------------------------
-		line->Initialize();
-		cicre->Initialize();
+		//line->Initialize();
+		//cicre->Initialize();
 
-		float force = stiffness * (target - b.y);
+		/*float force = stiffness * (target - b.y);
 		vel = damping * (vel + force);
 		b.y += vel;
 
@@ -413,36 +430,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		line->SetSize({ 64, b.y });
-		cicre->SetPosition({ 0, b.y });
+		cicre->SetPosition({ 0, b.y });*/
 
 		//U‚èŽq------------------------------------------------------
-		//double x;     // •R‚ðL‚Î‚µ‚ÄˆêŽü‚³‚¹‚½ê‡‚Éo—ˆ‚é‰~Žüã‚ÌÀ•WA‚O‚Í•R‚ªŽ²‚Ì^‰º‚É‚¢‚éˆÊ’u
-		//double speed; // x‚Ì‘¬“x
-		//double angle;
-		//int    jiku_x = 320, jiku_y = 100; // Ž²‚ÌˆÊ’u
-		//int nx, ny;
+		line->Initialize();
+		cicre->Initialize();
 
-		//// ‰ŠúˆÊ’u‚ÍŽ²‚Ì^‰º‚©‚ç¶•ûŒü‚É45“xŒX‚¢‚½ˆÊ’u
-		//x = CLENGTH / 8.0;
+		// ŒöŽ®‚É]‚Á‚Ä‘¬“x‚ð‰ÁŽZ
+			// MASS‚Ì’l‚ð¬‚³‚­‚·‚é‚Æ‚ä‚Á‚­‚è“®‚­
+		speed += -MASS * G * sin(x / LENGTH);
 
-		//// ‰‘¬“x‚Í‚O
-		//speed = 0.0;
+		// ‘¬“x‚É]‚Á‚Ä‰~ã‚ÌÀ•W‚ð•ÏX
+		x += speed;
 
-		//// ŒöŽ®‚É]‚Á‚Ä‘¬“x‚ð‰ÁŽZ
-		//	// MASS‚Ì’l‚ð¬‚³‚­‚·‚é‚Æ‚ä‚Á‚­‚è“®‚­
-		//speed += -MASS * G * sin(x / LENGTH);
+		// Ž²‚ðŒ´“_‚Æ‚µ‚½ê‡‚Ì‚Ô‚ç‰º‚ª‚Á‚Ä‚¢‚é•¨‚ÌÀ•W‚ðŽZo
+		// ‚±‚Ì‚Ü‚Ü‚¾‚Æ|45`45“x‚ÌU‚èŽq‚É‚È‚é‚Ì‚Å
+		// ŽžŒv‰ñ‚è‚É90“xiPI/2.0j‰ñ“]
+		angle = x / LENGTH + PI / 2.0;
 
-		//// ‘¬“x‚É]‚Á‚Ä‰~ã‚ÌÀ•W‚ð•ÏX
-		//x += speed;
+		// ‹‚ß‚½Šp“x‚©‚çŽ²‚ðŒ´“_‚Æ‚µ‚½‰~Žüã‚ÌÀ•W‚ðŽæ“¾
+		nx = cos(angle) * LENGTH;
+		ny = sin(angle) * LENGTH;
 
-		//// Ž²‚ðŒ´“_‚Æ‚µ‚½ê‡‚Ì‚Ô‚ç‰º‚ª‚Á‚Ä‚¢‚é•¨‚ÌÀ•W‚ðŽZo
-		//// ‚±‚Ì‚Ü‚Ü‚¾‚Æ|45`45“x‚ÌU‚èŽq‚É‚È‚é‚Ì‚Å
-		//// ŽžŒv‰ñ‚è‚É90“xiPI/2.0j‰ñ“]
-		//angle = x / LENGTH + PI / 2.0;
+		b.x = jiku_x + nx;
+		b.y = jiku_y + ny;
 
-		//// ‹‚ß‚½Šp“x‚©‚çŽ²‚ðŒ´“_‚Æ‚µ‚½‰~Žüã‚ÌÀ•W‚ðŽæ“¾
-		//nx = cos(angle) * LENGTH;
-		//ny = sin(angle) * LENGTH;
+		line->SetRotation(180 + ny);
+		line->SetPosition({ 100,100 });
+		cicre->SetPosition({ b.x, b.y });
 
 		//XV--------------------------------------------------------
 		particleMan->Update();
@@ -477,8 +492,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSkydome->Draw();
 		//objGround->Draw();
 		//objFighter->Draw();
-		objSphere->Draw();
-		objSphere2->Draw();
+		//objSphere->Draw();
+		//objSphere2->Draw();
 
 		Object3d::PostDraw();
 
@@ -489,12 +504,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		char str[256];
+		/*char str[256];
 		sprintf_s(str, "%f %f b.y : %f %f", force, vel, b.y, target);
-		debugText.Print(str, 10, 10, 1.0f);
+		debugText.Print(str, 10, 10, 1.0f);*/
 
-		char str3[256];
-		sprintf_s(str, "obj2 : %f %f", input->mousePos.x, input->mousePos.y);
+		char str[256];
+		sprintf_s(str, "obj2 : %f %f", nx, ny);
 		debugText.Print(str, 10, 30, 1.0f);
 
 		cicre->Draw();

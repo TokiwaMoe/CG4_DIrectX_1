@@ -397,6 +397,14 @@ void Sprite::SetSize(XMFLOAT2 size)
 	TransferVertices();
 }
 
+void Sprite::SetLeftTop(XMFLOAT2 leftTop)
+{
+	this->leftTop = leftTop;
+
+	// 頂点バッファへのデータ転送
+	TransferVertices();
+}
+
 void Sprite::SetAnchorPoint(XMFLOAT2 anchorpoint)
 {
 	this->anchorpoint = anchorpoint;
