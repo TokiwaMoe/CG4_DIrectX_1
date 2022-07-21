@@ -119,6 +119,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Sprite* background = nullptr;
 	background = Sprite::Create(1, { 0.0f,0.0f });
 
+	Sprite* line = nullptr;
+	Sprite::LoadTexture(2, L"Resource/Line.png");
+	line = Sprite::Create(2, { 0.0f,0.0f });
+	
+
+	Sprite* cicre = nullptr;
+	Sprite::LoadTexture(3, L"Resource/Cicre.png");
+	cicre = Sprite::Create(3, { 10.0f,0.0f });
+	
+
+
 	Audio* audio = nullptr;
 	audio = new Audio;
 	audio->Initialize();
@@ -146,6 +157,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	bool hitFlag = false;
 	bool repulsion = false;
 
+	XMFLOAT2 linePos = { 0,0 };
+	XMFLOAT2 b = { 0,0 };
+
+	float stiffness = 0.1;
+	float damping = 0.9;
+	float vel = 0.0;
+	float target = 0;
+	float old = 0;
+	bool flag = false;
+
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
 
@@ -161,8 +182,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		dxCommon->PreDraw();
 
 		//マウス座標
-		POINT mousePos;
-		GetCursorPos(&mousePos);
+		POINT p;
+		GetCursorPos(&p);
+
+		ScreenToClient(winApp->GetHwnd(), &p);
+
+		input->mousePos.x = p.x;
+		input->mousePos.y = p.y;
 
 		//パーティクル---------------------------------------------------------
 		//for (int i = 0; i < 10; i++) {
@@ -307,7 +333,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		/*float m1 = 60;
 		float m2 = 45;*/
 
-		float length = 30.0f;
+		/*float length = 30.0f;
 		float centerX = position2.x;
 		float centerY = position2.y;
 
@@ -325,7 +351,98 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		time ++;
 
 		objSphere->SetPosition(position);
-		objSphere2->SetPosition(position2);
+		objSphere2->SetPosition(position2);*/
+
+		//当たり判定--------------------------------------------------
+		line->Initialize();
+		cicre->Initialize();
+
+		float cicrePointX = 10.0f + 64.0f / 2;
+		float cicrePointY = 64.0f / 2;
+		float r = 64.0f / 2;
+
+		float linePointX = linePos.x + 32.0f;
+		float linePointY = linePos.y + 32.0f;
+
+		int x = cicrePointX - linePointX;
+		int y = cicrePointY - linePointY;
+		int dist = sqrtf(pow(x, 2) + pow(y, 2));
+
+		if (dist > r)
+		{
+			cicre->SetColor({ 1,1,1,1 });
+		}
+		else {
+			cicre->SetColor({ 1,0,0,1 });
+		}
+
+		
+
+		if (input->PushKey(DIK_W))
+		{
+			linePos.y -= 1;
+		}
+		if (input->PushKey(DIK_S))
+		{
+			linePos.y += 1;
+		}
+		if (input->PushKey(DIK_A))
+		{
+			linePos.x -= 1;
+		}
+		if (input->PushKey(DIK_D))
+		{
+			linePos.x += 1;
+		}
+
+		line->SetPosition(linePos);
+
+		//連結----------------------------------------------
+		line->Initialize();
+		cicre->Initialize();
+
+		float force = stiffness * (target - b.y);
+		vel = damping * (vel + force);
+		b.y += vel;
+
+		input->GetMouseMove();
+
+		if (input->PushMouse(input->M_Left))
+		{
+			target = input->mousePos.y;
+		}
+
+		line->SetSize({ 64, b.y });
+		cicre->SetPosition({ 0, b.y });
+
+		//振り子------------------------------------------------------
+		//double x;     // 紐を伸ばして一周させた場合に出来る円周上の座標、０は紐が軸の真下にいる位置
+		//double speed; // xの速度
+		//double angle;
+		//int    jiku_x = 320, jiku_y = 100; // 軸の位置
+		//int nx, ny;
+
+		//// 初期位置は軸の真下から左方向に45度傾いた位置
+		//x = CLENGTH / 8.0;
+
+		//// 初速度は０
+		//speed = 0.0;
+
+		//// 公式に従って速度を加算
+		//	// MASSの値を小さくするとゆっくり動く
+		//speed += -MASS * G * sin(x / LENGTH);
+
+		//// 速度に従って円上の座標を変更
+		//x += speed;
+
+		//// 軸を原点とした場合のぶら下がっている物の座標を算出
+		//// このままだと－45～45度の振り子になるので
+		//// 時計回りに90度（PI/2.0）回転
+		//angle = x / LENGTH + PI / 2.0;
+
+		//// 求めた角度から軸を原点とした円周上の座標を取得
+		//nx = cos(angle) * LENGTH;
+		//ny = sin(angle) * LENGTH;
 
 		//更新--------------------------------------------------------
 		particleMan->Update();
@@ -372,13 +489,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 前景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		/*char str[256];
-		sprintf_s(str, "obj1 : %f %f rad : %f", position.x, position.y, rad);
+		char str[256];
+		sprintf_s(str, "%f %f b.y : %f %f", force, vel, b.y, target);
 		debugText.Print(str, 10, 10, 1.0f);
 
 		char str3[256];
-		sprintf_s(str, "obj2 : %f %f %f", position2.x, position2.y, position2.z);
-		debugText.Print(str, 10, 30, 1.0f);*/
+		sprintf_s(str, "obj2 : %f %f", input->mousePos.x, input->mousePos.y);
+		debugText.Print(str, 10, 30, 1.0f);
+
+		cicre->Draw();
+		line->Draw();
+		
 
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();

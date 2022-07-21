@@ -84,6 +84,8 @@ public:
 
 	void SetTextureRect(XMFLOAT2 texBase, XMFLOAT2 texSize);
 
+	void SetColor(XMFLOAT4 color);
+
 	void Draw();
 
 private:

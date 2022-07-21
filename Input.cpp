@@ -1,6 +1,12 @@
 #include"Input.h"
 #include<Windows.h>
-
+#include<wrl.h>
+#define DIRECTINPUT_VERSION		0x0800	//DirectInputのバージョン指定
+#include<dinput.h>
+#include <d3d12.h>
+#include <DirectXMath.h>
+#include <d3dx12.h>
+#include"WinApp.h"
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
