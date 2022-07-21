@@ -21,9 +21,14 @@ void Player::Initialize()
 	playerModel = Object3dModel::LoadFromOBJ("chr_sword");
 	objPlayer = Object3d::Create();
 	objPlayer->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+	bulletModel = Object3dModel::LoadFromOBJ("sphere");
+	objBullet = Object3d::Create();
+	objBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.5,0.5,0.5 });
+	objBullet->SetObject3dModel(bulletModel);
+	objBullet->SetScale({ 0.5,0.5,0.5 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -38,7 +43,9 @@ void Player::Update(Camera *camera)
 	Move(camera);
 	Jump();
 	defense();
+	HomingBullet();
 	objPlayer->Update();
+	objBullet->Update();
 }
 
 void Player::Move(Camera* camera)
@@ -149,7 +156,7 @@ void Player::Jump()
 
 	if (jumpFlag == true)
 	{
-		position.y += 0.5f;
+		position.y += gravity / 60.0f;
 		if (position.y >= 4)
 		{
 			gravityFlag = true;
@@ -170,7 +177,31 @@ void Player::Jump()
 	objPlayer->SetPosition(position);
 }
 
+void Player::HomingBullet()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
+	{
+		bulletTime = 0;
+		bulletFlag = true;
+		bulletPos = { 0,5,0 };
+	}
+
+	if (bulletFlag)
+	{
+		bulletTime += 0.1f;
+		bulletPos = easing->ease(bulletPos, {0,0,5}, bulletTime);
+
+		if (bulletPos.z == 5)
+		{
+			bulletFlag = false;
+		}
+	}
+
+	objBullet->SetPosition(bulletPos);
+}
+
 void Player::Draw()
 {
 	objPlayer->Draw();
+	//objBullet->Draw();
 }

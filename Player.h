@@ -28,23 +28,29 @@ public:
 
 	void Jump();
 
+	void HomingBullet();
+
 	void Draw();
 
 
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* objPlayer = nullptr;
+	Object3dModel* bulletModel = nullptr;
+	Object3d* objBullet = nullptr;
 	Easing* easing = nullptr;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 rotation = { 0,0,0 };
-	// ローカル座標
+	// プレイヤー座標
 	XMFLOAT3 position = { 0,0,0 };
 	XMFLOAT3 oldPos = { 0,0,0 };
 	XMFLOAT3 endPos = { 0,0,0 };
 	XMFLOAT3 storagePos = { 0,0,0 };
+	//弾座標
+	XMFLOAT3 bulletPos = { 0,0,0 };
 
 	enum direction
 	{
@@ -67,10 +73,13 @@ private:
 	const float speed = 0.5;
 	//回避関連の変数
 	bool defenceFlag = false;
+	//弾変数
+	bool bulletFlag = false;
 
 public:
 	int defence_direction;
 	float time = 0;
+	float bulletTime = 0;
 	XMFLOAT3 distance;
 
 };

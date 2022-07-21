@@ -28,11 +28,21 @@ public:
 	float Quint_in(float x);
 	float Quint_out(float x);
 	float Quint_inout(float x);
-	float Expo(float x);
-	float Circ(float x);
-	float Back(float x);
-	float Elastic(float x);
-	float Bounce(float x);
+	float Expo_in(float x);
+	float Expo_out(float x);
+	float Expo_inout(float x);
+	float Circ_in(float x);
+	float Circ_out(float x);
+	float Circ_inout(float x);
+	float Back_in(float x);
+	float Back_out(float x);
+	float Back_inout(float x);
+	float Elastic_in(float x);
+	float Elastic_out(float x);
+	float Elastic_inout(float x);
+	float Bounce_in(float x);
+	float Bounce_out(float x);
+	float Bounce_inout(float x);
 
 public:
 	XMFLOAT3 position = { 0,0,0 };
