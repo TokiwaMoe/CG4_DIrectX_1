@@ -356,6 +356,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprintf_s(str2, "bulletPos x : %f y : %f z : %f", player->bulletPos.x, player->bulletPos.y, player->bulletPos.z);
 		debugText.Print(str2, 0, 30, 1.0f);
 
+		char str3[256];
+		sprintf_s(str3, "bulletTimer : %f  flag : %d", player->bulletTime, player->bulletFlag);
+		debugText.Print(str3, 0, 50, 1.0f);
+
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
 #pragma endregion

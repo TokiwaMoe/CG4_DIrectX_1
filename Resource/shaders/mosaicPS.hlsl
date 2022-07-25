@@ -7,7 +7,7 @@ SamplerState smp : register(s0);		//0番スロットに設定されたサンプラー
 float4 main(VSOutput input) : SV_TARGET
 {
 	float density = 50;
-	float4 col = tex0.Sample(smp, floor(input.uv *  density) / density); //x 以下の最大の整数を返す
+	float4 col = tex0.Sample(smp, floor(input.uv *  density) / density); //x以下の最大の整数を返す
 
 	return col;
 }

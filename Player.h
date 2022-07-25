@@ -11,6 +11,7 @@ class Player {
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
+	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	Player();
 	~Player();
@@ -65,21 +66,22 @@ private:
 	bool jumpFlag = false;
 	const float gravity = 9.8;
 	bool gravityFlag = false;
-	const float m = 1;	//•¨—Ê
-	const float k = 2;	//‹ó‹C’ïR
-	const float PI = 3.141592;
-	const float angle = 60;
-	
-	const float speed = 0.5;
+
 	//‰ñ”ğŠÖ˜A‚Ì•Ï”
 	bool defenceFlag = false;
-	//’e•Ï”
-	bool bulletFlag = false;
-
+	
 public:
 	int defence_direction;
 	float time = 0;
-	float bulletTime = 0;
 	XMFLOAT3 distance;
+
+	//’e•Ï”
+	bool bulletFlag = false;
+	const float bulletSpeed = 0.5;
+	float bulletTime = 0;
+	const float m = 1;	//•¨—Ê
+	const float PI = 3.141592;
+	const float angle = 30;
+	XMVECTOR lengthVec;
 
 };

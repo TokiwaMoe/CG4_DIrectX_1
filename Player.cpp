@@ -28,7 +28,7 @@ void Player::Initialize()
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.5,0.5,0.5 });
 	objBullet->SetObject3dModel(bulletModel);
-	objBullet->SetScale({ 0.5,0.5,0.5 });
+	objBullet->SetScale({ 0.1,0.1,0.1 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -168,7 +168,7 @@ void Player::Jump()
 		jumpFlag = false;
 		position.y -= gravity / 60.0f;
 
-		if (position.y < 0.5)
+		if (position.y < 0)
 		{
 			gravityFlag = false;
 		}
@@ -179,23 +179,42 @@ void Player::Jump()
 
 void Player::HomingBullet()
 {
-	if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
-	{
-		bulletTime = 0;
-		bulletFlag = true;
-		bulletPos = { 0,5,0 };
-	}
+	//if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
+	//{
+	//	//bulletTime = 0;
+	//	bulletFlag = true;
+	//	bulletPos = { 0,5,0 };
+	//}
 
-	if (bulletFlag)
-	{
-		bulletTime += 0.1f;
-		bulletPos = easing->ease(bulletPos, {0,0,5}, bulletTime);
+	//if (bulletFlag)
+	//{
+	//	bulletTime += 0.1f;
+	//	float dy = speed * bulletTime;
+	//	float dx = speed * bulletTime;
+	//	float vx = dx * cos((PI / 180) * angle);
+	//	float vy = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (bulletTime * bulletTime));
+	//	bulletPos.x = vx;
+	//	bulletPos.y = vy;
 
-		if (bulletPos.z == 5)
-		{
-			bulletFlag = false;
-		}
-	}
+	//	if (bulletPos.y < 0)
+	//	{
+	//		bulletFlag = false;
+	//	}
+	//}
+
+	float limitSpeed = 0.3f;     //弾の制限速度
+
+	lengthVec = { position.x - bulletPos.x, position.y - bulletPos.y, position.z - bulletPos.z };  //弾から追いかける対象への方向を計算
+	XMVector3Normalize(lengthVec);
+	lengthVec = { (lengthVec.m128_f32[0] - 1.0f) * bulletSpeed, (lengthVec.m128_f32[1] + 1.0f) * bulletSpeed, lengthVec.m128_f32[2] * bulletSpeed };  //方向の長さを1に正規化、任意の力をAddForceで加える
+
+	float speedXTemp = min(max(lengthVec.m128_f32[0], -limitSpeed), limitSpeed); //X方向の速度を制限
+	float speedYTemp = min(max(lengthVec.m128_f32[1], -limitSpeed), limitSpeed);  //Y方向の速度を制限
+	float speedZTemp = min(max(lengthVec.m128_f32[2], -limitSpeed), limitSpeed);
+
+	bulletPos.x += speedXTemp;
+	bulletPos.y += speedYTemp;
+	bulletPos.z += speedZTemp;
 
 	objBullet->SetPosition(bulletPos);
 }
@@ -203,5 +222,5 @@ void Player::HomingBullet()
 void Player::Draw()
 {
 	objPlayer->Draw();
-	//objBullet->Draw();
+	objBullet->Draw();
 }
