@@ -308,7 +308,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\noize_2PS.hlsl">
+    <FxCompile Include="Resource\shaders\scanNoisePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
@@ -316,7 +316,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\noize_2VS.hlsl">
+    <FxCompile Include="Resource\shaders\scanNoiseVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -493,12 +493,12 @@
     <None Include="Resource\shaders\mosaic.hlsli" />
     <None Include="Resource\shaders\negapozi.hlsli" />
     <None Include="Resource\shaders\noize.hlsli" />
-    <None Include="Resource\shaders\noize_2.hlsli" />
     <None Include="Resource\shaders\OBJShaderHeader.hlsli" />
     <None Include="Resource\shaders\OBJ_Light.hlsli" />
     <None Include="Resource\shaders\Particle.hlsli" />
     <None Include="Resource\shaders\PostEffect.hlsli" />
     <None Include="Resource\shaders\RGBShift.hlsli" />
+    <None Include="Resource\shaders\scanNoise.hlsli" />
     <None Include="Resource\shaders\sepia.hlsli" />
     <None Include="Resource\shaders\Sprite.hlsli" />
     <None Include="Resource\shaders\Toon.hlsli" />

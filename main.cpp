@@ -281,7 +281,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			postEffect->Initialize(L"Resource/shaders/negapoziVS.hlsl", L"Resource/shaders/negapoziPS.hlsl");
 			break;
 		case 5:
-			postEffect->Initialize(L"Resource/shaders/noize_2VS.hlsl", L"Resource/shaders/noize_2PS.hlsl");
+			postEffect->Initialize(L"Resource/shaders/scanNoiseVS.hlsl", L"Resource/shaders/scanNoisePS.hlsl");
 			break;
 		case 6:
 			postEffect->Initialize(L"Resource/shaders/mosaicVS.hlsl", L"Resource/shaders/mosaicPS.hlsl");

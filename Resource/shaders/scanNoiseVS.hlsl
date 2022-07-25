@@ -1,4 +1,4 @@
-#include "noize_2.hlsli"
+#include "scanNoise.hlsli"
 
 VSOutput main(float4 pos : POSITION, float2 uv : TEXCOORD)
 {

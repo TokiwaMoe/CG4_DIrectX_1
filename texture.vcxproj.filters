@@ -118,9 +118,6 @@
     <Filter Include="リソース ファイル\PostEffect\negapozi">
       <UniqueIdentifier>{3771f96c-e3f0-4616-bc19-1516e07097f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\PostEffect\noize_2">
-      <UniqueIdentifier>{cdae9d75-cd5f-40b9-b8a1-345ddcdfa0a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\PostEffect\Whitenoize">
       <UniqueIdentifier>{0c3d3039-0c96-4850-af66-070c363a63ef}</UniqueIdentifier>
     </Filter>
@@ -150,6 +147,9 @@
     </Filter>
     <Filter Include="リソース ファイル\PostEffect\sepia\Vignette">
       <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\PostEffect\scanNoise">
+      <UniqueIdentifier>{cdae9d75-cd5f-40b9-b8a1-345ddcdfa0a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -302,11 +302,11 @@
     <FxCompile Include="Resource\shaders\mosaicVS.hlsl">
       <Filter>リソース ファイル\PostEffect\mosaic</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\noize_2PS.hlsl">
-      <Filter>リソース ファイル\PostEffect\noize_2</Filter>
+    <FxCompile Include="Resource\shaders\scanNoisePS.hlsl">
+      <Filter>リソース ファイル\PostEffect\scanNoise</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\noize_2VS.hlsl">
-      <Filter>リソース ファイル\PostEffect\noize_2</Filter>
+    <FxCompile Include="Resource\shaders\scanNoiseVS.hlsl">
+      <Filter>リソース ファイル\PostEffect\scanNoise</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\WhiteNoizePS.hlsl">
       <Filter>リソース ファイル\PostEffect\Whitenoize</Filter>
@@ -388,9 +388,6 @@
     <None Include="Resource\shaders\mosaic.hlsli">
       <Filter>リソース ファイル\PostEffect\mosaic</Filter>
     </None>
-    <None Include="Resource\shaders\noize_2.hlsli">
-      <Filter>リソース ファイル\PostEffect\noize_2</Filter>
-    </None>
     <None Include="Resource\shaders\WhiteNoize.hlsli">
       <Filter>リソース ファイル\PostEffect\Whitenoize</Filter>
     </None>
@@ -411,6 +408,9 @@
     </None>
     <None Include="Resource\shaders\Header.hlsli">
       <Filter>リソース ファイル\PostEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\scanNoise.hlsli">
+      <Filter>リソース ファイル\PostEffect\scanNoise</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
