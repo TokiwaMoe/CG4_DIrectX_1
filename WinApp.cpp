@@ -18,7 +18,7 @@ void WinApp::Initialize()
 	
 	w.cbSize = sizeof(WNDCLASSEX);
 	w.lpfnWndProc = (WNDPROC)WindowProc; // ウィンドウプロシージャを設定
-	w.lpszClassName = L"ときわさん家のいやーな虫撃退法"; // ウィンドウクラス名
+	w.lpszClassName = L"3Dアクション"; // ウィンドウクラス名
 	w.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
 	w.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
 
@@ -29,7 +29,7 @@ void WinApp::Initialize()
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false); // 自動でサイズ補正
 
 	hwnd = CreateWindow(w.lpszClassName,
-		L"ときわさん家のいやーな虫撃退法",
+		L"3Dアクション",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

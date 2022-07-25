@@ -26,6 +26,17 @@ void DirectXCommon::Initialize(WinApp* winApp)
 	InitializeDepthBuffer();
 	//ƒtƒFƒ“ƒX‚Ì‰Šú‰»
 	InitializeFence();
+
+#ifdef _DEBUG
+	ComPtr<ID3D12InfoQueue> infoQueue;
+	if (SUCCEEDED(dev->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+	{
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+		infoQueue->Release();
+	}
+#endif
 }
 
 void DirectXCommon::InitializeDevice()
