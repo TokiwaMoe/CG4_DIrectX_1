@@ -148,9 +148,6 @@
     <Filter Include="リソース ファイル\PostEffect\scanNoise">
       <UniqueIdentifier>{cdae9d75-cd5f-40b9-b8a1-345ddcdfa0a8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Friend">
-      <UniqueIdentifier>{e1f05dad-8c20-49d6-ac58-6d40cf197d73}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\PostEffect\Vignette">
       <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
     </Filter>
@@ -227,9 +224,6 @@
     </ClCompile>
     <ClCompile Include="Easing.cpp">
       <Filter>ソース ファイル\easing</Filter>
-    </ClCompile>
-    <ClCompile Include="Friend.cpp">
-      <Filter>ソース ファイル\Friend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -497,9 +491,6 @@
     </ClInclude>
     <ClInclude Include="Easing.h">
       <Filter>ソース ファイル\easing</Filter>
-    </ClInclude>
-    <ClInclude Include="Friend.h">
-      <Filter>ソース ファイル\Friend</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

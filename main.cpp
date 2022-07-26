@@ -175,6 +175,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Player* player = new Player();
 	player->Initialize();
+	
 	// カメラ注視点をセット
 	camera->SetTarget({0, 2.5f, 0});
 	camera->SetDistance(8.0f);
@@ -245,7 +246,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		enemy->Update();
 		player->Update(camera);
-
 		camera->Update();
 		particleMan->Update();
 		light->Update();
@@ -254,6 +254,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere->Update();
 		objSphere2->Update();
 		object1->Update();
+		
 
 		//background->SetColor({ 0,0,0,1 });
 
@@ -316,7 +317,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D描画
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
-
 		player->Draw();
 		//enemy->Draw();
 		objSkydome->Draw();
@@ -359,6 +359,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		char str3[256];
 		sprintf_s(str3, "bulletTimer : %f  flag : %d", player->bulletTime, player->bulletFlag);
 		debugText.Print(str3, 0, 50, 1.0f);
+
+		char str4[256];
+		sprintf_s(str4, "friendPos x : %f y : %f z : %f  Angle : %f", player->friendPos.x, player->friendPos.y, player->friendPos.z, player->otomoAngle);
+		debugText.Print(str4, 0, 70, 1.0f);
+
+		char str5[256];
+		sprintf_s(str5, "e x : %f y : %f z : %f  Angle : %f", player->e.x, player->e.y, player->e.z, player->otomoAngle);
+		debugText.Print(str5, 0, 90, 1.0f);
 
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();

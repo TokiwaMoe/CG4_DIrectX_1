@@ -10,6 +10,17 @@ void Easing::Initialize()
 	time = 0;
 }
 
+XMFLOAT3 Easing::lerp(XMFLOAT3 start, XMFLOAT3 end, float flame)
+{
+	difference = { end.x - start.x, end.y - start.y, end.z - start.z };
+	time = flame / maxflame;
+	float v = time;
+	position.x = difference.x * v + start.x;
+	position.y = difference.y * v + start.y;
+	position.z = difference.z * v + start.z;
+	return position;
+}
+
 XMFLOAT3 Easing::ease(XMFLOAT3 start, XMFLOAT3 end, float flame)
 {
 	difference = { end.x - start.x, end.y - start.y, end.z - start.z };

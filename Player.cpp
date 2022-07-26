@@ -1,19 +1,10 @@
 ﻿#include "Player.h"
-#include "Camera.h"
 #include <time.h>
 #include <cassert>
 #include "SphereCollider.h"
 #include "Input.h"
 
 using namespace DirectX;
-
-Player::Player()
-{
-}
-
-Player::~Player()
-{
-}
 
 void Player::Initialize()
 {
@@ -24,11 +15,16 @@ void Player::Initialize()
 	bulletModel = Object3dModel::LoadFromOBJ("sphere");
 	objBullet = Object3d::Create();
 	objBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+	friendModel = Object3dModel::LoadFromOBJ("sphere");
+	objFriend = Object3d::Create();
+	objFriend->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.5,0.5,0.5 });
 	objBullet->SetObject3dModel(bulletModel);
 	objBullet->SetScale({ 0.1,0.1,0.1 });
+	objFriend->SetObject3dModel(friendModel);
+	objFriend->SetScale({ 0.1,0.1,0.1 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -36,6 +32,8 @@ void Player::Initialize()
 	time = 0;
 	defence_direction = Previous;
 	distance = { 0,0,0 };
+
+	otomoAngle = 0;
 }
 
 void Player::Update(Camera *camera)
@@ -44,8 +42,10 @@ void Player::Update(Camera *camera)
 	Jump();
 	defense();
 	HomingBullet();
+	OtomoMove();
 	objPlayer->Update();
 	objBullet->Update();
+	objFriend->Update();
 }
 
 void Player::Move(Camera* camera)
@@ -179,32 +179,44 @@ void Player::Jump()
 
 void Player::HomingBullet()
 {
-	//if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
-	//{
-	//	//bulletTime = 0;
-	//	bulletFlag = true;
-	//	bulletPos = { 0,5,0 };
-	//}
+	
+	bulletPos = position;
+	if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
+	{
+		//bulletTime = 0;
+		enemyOldPos = { 0,0,0 };
+		
+		bulletFlag = true;
+		point.p0 = bulletPos;
+		point.p1 = { point.p0.x + 0.5f, point.p0.y + 2.0f, point.p0.z - 0.5f };
+		point.p2 = { point.p1.x + 0.5f, point.p1.y, point.p1.z - 0.5f };
+		point.p3 = enemyOldPos;
+	}
 
-	//if (bulletFlag)
-	//{
-	//	bulletTime += 0.1f;
-	//	float dy = speed * bulletTime;
-	//	float dx = speed * bulletTime;
-	//	float vx = dx * cos((PI / 180) * angle);
-	//	float vy = dy * sin((PI / 180) * angle) - 0.5 * (gravity * (bulletTime * bulletTime));
-	//	bulletPos.x = vx;
-	//	bulletPos.y = vy;
+	if (bulletFlag)
+	{
+		bulletTime += 0.05f;
+		a = easing->lerp(point.p0, point.p1, bulletTime);
+		b = easing->lerp(point.p1, point.p2, bulletTime);
+		c = easing->lerp(point.p2, point.p3, bulletTime);
+		d = easing->lerp(a, b, bulletTime);
+		e = easing->lerp(b, c, bulletTime);
+		bulletPos = easing->lerp(d, e, bulletTime);
+		if (bulletTime >= 1.0f)
+		{
+			bulletFlag = false;
+			bulletTime = 0;
+		}
+	}
 
-	//	if (bulletPos.y < 0)
-	//	{
-	//		bulletFlag = false;
-	//	}
-	//}
+	objBullet->SetPosition(bulletPos);
+}
 
+void Player::OtomoMove()
+{
 	float limitSpeed = 0.3f;     //弾の制限速度
 
-	lengthVec = { position.x - bulletPos.x, position.y - bulletPos.y, position.z - bulletPos.z };  //弾から追いかける対象への方向を計算
+	lengthVec = { position.x - friendPos.x, position.y - friendPos.y, position.z - friendPos.z };  //弾から追いかける対象への方向を計算
 	XMVector3Normalize(lengthVec);
 	lengthVec = { (lengthVec.m128_f32[0] - 1.0f) * bulletSpeed, (lengthVec.m128_f32[1] + 1.0f) * bulletSpeed, lengthVec.m128_f32[2] * bulletSpeed };  //方向の長さを1に正規化、任意の力をAddForceで加える
 
@@ -212,15 +224,16 @@ void Player::HomingBullet()
 	float speedYTemp = min(max(lengthVec.m128_f32[1], -limitSpeed), limitSpeed);  //Y方向の速度を制限
 	float speedZTemp = min(max(lengthVec.m128_f32[2], -limitSpeed), limitSpeed);
 
-	bulletPos.x += speedXTemp;
-	bulletPos.y += speedYTemp;
-	bulletPos.z += speedZTemp;
+	friendPos.x += speedXTemp;
+	friendPos.y += speedYTemp;
+	friendPos.z += speedZTemp;
 
-	objBullet->SetPosition(bulletPos);
+	objFriend->SetPosition(friendPos);
 }
 
 void Player::Draw()
 {
 	objPlayer->Draw();
 	objBullet->Draw();
+	objFriend->Draw();
 }

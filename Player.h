@@ -13,8 +13,6 @@ class Player {
 	using XMMATRIX = DirectX::XMMATRIX;
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
-	Player();
-	~Player();
 	void Initialize();
 
 	void Update(Camera* camera);
@@ -31,6 +29,8 @@ public:
 
 	void HomingBullet();
 
+	void OtomoMove();
+
 	void Draw();
 
 
@@ -39,6 +39,8 @@ public:
 	Object3d* objPlayer = nullptr;
 	Object3dModel* bulletModel = nullptr;
 	Object3d* objBullet = nullptr;
+	Object3dModel* friendModel = nullptr;
+	Object3d* objFriend = nullptr;
 	Easing* easing = nullptr;
 
 	// ローカルスケール
@@ -52,6 +54,8 @@ public:
 	XMFLOAT3 storagePos = { 0,0,0 };
 	//弾座標
 	XMFLOAT3 bulletPos = { 0,0,0 };
+	//おとも座標
+	XMFLOAT3 friendPos = { 0,0,0 };
 
 	enum direction
 	{
@@ -59,6 +63,14 @@ public:
 		Back,
 		Right,
 		Left
+	};
+
+	struct Point
+	{
+		XMFLOAT3 p0 = { 0,0,0 };
+		XMFLOAT3 p1 = { 0,0,0 };
+		XMFLOAT3 p2 = { 0,0,0 };
+		XMFLOAT3 p3 = { 0,0,0 };
 	};
 
 private:
@@ -83,5 +95,17 @@ public:
 	const float PI = 3.141592;
 	const float angle = 30;
 	XMVECTOR lengthVec;
+	XMFLOAT3 enemyOldPos = { 0,0,0 };
+	Point point;
+	XMFLOAT3 a;
+	XMFLOAT3 b;
+	XMFLOAT3 c;
+	XMFLOAT3 d;
+	XMFLOAT3 e;
+
+	//おとも
+	float otomoAngle = 0;
+	float raise = 0.2f;
+	bool toggle = false;
 
 };
