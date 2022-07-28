@@ -348,7 +348,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 前景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		char str[256];
+		/*char str[256];
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
 
@@ -366,7 +366,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		char str5[256];
 		sprintf_s(str5, "e x : %f y : %f z : %f  Angle : %f", player->e.x, player->e.y, player->e.z, player->otomoAngle);
-		debugText.Print(str5, 0, 90, 1.0f);
+		debugText.Print(str5, 0, 90, 1.0f);*/
 
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
