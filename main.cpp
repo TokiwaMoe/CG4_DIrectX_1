@@ -120,7 +120,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	background = Sprite::Create(1, { 0.0f,0.0f });
 
 	Sprite* line = nullptr;
-	Sprite::LoadTexture(2, L"Resource/Line.png");
+	Sprite::LoadTexture(2, L"Resource/huriko.png");
 	line = Sprite::Create(2, { 0.0f,0.0f });
 	
 
@@ -455,8 +455,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		b.x = jiku_x + nx;
 		b.y = jiku_y + ny;
 
-		line->SetRotation(180 + ny);
-		line->SetPosition({ 100,100 });
+		/*line->SetRotation(nx);
+		line->SetPosition({ 100,100 });*/
 		cicre->SetPosition({ b.x, b.y });
 
 		//XV--------------------------------------------------------
@@ -508,12 +508,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprintf_s(str, "%f %f b.y : %f %f", force, vel, b.y, target);
 		debugText.Print(str, 10, 10, 1.0f);*/
 
-		char str[256];
+		/*char str[256];
 		sprintf_s(str, "obj2 : %f %f", nx, ny);
-		debugText.Print(str, 10, 30, 1.0f);
+		debugText.Print(str, 10, 30, 1.0f);*/
 
 		cicre->Draw();
-		line->Draw();
+		//line->Draw();
 		
 
 		debugText.DrawAll(dxCommon->GetCmdList());
