@@ -17,6 +17,32 @@ public:
 		LONG    lY;
 		LONG    lZ;
 	};
+	//パッド
+	enum PadButtaon
+	{
+		A,
+		B,
+		X,
+		Y,
+		LB,
+		RB,
+		Select,
+		Start,
+		LS,
+		RS,
+		Cross_Up,
+		Cross_Down,
+		Cross_Right,
+		Cross_Left,
+		ButtonMax
+	};
+	enum PadStick
+	{
+		Stick_Up,
+		Stick_Down,
+		Stick_Right,
+		Stick_Left
+	};
 public:
 	//namespace省略
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -39,9 +65,11 @@ public://メンバ関数
 	//初期化
 	void Initialize(WinApp *winApp);
 	void MouseInitialize(WinApp* winApp);
+	void PadInitialize(WinApp* winApp);
 	//更新
 	void KeyUpdate();
 	void MouseUpdate();
+	void PadUpdate();
 
 /// <summary>
 /// キーの押下をチェック
@@ -65,6 +93,11 @@ public://メンバ関数
 	/// <returns>マウス移動量</returns>
 	MouseMove GetMouseMove();
 
+	/// <summary>
+	/// スティックの傾き取得
+	/// </summary>
+	bool StickTilt(int stick);
+
 private: //メンバ変数
 	//DirectInputのインスタンス
 	ComPtr<IDirectInput8> dinput;
@@ -80,5 +113,14 @@ private: //メンバ変数
 	DIMOUSESTATE mouse = { 0 };
 	//前回のマウス
 	DIMOUSESTATE oldMouse = { 0 };
+
+	//ゲームパッド
+	ComPtr<IDirectInputDevice8> devPad;
+	//ゲームパッドの入力情報取得
+	DIJOYSTATE pad = {};
+	//前回のパッド
+	DIJOYSTATE oldPad = {};
+	//ボタンデータ
+	bool isPush[32] = {};
 	
 };

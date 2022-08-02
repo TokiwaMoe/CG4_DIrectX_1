@@ -77,6 +77,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Input* input = Input::GetInstance();
 	input->Initialize(winApp);
 	input->MouseInitialize(winApp);
+	input->PadInitialize(winApp);
 
 	DebugCamera* camera = nullptr;
 	// カメラ生成
@@ -196,6 +197,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//DirectX毎フレーム処理　ここから
 		input->KeyUpdate();
 		input->MouseUpdate();
+		input->PadUpdate();
 		//マウス座標
 		POINT mousePos;
 		GetCursorPos(&mousePos);
@@ -348,11 +350,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 前景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		/*char str[256];
+		char str[256];
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
 
-		char str2[256];
+		/*char str2[256];
 		sprintf_s(str2, "bulletPos x : %f y : %f z : %f", player->bulletPos.x, player->bulletPos.y, player->bulletPos.z);
 		debugText.Print(str2, 0, 30, 1.0f);
 

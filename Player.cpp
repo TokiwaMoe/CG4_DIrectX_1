@@ -72,6 +72,28 @@ void Player::Move(Camera* camera)
 		defence_direction = Right;
 	}
 
+
+	if (Input::GetInstance()->StickTilt(Input::Stick_Up)) {
+		position.z += forvardvec.m128_f32[2];
+		objPlayer->SetRotation({ 0,0,0 });
+		defence_direction = Previous;
+	}
+	if (Input::GetInstance()->StickTilt(Input::Stick_Down)) {
+		position.z -= forvardvec.m128_f32[2];
+		objPlayer->SetRotation({ 0,180,0 });
+		defence_direction = Back;
+	}
+	if (Input::GetInstance()->StickTilt(Input::Stick_Left)) {
+		position.x -= forvardvec.m128_f32[0];
+		objPlayer->SetRotation({ 0,-90,0 });
+		defence_direction = Left;
+	}
+	if (Input::GetInstance()->StickTilt(Input::Stick_Right)) {
+		position.x += forvardvec.m128_f32[0];
+		objPlayer->SetRotation({ 0,90,0 });
+		defence_direction = Right;
+	}
+
 	objPlayer->SetPosition(position);
 }
 
