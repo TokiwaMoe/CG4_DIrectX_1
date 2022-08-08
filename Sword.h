@@ -42,5 +42,5 @@ public:
 	XMFLOAT3 position = { 0,0,0 };
 
 private:
-
+	bool Attack = false;
 };

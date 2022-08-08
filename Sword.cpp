@@ -1,4 +1,5 @@
 #include "Sword.h"
+#include "Input.h"
 
 void Sword::Initialize()
 {
@@ -9,11 +10,13 @@ void Sword::Initialize()
 
 	objSword->SetObject3dModel(swordModel);
 	objSword->SetScale({ 0.02,0.02,0.02 });
+	objSword->SetRotation({ 90,0,0 });
 	
 }
 
 void Sword::Update(Player* player)
 {
+	objSword->SetRotation({ 90,0,0 });
 	Move(player);
 	objSword->Update();
 }
@@ -21,7 +24,16 @@ void Sword::Update(Player* player)
 void Sword::Move(Player* player)
 {
 	position = player->GetPosition();
+
+	if (Input::GetInstance()->PushKey(DIK_4))
+	{
+		position.x -= 1;
+		position.y -= 1;
+		objSword->SetRotation({ 90, 0, 30 });
+	}
+	
 	objSword->SetPosition(position);
+	
 }
 
 void Sword::Draw()
