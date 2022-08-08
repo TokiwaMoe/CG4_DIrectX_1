@@ -1,10 +1,13 @@
+#pragma once
 #include <DirectXMath.h>
 #include"DirectXCommon.h"
 #include"Camera.h"
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Easing.h"
+
 class Player {
+private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -32,6 +35,8 @@ public:
 	void OtomoMove();
 
 	void Draw();
+
+	const XMFLOAT3& GetPosition() { return position; }
 
 
 public:

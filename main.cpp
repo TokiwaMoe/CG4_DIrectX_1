@@ -33,6 +33,7 @@
 #include"Light.h"
 #include"Player.h"
 #include"Enemy.h"
+#include"Sword.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -107,6 +108,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objGround->SetObject3dModel(Object3dModelGround);
 	objSphere->SetObject3dModel(Object3dModelSphere);
 	objSphere2->SetObject3dModel(Object3dModelSphere2);
+
 
 	XMFLOAT3 playerPosition = { 1,0,0 };
 	objSphere->SetPosition({ +10,0,0 });
@@ -184,6 +186,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Enemy* enemy = new Enemy();
 	enemy->Initialize();
 
+	Sword* sword = new Sword();
+	sword->Initialize();
+
 	int postEffectFlag = 0;
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -256,6 +261,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere->Update();
 		objSphere2->Update();
 		object1->Update();
+		sword->Update(player);
 		
 
 		//background->SetColor({ 0,0,0,1 });
@@ -323,6 +329,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//enemy->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
+		sword->Draw();
 		//objFighter->Draw();
 		//objSphere->Draw();
 		//objSphere2->Draw();

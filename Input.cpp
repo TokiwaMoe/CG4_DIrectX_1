@@ -40,10 +40,13 @@ void Input::MouseInitialize(WinApp* winApp)
 	HRESULT result;
 	//マウスデバイス生成
 	result = dinput->CreateDevice(GUID_SysMouse, &devMouse, NULL);
-	//入力データ形式のセット
-	result = devMouse->SetDataFormat(&c_dfDIMouse);
-	//排他制御レベルのセット
-	result = devMouse->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	if (devMouse != nullptr)
+	{
+		//入力データ形式のセット
+		result = devMouse->SetDataFormat(&c_dfDIMouse);
+		//排他制御レベルのセット
+		result = devMouse->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	}
 }
 
 void Input::PadInitialize(WinApp* winApp)
@@ -51,67 +54,79 @@ void Input::PadInitialize(WinApp* winApp)
 	HRESULT result;
 	//パッドデバイス生成
 	result = dinput->CreateDevice(GUID_Joystick, &devPad, NULL);
-	//入力データ形式のセット
-	result = devPad->SetDataFormat(&c_dfDIJoystick);
-	// 軸モードを絶対値モードとして設定
-	DIPROPDWORD diprop;
-	ZeroMemory(&diprop, sizeof(diprop));
-	diprop.diph.dwSize = sizeof(diprop);
-	diprop.diph.dwHeaderSize = sizeof(diprop.diph);
-	diprop.diph.dwHow = DIPH_DEVICE;
-	diprop.diph.dwObj = 0;
-	diprop.dwData = DIPROPAXISMODE_ABS;
+	if (devPad != nullptr)
+	{
+		//入力データ形式のセット
+		result = devPad->SetDataFormat(&c_dfDIJoystick);
+		// 軸モードを絶対値モードとして設定
+		DIPROPDWORD diprop;
+		ZeroMemory(&diprop, sizeof(diprop));
+		diprop.diph.dwSize = sizeof(diprop);
+		diprop.diph.dwHeaderSize = sizeof(diprop.diph);
+		diprop.diph.dwHow = DIPH_DEVICE;
+		diprop.diph.dwObj = 0;
+		diprop.dwData = DIPROPAXISMODE_ABS;
 
-	// 軸モードを変更
-	devPad->SetProperty(DIPROP_AXISMODE, &diprop.diph);
+		// 軸モードを変更
+		devPad->SetProperty(DIPROP_AXISMODE, &diprop.diph);
 
-	// X軸の値の範囲設定
-	DIPROPRANGE diprg;
-	ZeroMemory(&diprg, sizeof(diprg));
-	diprg.diph.dwSize = sizeof(diprg);
-	diprg.diph.dwHeaderSize = sizeof(diprg.diph);
-	diprg.diph.dwHow = DIPH_BYOFFSET;
-	diprg.diph.dwObj = DIJOFS_X;
-	diprg.lMin = -1000;
-	diprg.lMax = 1000;
+		// X軸の値の範囲設定
+		DIPROPRANGE diprg;
+		ZeroMemory(&diprg, sizeof(diprg));
+		diprg.diph.dwSize = sizeof(diprg);
+		diprg.diph.dwHeaderSize = sizeof(diprg.diph);
+		diprg.diph.dwHow = DIPH_BYOFFSET;
+		diprg.diph.dwObj = DIJOFS_X;
+		diprg.lMin = -1000;
+		diprg.lMax = 1000;
 
-	// X軸の値の範囲設定
-	devPad->SetProperty(DIPROP_RANGE, &diprg.diph);
+		// X軸の値の範囲設定
+		devPad->SetProperty(DIPROP_RANGE, &diprg.diph);
 
-	// Y軸の値の範囲設定
-	diprg.diph.dwObj = DIJOFS_Y;
-	devPad->SetProperty(DIPROP_RANGE, &diprg.diph);
-	//排他制御レベルのセット
-	result = devPad->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+		// Y軸の値の範囲設定
+		diprg.diph.dwObj = DIJOFS_Y;
+		devPad->SetProperty(DIPROP_RANGE, &diprg.diph);
+		//排他制御レベルのセット
+		result = devPad->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	}
+	
 }
 
 void Input::MouseUpdate()
 {
 	HRESULT result;
 
-	//マウスの情報取得開始
-	result = devMouse->Acquire();
-	//前回のキー入力を保存
-	oldMouse = mouse;
-	//マウスの入力情報を取得
-	result = devMouse->GetDeviceState(sizeof(DIMOUSESTATE), &mouse);
+	if (devMouse != nullptr)
+	{
+		//マウスの情報取得開始
+		result = devMouse->Acquire();
+		//前回のキー入力を保存
+		oldMouse = mouse;
+		//マウスの入力情報を取得
+		result = devMouse->GetDeviceState(sizeof(DIMOUSESTATE), &mouse);
+	}
+	
 }
 
 void Input::PadUpdate()
 {
 	HRESULT result;
 
-	//パッドの情報取得開始
-	result = devPad->Acquire();
-	//前回のキー入力を保存
-	oldPad = pad;
-	//パッドの入力情報を取得
-	result = devPad->GetDeviceState(sizeof(DIJOYSTATE), &pad);
-	//リセット
-	for (int i = 0; i < 32; i++)
+	if (devPad != nullptr)
 	{
-		isPush[i] = false;
+		//パッドの情報取得開始
+		result = devPad->Acquire();
+		//前回のキー入力を保存
+		oldPad = pad;
+		//パッドの入力情報を取得
+		result = devPad->GetDeviceState(sizeof(DIJOYSTATE), &pad);
+		//リセット
+		for (int i = 0; i < 32; i++)
+		{
+			isPush[i] = false;
+		}
 	}
+	
 }
 
 void Input::KeyUpdate()

@@ -151,6 +151,9 @@
     <Filter Include="リソース ファイル\PostEffect\Vignette">
       <UniqueIdentifier>{12402306-bf8a-4836-ada6-ee764a845d09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\sword">
+      <UniqueIdentifier>{f0a2af8f-02ac-42bb-9329-b99abf966f0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -224,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="Easing.cpp">
       <Filter>ソース ファイル\easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>ソース ファイル\sword</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -491,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="Easing.h">
       <Filter>ソース ファイル\easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>ソース ファイル\sword</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
