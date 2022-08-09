@@ -5,8 +5,9 @@
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Easing.h"
+#include"Player.h"
 
-class Player {
+class Skill {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::
@@ -18,17 +19,11 @@ private:
 public:
 	void Initialize();
 
-	void Update(Camera* camera);
+	void Update(Player* player);
 
-	void Move(Camera* camera);
+	void Move(Player *player);
 
-	void defense();
-
-	void defenseKey();
-
-	void defenseMove(XMFLOAT3 FinalPos);
-
-	void Jump();
+	void HomingBullet(Player* player);
 
 	void Draw();
 
@@ -36,27 +31,22 @@ public:
 
 
 public:
-	Object3dModel* playerModel = nullptr;
-	Object3d* objPlayer = nullptr;
-	Object3dModel* bulletModel = nullptr;
-	Object3d* objBullet = nullptr;
+	Easing* easing = nullptr;
+	Player* player = nullptr;
+
 	Object3dModel* friendModel = nullptr;
 	Object3d* objFriend = nullptr;
-	Easing* easing = nullptr;
+	Object3dModel* bulletModel = nullptr;
+	Object3d* objBullet = nullptr;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 rotation = { 0,0,0 };
-	// プレイヤー座標
+	//座標
 	XMFLOAT3 position = { 0,0,0 };
-	XMFLOAT3 oldPos = { 0,0,0 };
-	XMFLOAT3 endPos = { 0,0,0 };
-	XMFLOAT3 storagePos = { 0,0,0 };
 	//弾座標
 	XMFLOAT3 bulletPos = { 0,0,0 };
-	//おとも座標
-	XMFLOAT3 friendPos = { 0,0,0 };
 
 	enum direction
 	{
@@ -74,20 +64,7 @@ public:
 		XMFLOAT3 p3 = { 0,0,0 };
 	};
 
-private:
-	//ジャンプ関連の変数
-	bool jumpFlag = false;
-	const float gravity = 9.8;
-	bool gravityFlag = false;
-
-	//回避関連の変数
-	bool defenceFlag = false;
-	
 public:
-	int defence_direction;
-	float time = 0;
-	XMFLOAT3 distance;
-
 	//弾変数
 	bool bulletFlag = false;
 	const float bulletSpeed = 0.5;

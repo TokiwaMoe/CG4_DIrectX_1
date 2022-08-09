@@ -34,6 +34,7 @@
 #include"Player.h"
 #include"Enemy.h"
 #include"Sword.h"
+#include"Skill.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -189,6 +190,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Sword* sword = new Sword();
 	sword->Initialize();
 
+	Skill* skill = new Skill();
+	skill->Initialize();
+
 	int postEffectFlag = 0;
 	//audio->PlayBGMWave("Resource/BGM.wav", 0.3f, true);
 	while (true) {
@@ -262,6 +266,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere2->Update();
 		object1->Update();
 		sword->Update(player);
+		skill->Update(player);
 		
 
 		//background->SetColor({ 0,0,0,1 });
@@ -330,6 +335,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSkydome->Draw();
 		objGround->Draw();
 		sword->Draw();
+		skill->Draw();
 		//objFighter->Draw();
 		//objSphere->Draw();
 		//objSphere2->Draw();

@@ -154,6 +154,9 @@
     <Filter Include="ソース ファイル\sword">
       <UniqueIdentifier>{f0a2af8f-02ac-42bb-9329-b99abf966f0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Skill">
+      <UniqueIdentifier>{6fce3c29-f85a-4e71-b502-d9dc60087c64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="Sword.cpp">
       <Filter>ソース ファイル\sword</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>ソース ファイル\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +506,9 @@
     </ClInclude>
     <ClInclude Include="Sword.h">
       <Filter>ソース ファイル\sword</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>ソース ファイル\Skill</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
