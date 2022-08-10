@@ -255,7 +255,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		}
 
-		enemy->Update();
+		enemy->Update(player);
 		player->Update(camera);
 		camera->Update();
 		particleMan->Update();
@@ -331,7 +331,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
 		player->Draw();
-		//enemy->Draw();
+		enemy->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
 		sword->Draw();
@@ -367,19 +367,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
 
-		/*char str2[256];
-		sprintf_s(str2, "bulletPos x : %f y : %f z : %f", player->bulletPos.x, player->bulletPos.y, player->bulletPos.z);
+		char str2[256];
+		sprintf_s(str2, "angle : %f", enemy->Angle);
 		debugText.Print(str2, 0, 30, 1.0f);
 
-		char str3[256];
+		/*char str3[256];
 		sprintf_s(str3, "bulletTimer : %f  flag : %d", player->bulletTime, player->bulletFlag);
-		debugText.Print(str3, 0, 50, 1.0f);
+		debugText.Print(str3, 0, 50, 1.0f);*/
 
-		char str4[256];
+		/*char str4[256];
 		sprintf_s(str4, "friendPos x : %f y : %f z : %f  Angle : %f", player->friendPos.x, player->friendPos.y, player->friendPos.z, player->otomoAngle);
-		debugText.Print(str4, 0, 70, 1.0f);
+		debugText.Print(str4, 0, 70, 1.0f);*/
 
-		char str5[256];
+		/*char str5[256];
 		sprintf_s(str5, "e x : %f y : %f z : %f  Angle : %f", player->e.x, player->e.y, player->e.z, player->otomoAngle);
 		debugText.Print(str5, 0, 90, 1.0f);*/
 

@@ -3,6 +3,7 @@
 #include"Camera.h"
 #include"Object3d.h"
 #include"Object3dModel.h"
+#include"Player.h"
 
 class Enemy
 {
@@ -17,9 +18,11 @@ public:
 	~Enemy();
 	void Initialize();
 
-	void Update();
+	void Update(Player* player);
 
 	void Move();
+
+	void Target(Player* player);
 
 	void Draw();
 
@@ -28,7 +31,10 @@ public:
 	Object3dModel* enemyModel = nullptr;
 	Object3d* objEnemy = nullptr;
 
+	Player* player = nullptr;
 	float speed = 0.5f;
+
+	float Angle;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };

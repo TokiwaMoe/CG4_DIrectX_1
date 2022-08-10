@@ -12,19 +12,9 @@ void Player::Initialize()
 	playerModel = Object3dModel::LoadFromOBJ("chr_sword");
 	objPlayer = Object3d::Create();
 	objPlayer->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
-	bulletModel = Object3dModel::LoadFromOBJ("sphere");
-	objBullet = Object3d::Create();
-	objBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
-	friendModel = Object3dModel::LoadFromOBJ("sphere");
-	objFriend = Object3d::Create();
-	objFriend->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.5,0.5,0.5 });
-	objBullet->SetObject3dModel(bulletModel);
-	objBullet->SetScale({ 0.1,0.1,0.1 });
-	objFriend->SetObject3dModel(friendModel);
-	objFriend->SetScale({ 0.1,0.1,0.1 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -42,8 +32,6 @@ void Player::Update(Camera *camera)
 	Jump();
 	defense();
 	objPlayer->Update();
-	objBullet->Update();
-	objFriend->Update();
 }
 
 void Player::Move(Camera* camera)
@@ -200,6 +188,4 @@ void Player::Jump()
 void Player::Draw()
 {
 	objPlayer->Draw();
-	objBullet->Draw();
-	objFriend->Draw();
 }

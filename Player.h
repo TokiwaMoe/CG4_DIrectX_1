@@ -38,10 +38,6 @@ public:
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* objPlayer = nullptr;
-	Object3dModel* bulletModel = nullptr;
-	Object3d* objBullet = nullptr;
-	Object3dModel* friendModel = nullptr;
-	Object3d* objFriend = nullptr;
 	Easing* easing = nullptr;
 
 	// ローカルスケール
