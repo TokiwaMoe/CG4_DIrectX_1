@@ -42,4 +42,9 @@ public:
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 1,0,0 };
+
+	//プレイヤーに向く処理
+	float targetTime = 0;
+	float maxTargetTime = 10;
+	bool targetFlag = false;
 };
