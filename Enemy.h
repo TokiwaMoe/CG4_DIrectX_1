@@ -4,6 +4,7 @@
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Player.h"
+#include"easing.h"
 
 class Enemy
 {
@@ -24,14 +25,19 @@ public:
 
 	void Target(Player* player);
 
+	void Assault(Player* player);
+
 	void Draw();
+
+	const XMFLOAT3& GetPosition() { return position; }
 
 
 public:
 	Object3dModel* enemyModel = nullptr;
 	Object3d* objEnemy = nullptr;
+	Easing* easing = nullptr;
 
-	Player* player = nullptr;
+
 	float speed = 0.5f;
 
 	float Angle;
@@ -45,6 +51,15 @@ public:
 
 	//ƒvƒŒƒCƒ„[‚ÉŒü‚­ˆ—
 	float targetTime = 0;
-	float maxTargetTime = 10;
+	const float maxTargetTime = 10;
 	bool targetFlag = false;
+
+	//“ËŒ‚
+	float preAssaultTime = 0;
+	const float maxPreAssaultTime = 100;
+	float bfoAssaultTime = 0;
+	const float maxBfoAssaultTime = 80;
+	bool assaultFlag = false;
+	XMFLOAT3 playerOldPos = { 0,0,0 };
+	XMFLOAT3 oldPos = { 0,0,0 };
 };

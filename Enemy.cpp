@@ -18,12 +18,16 @@ void Enemy::Initialize()
 	objEnemy->SetObject3dModel(enemyModel);
 	objEnemy->SetScale({ 0.5,0.5,0.5 });
 
+	easing = new Easing();
+	easing->Initialize();
+
 	speed = 0.5f;
 }
 
 void Enemy::Update(Player* player)
 {
 	Target(player);
+	Assault(player);
 	objEnemy->Update();
 }
 
@@ -40,6 +44,32 @@ void Enemy::Target(Player* player)
 	Angle = (atan2(AngleX, AngleZ)) * 180.0f / 3.14f + direction;
 
 	objEnemy->SetRotation({ 0,Angle,0 });
+}
+
+void Enemy::Assault(Player* player)
+{
+	preAssaultTime++;
+	if (preAssaultTime >= maxPreAssaultTime && assaultFlag == false)
+	{
+		playerOldPos = player->GetPosition();
+		oldPos = position;
+		assaultFlag = true;
+		bfoAssaultTime = 0;
+	}
+
+	if (assaultFlag)
+	{
+		bfoAssaultTime += 0.01f;
+		position = easing->ease(oldPos, playerOldPos, bfoAssaultTime);
+		preAssaultTime = 0;
+		if (bfoAssaultTime >= easing->maxflame)
+		{
+			assaultFlag = false;
+			
+		}
+	}
+
+	objEnemy->SetPosition(position);
 }
 
 void Enemy::Draw()

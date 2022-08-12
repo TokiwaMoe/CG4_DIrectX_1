@@ -83,27 +83,6 @@ void Player::Move(Camera* camera)
 	objPlayer->SetPosition(position);
 }
 
-void Player::defense()
-{
-	if (Input::GetInstance()->TriggerKey(DIK_1) && defenceFlag == false)
-	{
-		time = 0;
-		distance = { 0,0,0 };
-		defenceFlag = true;
-		oldPos = objPlayer->GetPosition();
-	}
-
-	
-	if (defenceFlag)
-	{
-		defenseKey();
-		
-	}
-	
-
-	objPlayer->SetPosition(position);
-}
-
 void Player::defenseKey()
 {
 	/*if (Input::GetInstance()->PushKey(DIK_W)) {
@@ -136,6 +115,27 @@ void Player::defenseKey()
 	}
 	endPos = { oldPos.x + distance.x, oldPos.y + distance.y, oldPos.z + distance.z };
 	defenseMove(endPos);
+}
+
+void Player::defense()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_1) && defenceFlag == false)
+	{
+		time = 0;
+		distance = { 0,0,0 };
+		defenceFlag = true;
+		oldPos = objPlayer->GetPosition();
+	}
+
+
+	if (defenceFlag)
+	{
+		defenseKey();
+
+	}
+
+
+	objPlayer->SetPosition(position);
 }
 
 void Player::defenseMove(XMFLOAT3 FinalPos)

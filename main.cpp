@@ -371,17 +371,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprintf_s(str2, "angle : %f", enemy->Angle);
 		debugText.Print(str2, 0, 30, 1.0f);
 
-		/*char str3[256];
-		sprintf_s(str3, "bulletTimer : %f  flag : %d", player->bulletTime, player->bulletFlag);
-		debugText.Print(str3, 0, 50, 1.0f);*/
+		char str3[256];
+		sprintf_s(str3, "preAssaultTime : %f bfoAssaultTime : %f", enemy->preAssaultTime, enemy->bfoAssaultTime);
+		debugText.Print(str3, 0, 50, 1.0f);
 
-		/*char str4[256];
-		sprintf_s(str4, "friendPos x : %f y : %f z : %f  Angle : %f", player->friendPos.x, player->friendPos.y, player->friendPos.z, player->otomoAngle);
-		debugText.Print(str4, 0, 70, 1.0f);*/
+		char str4[256];
+		sprintf_s(str4, "enemyPosition x : %f y : %f z : %f", enemy->position.x, enemy->position.y, enemy->position.z);
+		debugText.Print(str4, 0, 70, 1.0f);
 
 		/*char str5[256];
-		sprintf_s(str5, "e x : %f y : %f z : %f  Angle : %f", player->e.x, player->e.y, player->e.z, player->otomoAngle);
-		debugText.Print(str5, 0, 90, 1.0f);*/
+		sprintf_s(str5, "playerOldPos x : %f y : %f z : %f", enemy->playerOldPos.x, enemy->playerOldPos.y, enemy->playerOldPos.z);
+		debugText.Print(str5, 0, 90, 1.0f);
+
+		char str6[256];
+		sprintf_s(str6, "enemyOldPos x : %f y : %f z : %f", enemy->oldPos.x, enemy->oldPos.y, enemy->oldPos.z);
+		debugText.Print(str6, 0, 110, 1.0f);*/
 
 		debugText.DrawAll(dxCommon->GetCmdList());
 		Sprite::PostDraw();
