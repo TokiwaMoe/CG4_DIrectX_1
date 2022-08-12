@@ -102,7 +102,7 @@ void Enemy::BoundBullet(Player* player)
 	if (bulletPos.y >= 5.0f) {
 		vy = -vy;
 	}
-	else if (bulletPos.x < 0) {
+	else if (bulletPos.y < 0) {
 		vy = vy;
 	}
 

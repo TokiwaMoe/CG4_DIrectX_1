@@ -371,12 +371,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		sprintf_s(str2, "angle : %f", enemy->Angle);
 		debugText.Print(str2, 0, 30, 1.0f);
 
-		char str3[256];
+		/*char str3[256];
 		sprintf_s(str3, "preAssaultTime : %f bfoAssaultTime : %f", enemy->preAssaultTime, enemy->bfoAssaultTime);
-		debugText.Print(str3, 0, 50, 1.0f);
+		debugText.Print(str3, 0, 50, 1.0f);*/
 
 		char str4[256];
-		sprintf_s(str4, "enemyPosition x : %f y : %f z : %f", enemy->position.x, enemy->position.y, enemy->position.z);
+		sprintf_s(str4, "bulletPos x : %f y : %f z : %f", enemy->bulletPos.x, enemy->bulletPos.y, enemy->bulletPos.z);
 		debugText.Print(str4, 0, 70, 1.0f);
 
 		/*char str5[256];
