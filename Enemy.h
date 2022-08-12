@@ -27,6 +27,10 @@ public:
 
 	void Assault(Player* player);
 
+	void HomingBullet(Player* player);
+
+	void BoundBullet(Player* player);
+
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
@@ -35,6 +39,9 @@ public:
 public:
 	Object3dModel* enemyModel = nullptr;
 	Object3d* objEnemy = nullptr;
+	Object3dModel* enemyBulletModel = nullptr;
+	Object3d* objEnemyBullet = nullptr;
+
 	Easing* easing = nullptr;
 
 
@@ -62,4 +69,8 @@ public:
 	bool assaultFlag = false;
 	XMFLOAT3 playerOldPos = { 0,0,0 };
 	XMFLOAT3 oldPos = { 0,0,0 };
+
+	//ƒoƒEƒ“ƒh
+	float gravity;
+	XMFLOAT3 bulletPos = { 0,0,0 };
 };
