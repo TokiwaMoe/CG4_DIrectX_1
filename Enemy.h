@@ -73,4 +73,7 @@ public:
 	//ƒoƒEƒ“ƒh
 	float gravity;
 	XMFLOAT3 bulletPos = { 0,0,0 };
+	bool gravityFlag = false;
+	float e1;
+	float boundHeight;
 };

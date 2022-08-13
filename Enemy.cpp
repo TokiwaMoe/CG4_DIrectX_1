@@ -29,6 +29,7 @@ void Enemy::Initialize()
 	easing->Initialize();
 
 	speed = 0.5f;
+	boundHeight = 5.0f;
 }
 
 void Enemy::Update(Player* player)
@@ -87,24 +88,44 @@ void Enemy::HomingBullet(Player* player)
 
 void Enemy::BoundBullet(Player* player)
 {
+	float m1 = 1;
 	float vx = 0.1f;
 	gravity = 9.8f / 60.0f;
 	float vy = 0;
 	vy = vy + gravity;//重力の考慮
 	bulletPos.x = bulletPos.x + vx;//速度の更新
-	bulletPos.y = bulletPos.y + vy;
+	
 
 	/*if (bulletPos.x > 0) {
 		vx = vx * -1.0f;
 	}*/
 	//画面のy座標は逆なので
 	//↓が床とのあたり判定
-	if (bulletPos.y >= 5.0f) {
-		vy = -vy;
+	
+	if (gravityFlag)
+	{
+		bulletPos.y = bulletPos.y - vy;
+
+		if (bulletPos.y < 0)
+		{
+			gravityFlag = false;
+			float a1 = m1 * vy;
+			float law1 = a1 / m1;
+			e1 = vy / law1;
+			vy *= e1;
+			boundHeight -= 1.0f;
+			vx += 0.1f;
+		}
 	}
-	else if (bulletPos.y < 0) {
-		vy = vy;
+	else {
+
+		bulletPos.y = bulletPos.y + vy;
+
+		if (bulletPos.y >= boundHeight) {
+			gravityFlag = true;
+		}
 	}
+	
 
 	objEnemyBullet->SetPosition(bulletPos);
 }
