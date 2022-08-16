@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "Input.h"
 
+using namespace DirectX;
+
 Enemy::Enemy()
 {
 }
@@ -16,14 +18,20 @@ void Enemy::Initialize()
 	objEnemy->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
 	enemyBulletModel = Object3dModel::LoadFromOBJ("sphere");
-	objEnemyBullet = Object3d::Create();
-	objEnemyBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+	objBoundBullet = Object3d::Create();
+	objBoundBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+
+	objHomingBullet = Object3d::Create();
+	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
 	objEnemy->SetObject3dModel(enemyModel);
 	objEnemy->SetScale({ 0.5,0.5,0.5 });
 
-	objEnemyBullet->SetObject3dModel(enemyBulletModel);
-	objEnemyBullet->SetScale({ 0.5,0.5,0.5 });
+	objBoundBullet->SetObject3dModel(enemyBulletModel);
+	objBoundBullet->SetScale({ 0.5,0.5,0.5 });
+
+	objHomingBullet->SetObject3dModel(enemyBulletModel);
+	objHomingBullet->SetScale({ 0.5,0.5,0.5 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -37,8 +45,10 @@ void Enemy::Update(Player* player)
 	Target(player);
 	Assault(player);
 	BoundBullet(player);
+	HomingBullet(player);
 	objEnemy->Update();
-	objEnemyBullet->Update();
+	objBoundBullet->Update();
+	objHomingBullet->Update();
 }
 
 void Enemy::Move()
@@ -84,6 +94,38 @@ void Enemy::Assault(Player* player)
 
 void Enemy::HomingBullet(Player* player)
 {
+	if (Input::GetInstance()->TriggerKey(DIK_5) && homingBulletFlag == false)
+	{
+
+		homingBulletFlag = true;
+		homingBulletPos = position;
+	}
+
+	if (homingBulletFlag)
+	{
+		float limitSpeed = 0.3f;     //弾の制限速度
+		XMFLOAT3 playerPos = player->GetPosition();
+		lengthVec = { playerPos.x - homingBulletPos.x, playerPos.y - homingBulletPos.y, playerPos.z - homingBulletPos.z };  //弾から追いかける対象への方向を計算
+		XMVector3Normalize(lengthVec);
+		lengthVec = { lengthVec.m128_f32[0] * homingBulletSpeed, lengthVec.m128_f32[1] * homingBulletSpeed, lengthVec.m128_f32[2] * homingBulletSpeed };  //方向の長さを1に正規化、任意の力をAddForceで加える
+
+		float speedXTemp = min(max(lengthVec.m128_f32[0], -limitSpeed), limitSpeed); //X方向の速度を制限
+		float speedYTemp = min(max(lengthVec.m128_f32[1], -limitSpeed), limitSpeed);  //Y方向の速度を制限
+		float speedZTemp = min(max(lengthVec.m128_f32[2], -limitSpeed), limitSpeed);
+
+		homingBulletPos.x += speedXTemp;
+		homingBulletPos.y += speedYTemp;
+		homingBulletPos.z += speedZTemp;
+
+		if (homingBulletPos.x == playerPos.x && homingBulletPos.y == playerPos.y && homingBulletPos.z == playerPos.z)
+		{
+			homingBulletFlag = false;
+		}
+	}
+
+	
+
+	objHomingBullet->SetPosition(homingBulletPos);
 }
 
 void Enemy::BoundBullet(Player* player)
@@ -93,7 +135,7 @@ void Enemy::BoundBullet(Player* player)
 	gravity = 9.8f / 60.0f;
 	float vy = 0;
 	vy = vy + gravity;//重力の考慮
-	bulletPos.x = bulletPos.x + vx;//速度の更新
+	boundBulletPos.x = boundBulletPos.x + vx;//速度の更新
 	
 
 	/*if (bulletPos.x > 0) {
@@ -104,9 +146,9 @@ void Enemy::BoundBullet(Player* player)
 	
 	if (gravityFlag)
 	{
-		bulletPos.y = bulletPos.y - vy;
+		boundBulletPos.y = boundBulletPos.y - vy;
 
-		if (bulletPos.y < 0)
+		if (boundBulletPos.y < 0)
 		{
 			gravityFlag = false;
 			float a1 = m1 * vy;
@@ -119,19 +161,20 @@ void Enemy::BoundBullet(Player* player)
 	}
 	else {
 
-		bulletPos.y = bulletPos.y + vy;
+		boundBulletPos.y = boundBulletPos.y + vy;
 
-		if (bulletPos.y >= boundHeight) {
+		if (boundBulletPos.y >= boundHeight) {
 			gravityFlag = true;
 		}
 	}
 	
 
-	objEnemyBullet->SetPosition(bulletPos);
+	objBoundBullet->SetPosition(boundBulletPos);
 }
 
 void Enemy::Draw()
 {
 	objEnemy->Draw();
-	objEnemyBullet->Draw();
+	objBoundBullet->Draw();
+	objHomingBullet->Draw();
 }

@@ -363,21 +363,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 前景スプライト描画
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		char str[256];
+		/*char str[256];
 		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
 		debugText.Print(str, 0, 10, 1.0f);
 
 		char str2[256];
 		sprintf_s(str2, "angle : %f", enemy->Angle);
-		debugText.Print(str2, 0, 30, 1.0f);
+		debugText.Print(str2, 0, 30, 1.0f);*/
 
 		/*char str3[256];
 		sprintf_s(str3, "preAssaultTime : %f bfoAssaultTime : %f", enemy->preAssaultTime, enemy->bfoAssaultTime);
 		debugText.Print(str3, 0, 50, 1.0f);*/
 
-		char str4[256];
-		sprintf_s(str4, "bulletPos x : %f y : %f z : %f", enemy->bulletPos.x, enemy->bulletPos.y, enemy->bulletPos.z);
-		debugText.Print(str4, 0, 70, 1.0f);
+		/*char str4[256];
+		sprintf_s(str4, "bulletPos x : %f y : %f z : %f", enemy->boundBulletPos.x, enemy->boundBulletPos.y, enemy->boundBulletPos.z);
+		debugText.Print(str4, 0, 70, 1.0f);*/
 
 		/*char str5[256];
 		sprintf_s(str5, "playerOldPos x : %f y : %f z : %f", enemy->playerOldPos.x, enemy->playerOldPos.y, enemy->playerOldPos.z);

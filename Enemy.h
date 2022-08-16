@@ -14,6 +14,7 @@ class Enemy
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
+	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	Enemy();
 	~Enemy();
@@ -40,7 +41,8 @@ public:
 	Object3dModel* enemyModel = nullptr;
 	Object3d* objEnemy = nullptr;
 	Object3dModel* enemyBulletModel = nullptr;
-	Object3d* objEnemyBullet = nullptr;
+	Object3d* objBoundBullet = nullptr;
+	Object3d* objHomingBullet = nullptr;
 
 	Easing* easing = nullptr;
 
@@ -72,8 +74,16 @@ public:
 
 	//バウンド
 	float gravity;
-	XMFLOAT3 bulletPos = { 0,0,0 };
+	XMFLOAT3 boundBulletPos = { 0,0,0 };
 	bool gravityFlag = false;
 	float e1;
 	float boundHeight;
+
+	//ホーミング弾
+	XMFLOAT3 homingBulletPos = { 0,0,0 };
+	bool homingBulletFlag = false;
+	XMVECTOR lengthVec;
+	const float homingBulletSpeed = 0.5;
+	float homingTime = 0;
+	float homingMaxTime = 100;
 };
