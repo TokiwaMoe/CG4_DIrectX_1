@@ -32,6 +32,8 @@ public:
 
 	void BoundBullet(Player* player);
 
+	void AirfoilBullet(Player* player);
+
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
@@ -43,6 +45,8 @@ public:
 	Object3dModel* enemyBulletModel = nullptr;
 	Object3d* objBoundBullet = nullptr;
 	Object3d* objHomingBullet = nullptr;
+	Object3d* objAirfoilBulletRight[10][13];
+	Object3d* objAirfoilBulletLeft[10][13];
 
 	Easing* easing = nullptr;
 
@@ -86,4 +90,8 @@ public:
 	const float homingBulletSpeed = 0.5;
 	float homingTime = 0;
 	float homingMaxTime = 100;
+
+	//—ƒŒ^’e
+	XMFLOAT3 airfoilPosRight[10][13];
+	XMFLOAT3 airfoilPosLeft[10][13];
 };
