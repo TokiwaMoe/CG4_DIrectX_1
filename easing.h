@@ -14,6 +14,7 @@ public:
 	void Initialize();
 	XMFLOAT3 lerp(XMFLOAT3 start, XMFLOAT3 end, float flame);
 	XMFLOAT3 ease(XMFLOAT3 start, XMFLOAT3 end, float flame);
+	XMFLOAT3 easeOut(XMFLOAT3 start, XMFLOAT3 end, float flame);
 	float Cubic_in(float x);
 	float Cubic_out(float x);
 	float Cubic_inout(float x);

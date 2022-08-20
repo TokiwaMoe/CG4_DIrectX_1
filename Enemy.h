@@ -82,6 +82,8 @@ public:
 	bool gravityFlag = false;
 	float e1;
 	float boundHeight;
+	XMFLOAT3 endPos = { 0,0,0 };
+	float boundTime = 0;
 
 	//ホーミング弾
 	XMFLOAT3 homingBulletPos = { 0,0,0 };

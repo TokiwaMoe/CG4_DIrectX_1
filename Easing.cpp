@@ -32,6 +32,17 @@ XMFLOAT3 Easing::ease(XMFLOAT3 start, XMFLOAT3 end, float flame)
 	return position;
 }
 
+XMFLOAT3 Easing::easeOut(XMFLOAT3 start, XMFLOAT3 end, float flame)
+{
+	difference = { end.x - start.x, end.y - start.y, end.z - start.z };
+	time = flame / maxflame;
+	float v = Bounce_out(time);
+	position.x = difference.x * v + start.x;
+	position.y = difference.y * v + start.y;
+	position.z = difference.z * v + start.z;
+	return position;
+}
+
 float Easing::Cubic_in(float x)
 {
 	return x * x * x;

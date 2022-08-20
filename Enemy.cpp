@@ -24,7 +24,7 @@ void Enemy::Initialize()
 	objHomingBullet = Object3d::Create();
 	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
@@ -33,7 +33,7 @@ void Enemy::Initialize()
 			objAirfoilBulletLeft[y][x] = Object3d::Create();
 			objAirfoilBulletLeft[y][x]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 		}
-	}
+	}*/
 
 	objEnemy->SetObject3dModel(enemyModel);
 	objEnemy->SetScale({ 0.5,0.5,0.5 });
@@ -41,10 +41,10 @@ void Enemy::Initialize()
 	objBoundBullet->SetObject3dModel(enemyBulletModel);
 	objBoundBullet->SetScale({ 0.5,0.5,0.5 });
 
-	objHomingBullet->SetObject3dModel(enemyBulletModel);
-	objHomingBullet->SetScale({ 0.5,0.5,0.5 });
+	/*objHomingBullet->SetObject3dModel(enemyBulletModel);
+	objHomingBullet->SetScale({ 0.5,0.5,0.5 });*/
 
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
@@ -53,7 +53,7 @@ void Enemy::Initialize()
 			objAirfoilBulletLeft[y][x]->SetObject3dModel(enemyBulletModel);
 			objAirfoilBulletLeft[y][x]->SetScale({ 0.5,0.5,0.5 });
 		}
-	}
+	}*/
 
 	easing = new Easing();
 	easing->Initialize();
@@ -68,18 +68,18 @@ void Enemy::Update(Player* player)
 	Assault(player);
 	BoundBullet(player);
 	HomingBullet(player);
-	AirfoilBullet(player);
+	//AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
 			objAirfoilBulletRight[y][x]->Update();
 			objAirfoilBulletLeft[y][x]->Update();
 		}
-	}
+	}*/
 }
 
 void Enemy::Move()
@@ -161,44 +161,54 @@ void Enemy::HomingBullet(Player* player)
 
 void Enemy::BoundBullet(Player* player)
 {
-	float m1 = 1;
-	float vx = 0.1f;
-	gravity = 9.8f / 60.0f;
-	float vy = 0;
-	vy = vy + gravity;//重力の考慮
-	boundBulletPos.x = boundBulletPos.x + vx;//速度の更新
 	
+	endPos = { 60,0,0 };
+	boundBulletPos = { 0,30,0 };
+	boundBulletPos = easing->easeOut(boundBulletPos, endPos, boundTime);
+	boundTime += 0.01f;
 
-	/*if (bulletPos.x > 0) {
-		vx = vx * -1.0f;
-	}*/
-	//画面のy座標は逆なので
-	//↓が床とのあたり判定
-	
-	if (gravityFlag)
+	if (boundTime >= easing->maxflame)
 	{
-		boundBulletPos.y = boundBulletPos.y - vy;
-
-		if (boundBulletPos.y < 0)
-		{
-			gravityFlag = false;
-			float a1 = m1 * vy;
-			float law1 = a1 / m1;
-			e1 = vy / law1;
-			vy *= e1;
-			boundHeight -= 1.0f;
-			vx += 0.1f;
-		}
+		boundBulletPos = endPos;
+		boundTime = 0;
 	}
-	else {
+	//float m1 = 1;
+	//float vx = 0.1f;
+	//gravity = 9.8f / 60.0f;
+	//float vy = 0;
+	//vy = vy + gravity;//重力の考慮
+	//boundBulletPos.x = boundBulletPos.x + vx;//速度の更新
+	//
 
-		boundBulletPos.y = boundBulletPos.y + vy;
+	///*if (bulletPos.x > 0) {
+	//	vx = vx * -1.0f;
+	//}*/
+	////画面のy座標は逆なので
+	////↓が床とのあたり判定
+	//
+	//if (gravityFlag)
+	//{
+	//	boundBulletPos.y = boundBulletPos.y - vy;
 
-		if (boundBulletPos.y >= boundHeight) {
-			gravityFlag = true;
-		}
-	}
-	
+	//	if (boundBulletPos.y < 0)
+	//	{
+	//		gravityFlag = false;
+	//		float a1 = m1 * vy;
+	//		float law1 = a1 / m1;
+	//		e1 = vy / law1;
+	//		vy *= e1;
+	//		boundHeight -= 1.0f;
+	//		vx += 0.1f;
+	//	}
+	//}
+	//else {
+
+	//	boundBulletPos.y = boundBulletPos.y + vy;
+
+	//	if (boundBulletPos.y >= boundHeight) {
+	//		gravityFlag = true;
+	//	}
+	//}
 
 	objBoundBullet->SetPosition(boundBulletPos);
 }
@@ -229,12 +239,12 @@ void Enemy::Draw()
 	objEnemy->Draw();
 	objBoundBullet->Draw();
 	objHomingBullet->Draw();
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
 			objAirfoilBulletRight[y][x]->Draw();
 			objAirfoilBulletLeft[y][x]->Draw();
 		}
-	}
+	}*/
 }
