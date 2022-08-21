@@ -164,7 +164,7 @@ void Enemy::BoundBullet(Player* player)
 	
 	endPos = { 60,0,0 };
 	boundBulletPos = { 0,30,0 };
-	boundBulletPos = easing->easeOut(boundBulletPos, endPos, boundTime);
+	boundBulletPos = easing->easeOut_Bounce(boundBulletPos, endPos, boundTime);
 	boundTime += 0.01f;
 
 	if (boundTime >= easing->maxflame)
@@ -172,43 +172,6 @@ void Enemy::BoundBullet(Player* player)
 		boundBulletPos = endPos;
 		boundTime = 0;
 	}
-	//float m1 = 1;
-	//float vx = 0.1f;
-	//gravity = 9.8f / 60.0f;
-	//float vy = 0;
-	//vy = vy + gravity;//重力の考慮
-	//boundBulletPos.x = boundBulletPos.x + vx;//速度の更新
-	//
-
-	///*if (bulletPos.x > 0) {
-	//	vx = vx * -1.0f;
-	//}*/
-	////画面のy座標は逆なので
-	////↓が床とのあたり判定
-	//
-	//if (gravityFlag)
-	//{
-	//	boundBulletPos.y = boundBulletPos.y - vy;
-
-	//	if (boundBulletPos.y < 0)
-	//	{
-	//		gravityFlag = false;
-	//		float a1 = m1 * vy;
-	//		float law1 = a1 / m1;
-	//		e1 = vy / law1;
-	//		vy *= e1;
-	//		boundHeight -= 1.0f;
-	//		vx += 0.1f;
-	//	}
-	//}
-	//else {
-
-	//	boundBulletPos.y = boundBulletPos.y + vy;
-
-	//	if (boundBulletPos.y >= boundHeight) {
-	//		gravityFlag = true;
-	//	}
-	//}
 
 	objBoundBullet->SetPosition(boundBulletPos);
 }
