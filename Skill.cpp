@@ -53,12 +53,12 @@ void Skill::Move(Player* player)
 
 void Skill::HomingBullet(Player* player)
 {
-	bulletPos = player->GetPosition();
+	
 	if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
 	{
-		//bulletTime = 0;
+		bulletPos = player->GetPosition();
 		enemyOldPos = { 0,0,0 };
-
+		bulletTime = 0;
 		bulletFlag = true;
 		point.p0 = bulletPos;
 		point.p1 = { point.p0.x + 0.5f, point.p0.y + 2.0f, point.p0.z - 0.5f };
@@ -78,8 +78,12 @@ void Skill::HomingBullet(Player* player)
 		if (bulletTime >= 1.0f)
 		{
 			bulletFlag = false;
-			bulletTime = 0;
+			
 		}
+	}
+	else
+	{
+		
 	}
 
 	objBullet->SetPosition(bulletPos);

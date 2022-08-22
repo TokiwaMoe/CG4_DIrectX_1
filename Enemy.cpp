@@ -24,7 +24,7 @@ void Enemy::Initialize()
 	objHomingBullet = Object3d::Create();
 	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
-	/*for (int y = 0; y < 10; y++)
+	for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
@@ -33,7 +33,7 @@ void Enemy::Initialize()
 			objAirfoilBulletLeft[y][x] = Object3d::Create();
 			objAirfoilBulletLeft[y][x]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 		}
-	}*/
+	}
 
 	objEnemy->SetObject3dModel(enemyModel);
 	objEnemy->SetScale({ 0.5,0.5,0.5 });
@@ -41,10 +41,10 @@ void Enemy::Initialize()
 	objBoundBullet->SetObject3dModel(enemyBulletModel);
 	objBoundBullet->SetScale({ 0.5,0.5,0.5 });
 
-	/*objHomingBullet->SetObject3dModel(enemyBulletModel);
-	objHomingBullet->SetScale({ 0.5,0.5,0.5 });*/
+	objHomingBullet->SetObject3dModel(enemyBulletModel);
+	objHomingBullet->SetScale({ 0.5,0.5,0.5 });
 
-	/*for (int y = 0; y < 10; y++)
+	for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
@@ -53,13 +53,18 @@ void Enemy::Initialize()
 			objAirfoilBulletLeft[y][x]->SetObject3dModel(enemyBulletModel);
 			objAirfoilBulletLeft[y][x]->SetScale({ 0.5,0.5,0.5 });
 		}
-	}*/
+	}
 
 	easing = new Easing();
 	easing->Initialize();
 
 	speed = 0.5f;
 	boundHeight = 5.0f;
+
+	for (int i = 0; i < 10; i++)
+	{
+		airfoilFlag[i] = false;
+	}
 }
 
 void Enemy::Update(Player* player)
@@ -68,18 +73,18 @@ void Enemy::Update(Player* player)
 	Assault(player);
 	BoundBullet(player);
 	HomingBullet(player);
-	//AirfoilBullet(player);
+	AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
-	/*for (int y = 0; y < 10; y++)
+	for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
 			objAirfoilBulletRight[y][x]->Update();
 			objAirfoilBulletLeft[y][x]->Update();
 		}
-	}*/
+	}
 }
 
 void Enemy::Move()
@@ -178,14 +183,28 @@ void Enemy::BoundBullet(Player* player)
 
 void Enemy::AirfoilBullet(Player* player)
 {
-	for (int y = 0; y < 10; y++)
+	for (int i = 0; i < 10; i++)
 	{
-		for (int x = 0; x < 13; x++)
+		if (Input::GetInstance()->TriggerKey(DIK_6) && airfoilFlag[i] == false)
 		{
-			airfoilPosRight[y][x] = { 1.0f * x, 2.0f * y, 0 };
-			airfoilPosLeft[y][x] = { -1.0f * x, 2.0f * y, 0 };
+			for (int y = 0; y < 10; y++)
+			{
+				for (int x = 0; x < 13; x++)
+				{
+					airfoilPosRight[y][x] = { position.x + 2.0f * x, position.x + 2.0f * y, position.z};
+					airfoilPosLeft[y][x] = { position.x - 2.0f * x, position.y + 2.0f * y, position.z };
+					playerOldPos = player->GetPosition();
+					airfoilTime = 0;
+					airfoilFlag[i] = true;
+					rightPoint.p0[y][x] = airfoilPosRight[y][x];
+					rightPoint.p1[y][x] = { rightPoint.p0[y][x].x + 0.5f, rightPoint.p0[y][x].y + 2.0f, rightPoint.p0[y][x].z - 0.5f };
+					rightPoint.p2[y][x] = { rightPoint.p1[y][x].x + 0.5f, rightPoint.p1[y][x].y, rightPoint.p1[y][x].z - 0.5f };
+					rightPoint.p3[y][x] = playerOldPos;
+				}
+			}
 		}
 	}
+	
 
 	for (int y = 0; y < 10; y++)
 	{
@@ -202,12 +221,12 @@ void Enemy::Draw()
 	objEnemy->Draw();
 	objBoundBullet->Draw();
 	objHomingBullet->Draw();
-	/*for (int y = 0; y < 10; y++)
+	for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
 			objAirfoilBulletRight[y][x]->Draw();
 			objAirfoilBulletLeft[y][x]->Draw();
 		}
-	}*/
+	}
 }
