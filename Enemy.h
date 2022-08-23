@@ -94,6 +94,33 @@ public:
 	float homingMaxTime = 100;
 
 	//—ƒŒ^’e
+	struct RightPoint
+	{
+		XMFLOAT3 p0[10][13];
+		XMFLOAT3 p1[10][13];
+		XMFLOAT3 p2[10][13];
+		XMFLOAT3 p3[10][13];
+	};
+
+	struct LeftPoint
+	{
+		XMFLOAT3 p0[10][13];
+		XMFLOAT3 p1[10][13];
+		XMFLOAT3 p2[10][13];
+		XMFLOAT3 p3[10][13];
+	};
+
 	XMFLOAT3 airfoilPosRight[10][13];
 	XMFLOAT3 airfoilPosLeft[10][13];
+	RightPoint rightPoint;
+	LeftPoint leftPoint;
+	XMFLOAT3 a[10][13];
+	XMFLOAT3 b[10][13];
+	XMFLOAT3 c[10][13];
+	XMFLOAT3 d[10][13];
+	XMFLOAT3 e[10][13];
+	bool airfoilFlag[10];
+	XMFLOAT3 playerOldPos;
+	float airfoilTime = 0;
+
 };
