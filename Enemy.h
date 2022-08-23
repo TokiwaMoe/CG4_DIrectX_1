@@ -120,7 +120,7 @@ public:
 	XMFLOAT3 d[10][13];
 	XMFLOAT3 e[10][13];
 	bool airfoilFlag[10];
-	XMFLOAT3 playerOldPos;
+	XMFLOAT3 playerOldPos_airfoil;
 	float airfoilTime = 0;
 
 };
