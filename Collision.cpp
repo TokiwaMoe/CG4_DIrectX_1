@@ -227,3 +227,11 @@ bool Collision::CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Ra
 			return true;
 		}
 }
+
+void Collision::CreateOBB(OBB* obb)
+{
+	XMMATRIX matRot;
+
+	XMFLOAT3 max = { -10000.0f, -10000.0f, -10000.0f };
+	XMFLOAT3 mix = { 10000.0f, 10000.0f, 10000.0f };
+}

@@ -73,4 +73,7 @@ public:
 
 	//‹…‚Æ‹…
 	static bool CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Radius, float sphere2Radius);
+
+	//OBB‚Ì“–‚½‚è”»’è
+	void CreateOBB(OBB* obb);
 };

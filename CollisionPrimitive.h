@@ -60,5 +60,14 @@ struct Ray
 //OBBとOBBの当たり判定
 class OBB
 {
+protected:
+	XMFLOAT3 m_Pos;				//位置
+	XMFLOAT3 m_NormaDirect[3];	//方向ベクトル
+	XMFLOAT3 fLength;
+};
 
+struct VERTEX
+{
+	XMFLOAT3 position, normal;
+	float tu, tv;
 };
