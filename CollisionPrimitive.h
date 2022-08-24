@@ -56,3 +56,9 @@ struct Ray
 	//•ûŒü
 	DirectX::XMVECTOR dir = { 1,0,0,0 };
 };
+
+//OBB‚ÆOBB‚Ì“–‚½‚è”»’è
+class OBB
+{
+
+};
