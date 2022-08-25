@@ -228,10 +228,28 @@ bool Collision::CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Ra
 		}
 }
 
-void Collision::CreateOBB(OBB* obb)
+bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 {
-	XMMATRIX matRot;
+	//各ベクトルの確保
+	 XMVECTOR NAe1 = obb1.GetDirect(0), Ae1 = NAe1 * obb1.GetLen_W(0);
+	 XMVECTOR NAe2 = obb1.GetDirect(1), Ae2 = NAe2 * obb1.GetLen_W(1);
+	 XMVECTOR NAe3 = obb1.GetDirect(2), Ae3 = NAe3 * obb1.GetLen_W(2);
+	 XMVECTOR NBe1 = obb2.GetDirect(0), Be1 = NBe1 * obb2.GetLen_W(0);
+	 XMVECTOR NBe2 = obb2.GetDirect(1), Be2 = NBe2 * obb2.GetLen_W(1);
+	 XMVECTOR NBe3 = obb2.GetDirect(2), Be3 = NBe3 * obb2.GetLen_W(2);
 
-	XMFLOAT3 max = { -10000.0f, -10000.0f, -10000.0f };
-	XMFLOAT3 mix = { 10000.0f, 10000.0f, 10000.0f };
+	 //分離軸 : Ae1
+	 XMVECTOR rA = XMVector3Length(Ae1);
+	 XMVECTOR rB;
+}
+
+float Collision::LenSegOnSeparateAxis(XMVECTOR& Sep, XMVECTOR& e1, XMVECTOR& e2, XMVECTOR& e3)
+{
+	//3つの内積の絶対値の和で投影線分長を計算
+	//分離軸Sepは標準化されていること
+	e3 = {0,0,0,0};
+	float r1 = fabs(XMVectorGetX(XMVector3Dot(Sep, e1)));
+	float r2 = fabs(XMVectorGetX(XMVector3Dot(Sep, e2)));
+	float r3 = e3 ? fabs(XMVectorGetX(XMVector3Dot(Sep, e3))) : 0;
+	return r1 + r2 + r3;
 }
