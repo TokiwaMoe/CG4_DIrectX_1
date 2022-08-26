@@ -11,3 +11,18 @@ void Triangle::ComputeNormal()
 	normal = XMVector3Cross(p0_p1, p0_p2);
 	normal = XMVector3Normalize(normal);
 }
+
+XMFLOAT3 OBB::GetDirect(int elem)
+{
+	return XMFLOAT3();
+}
+
+float OBB::GetLen_W(int elem)
+{
+	return 0.0f;
+}
+
+XMFLOAT3 OBB::GetPos_W()
+{
+	return XMFLOAT3();
+}

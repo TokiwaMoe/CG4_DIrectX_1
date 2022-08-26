@@ -61,13 +61,12 @@ struct Ray
 class OBB
 {
 protected:
-	XMFLOAT3 m_Pos;				//位置
-	XMFLOAT3 m_NormaDirect[3];	//方向ベクトル
-	XMFLOAT3 fLength;
-};
+	XMVECTOR m_Pos;				//位置
+	XMVECTOR m_NormaDirect[3];	//方向ベクトル
+	float m_fLength[3];		//各軸方向の長さ
 
-struct VERTEX
-{
-	XMFLOAT3 position, normal;
-	float tu, tv;
+public:
+	XMVECTOR GetDirect(int elem);	//指定軸番号の方向ベクトルを取得
+	float GetLen_W(int elem);		//指定軸方向の長さを取得
+	XMVECTOR GetPos_W();			//位置を取得
 };

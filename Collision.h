@@ -75,5 +75,6 @@ public:
 	static bool CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Radius, float sphere2Radius);
 
 	//OBB‚Ì“–‚½‚è”»’è
-	void CreateOBB(OBB* obb);
+	static bool ColOBBs(OBB& obb1, OBB& obb2);
+	static float LenSegOnSeparateAxis(XMVECTOR& Sep, XMVECTOR& e1, XMVECTOR& e2, XMVECTOR& e3);
 };
