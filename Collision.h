@@ -9,6 +9,7 @@ class Collision
 {
 private:
 	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	///<summary>
 	///‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è

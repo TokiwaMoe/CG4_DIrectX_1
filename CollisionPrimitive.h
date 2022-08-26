@@ -61,12 +61,12 @@ struct Ray
 class OBB
 {
 protected:
-	XMVECTOR m_Pos;				//位置
-	XMVECTOR m_NormaDirect[3];	//方向ベクトル
+	DirectX::XMVECTOR m_Pos;				//位置
+	DirectX::XMVECTOR m_NormaDirect[3];	//方向ベクトル
 	float m_fLength[3];		//各軸方向の長さ
 
 public:
-	XMVECTOR GetDirect(int elem);	//指定軸番号の方向ベクトルを取得
+	DirectX::XMVECTOR GetDirect(int elem);	//指定軸番号の方向ベクトルを取得
 	float GetLen_W(int elem);		//指定軸方向の長さを取得
-	XMVECTOR GetPos_W();			//位置を取得
+	DirectX::XMVECTOR GetPos_W();			//位置を取得
 };
