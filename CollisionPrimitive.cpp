@@ -14,15 +14,15 @@ void Triangle::ComputeNormal()
 
 XMVECTOR OBB::GetDirect(int elem)
 {
-	return XMVECTOR();
+	return m_NormaDirect[elem];
 }
 
 float OBB::GetLen_W(int elem)
 {
-	return 0.0f;
+	return m_fLength[elem];
 }
 
 XMVECTOR OBB::GetPos_W()
 {
-	return XMVECTOR();
+	return m_Pos;
 }
