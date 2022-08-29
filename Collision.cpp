@@ -295,9 +295,10 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C11
 	 XMVECTOR Cross;
+	 XMVECTOR empty = { 0,0,0 };
 	 Cross = XMVector3Cross(NAe1, NBe1);
-	 rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be2, Be3, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be2, Be3, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -306,8 +307,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C12
 	 Cross = XMVector3Cross(NAe1, NBe2);
-	 rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be1, Be3, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be1, Be3, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -316,8 +317,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C13
 	 Cross = XMVector3Cross(NAe1, NBe3);
-	 rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be1, Be2, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae2, Ae3, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be1, Be2, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -326,8 +327,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C21
 	 Cross = XMVector3Cross(NAe2, NBe1);
-	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be2, Be3, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be2, Be3, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -336,8 +337,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C22
 	 Cross = XMVector3Cross(NAe2, NBe2);
-	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be1, Be3, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be1, Be3, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -346,8 +347,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C23
 	 Cross = XMVector3Cross(NAe2, NBe3);
-	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be1, Be2, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae3, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be1, Be2, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -356,8 +357,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C31
 	 Cross = XMVector3Cross(NAe3, NBe1);
-	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be2, Be3, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be2, Be3, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -366,8 +367,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C32
 	 Cross = XMVector3Cross(NAe3, NBe2);
-	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be1, Be3, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be1, Be3, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {
@@ -376,8 +377,8 @@ bool Collision::ColOBBs(OBB& obb1, OBB& obb2)
 
 	 //•ª—£Ž² : C33
 	 Cross = XMVector3Cross(NAe3, NBe3);
-	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2, { 0,0,0 });
-	 rB = LenSegOnSeparateAxis(Cross, Be1, Be2, { 0,0,0 });
+	 rA = LenSegOnSeparateAxis(Cross, Ae1, Ae2, empty);
+	 rB = LenSegOnSeparateAxis(Cross, Be1, Be2, empty);
 	 L = fabs(XMVectorGetX(XMVector3Dot(Interval, Cross)));
 	 if (L > rA + rB)
 	 {

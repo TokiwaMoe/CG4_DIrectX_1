@@ -12,9 +12,9 @@ void Triangle::ComputeNormal()
 	normal = XMVector3Normalize(normal);
 }
 
-XMFLOAT3 OBB::GetDirect(int elem)
+XMVECTOR OBB::GetDirect(int elem)
 {
-	return XMFLOAT3();
+	return XMVECTOR();
 }
 
 float OBB::GetLen_W(int elem)
@@ -22,7 +22,7 @@ float OBB::GetLen_W(int elem)
 	return 0.0f;
 }
 
-XMFLOAT3 OBB::GetPos_W()
+XMVECTOR OBB::GetPos_W()
 {
-	return XMFLOAT3();
+	return XMVECTOR();
 }
