@@ -1,20 +1,26 @@
 #include "GameScene.h"
 
-
-void GameScene::Initialize(WinApp* winApp)
+GameScene::GameScene()
 {
-	this->dxCommon = dxCommon;
-	this->input = input;
-	this->audio = audio;
 
-	dxCommon = new DirectXCommon();
-	dxCommon->Initialize(winApp);
+}
+
+GameScene::~GameScene(){}
+
+void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxc, Audio* sound, Input *input)
+{
+	this->dxCommon = dxc;
+	this->audio = sound;
+	this->input = input;
+
+	/*dxCommon = new DirectXCommon();
+	dxCommon->Initialize(winApp);*/
 
 #pragma region キー取得
-	input = Input::GetInstance();
-	input->Initialize(winApp);
-	input->MouseInitialize(winApp);
-	input->PadInitialize(winApp);
+	//input = Input::GetInstance();
+	//input->Initialize(winApp);
+	//input->MouseInitialize(winApp);
+	//input->PadInitialize(winApp);
 #pragma endregion
 
 #pragma region カメラ
@@ -50,8 +56,8 @@ void GameScene::Initialize(WinApp* winApp)
 #pragma endregion
 
 #pragma region サウンド
-	audio = new Audio;
-	audio->Initialize();
+	/*audio = new Audio;
+	audio->Initialize();*/
 #pragma endregion
 
 #pragma region ライト
@@ -108,9 +114,13 @@ void GameScene::Resource2dCreate()
 
 void GameScene::GameInitialize()
 {
+	player = new Player();
 	player->Initialize();
+	enemy = new Enemy();
 	enemy->Initialize();
+	sword = new Sword();
 	sword->Initialize();
+	skill = new Skill();
 	skill->Initialize();
 }
 
@@ -165,14 +175,26 @@ void GameScene::Update()
 
 	////background->SetColor({ 0,0,0,1 });
 	//background->Update();
+	camera->Update();
+	particleMan->Update();
+	light->Update();
 }
 
 void GameScene::ResourcesUpdate()
 {
+	objSkydome->Update();
+	objGround->Update();
+	objSphere->Update();
+	objSphere2->Update();
+	object1->Update();
 }
 
 void GameScene::GameUpdate()
 {
+	enemy->Update(player);
+	player->Update(camera);
+	sword->Update(player);
+	skill->Update(player);
 }
 
 void GameScene::Draw()
@@ -190,12 +212,16 @@ void GameScene::Draw()
 #pragma region 3D描画
 	Object3d::PreDraw(dxCommon->GetCmdList());
 
-	/*objSkydome->Draw();
+	objSkydome->Draw();
 	objGround->Draw();
-	objFighter->Draw();
-	objSphere->Draw();
-	objSphere2->Draw();*/
-	//object1->Draw(dxCommon->GetCmdList());
+	player->Draw();
+	enemy->Draw();
+	sword->Draw();
+	skill->Draw();
+	//objFighter->Draw();
+	/*objSphere->Draw();
+	objSphere2->Draw();
+	object1->Draw(dxCommon->GetCmdList());*/
 
 	Object3d::PostDraw();
 
@@ -216,14 +242,6 @@ void GameScene::Draw()
 
 	dxCommon->PreDraw();
 	dxCommon->PostDraw();
-}
-
-void GameScene::ResourceDraw()
-{
-}
-
-void GameScene::GameDraw()
-{
 }
 
 void GameScene::Delete()

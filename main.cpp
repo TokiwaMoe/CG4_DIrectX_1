@@ -35,6 +35,7 @@
 #include"Enemy.h"
 #include"Sword.h"
 #include"Skill.h"
+#include"GameScene.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -75,11 +76,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon = new DirectXCommon();
 	dxCommon->Initialize(winApp);
 
+	Audio* audio = nullptr;
+	audio = new Audio();
+	audio->Initialize();
+
 	//ポインタ置き場
 	Input* input = Input::GetInstance();
 	input->Initialize(winApp);
 	input->MouseInitialize(winApp);
 	input->PadInitialize(winApp);
+
+	GameScene* gameScene = nullptr;
+	gameScene = new GameScene();
+	gameScene->Initialize(winApp, dxCommon, audio, input);
+	gameScene->Object3dCreate();
+	gameScene->Resource2dCreate();
+	gameScene->GameInitialize();
+
+	
+
+	
 
 	DebugCamera* camera = nullptr;
 	// カメラ生成
@@ -164,9 +180,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	postEffect->Initialize(L"Resource/shaders/PostEffectVS.hlsl", L"Resource/shaders/PostEffectPS.hlsl");
 	
 
-	Audio* audio = nullptr;
-	audio = new Audio;
-	audio->Initialize();
+	
 
 	Light::StaticInitialize(dxCommon->GetDev());
 	Light* light = nullptr;

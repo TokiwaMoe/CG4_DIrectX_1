@@ -46,7 +46,7 @@ public:
 	GameScene();
 	~GameScene();
 
-	void Initialize(WinApp* winApp);
+	void Initialize(WinApp* winApp, DirectXCommon* dxc, Audio *sound, Input *input);
 	void Object3dCreate();
 	void Resource2dCreate();
 	void GameInitialize();
@@ -54,8 +54,6 @@ public:
 	void ResourcesUpdate();
 	void GameUpdate();
 	void Draw();
-	void ResourceDraw();
-	void GameDraw();
 	void Delete();
 
 private:
@@ -65,8 +63,6 @@ private:
 	Audio* audio = nullptr;
 	DebugText debugText;
 	DebugCamera* camera = nullptr;
-	ParticleManager* particleMan = nullptr;
-	DebugText debugText;
 	Light* light = nullptr;
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
