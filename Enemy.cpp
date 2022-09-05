@@ -44,7 +44,7 @@ void Enemy::Initialize()
 	objHomingBullet->SetObject3dModel(enemyBulletModel);
 	objHomingBullet->SetScale({ 0.5,0.5,0.5 });
 
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
@@ -53,18 +53,13 @@ void Enemy::Initialize()
 			objAirfoilBulletLeft[y][x]->SetObject3dModel(enemyBulletModel);
 			objAirfoilBulletLeft[y][x]->SetScale({ 0.5,0.5,0.5 });
 		}
-	}
+	}*/
 
 	easing = new Easing();
 	easing->Initialize();
 
 	speed = 0.5f;
 	boundHeight = 5.0f;
-
-	for (int i = 0; i < 10; i++)
-	{
-		airfoilFlag[i] = false;
-	}
 }
 
 void Enemy::Update(Player* player)
@@ -183,7 +178,7 @@ void Enemy::BoundBullet(Player* player)
 
 void Enemy::AirfoilBullet(Player* player)
 {
-	for (int i = 0; i < 10; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
 		if (Input::GetInstance()->TriggerKey(DIK_6) && airfoilFlag[i] == false)
 		{
@@ -236,7 +231,7 @@ void Enemy::AirfoilBullet(Player* player)
 			objAirfoilBulletRight[y][x]->SetPosition(airfoilPosRight[y][x]);
 			objAirfoilBulletLeft[y][x]->SetPosition(airfoilPosLeft[y][x]);
 		}
-	}
+	}*/
 }
 
 void Enemy::Draw()
@@ -244,12 +239,12 @@ void Enemy::Draw()
 	objEnemy->Draw();
 	objBoundBullet->Draw();
 	objHomingBullet->Draw();
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
 			objAirfoilBulletRight[y][x]->Draw();
 			objAirfoilBulletLeft[y][x]->Draw();
 		}
-	}
+	}*/
 }
