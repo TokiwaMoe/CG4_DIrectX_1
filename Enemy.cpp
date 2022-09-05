@@ -24,7 +24,7 @@ void Enemy::Initialize()
 	objHomingBullet = Object3d::Create();
 	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
@@ -33,7 +33,7 @@ void Enemy::Initialize()
 			objAirfoilBulletLeft[y][x] = Object3d::Create();
 			objAirfoilBulletLeft[y][x]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 		}
-	}
+	}*/
 
 	objEnemy->SetObject3dModel(enemyModel);
 	objEnemy->SetScale({ 0.5,0.5,0.5 });
@@ -72,14 +72,14 @@ void Enemy::Update(Player* player)
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
-	for (int y = 0; y < 10; y++)
+	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
 		{
 			objAirfoilBulletRight[y][x]->Update();
 			objAirfoilBulletLeft[y][x]->Update();
 		}
-	}
+	}*/
 }
 
 void Enemy::Move()
