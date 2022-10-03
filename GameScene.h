@@ -1,18 +1,7 @@
 #pragma once
-#include <d3d12.h>
-#include <dxgi1_6.h>
-#include <vector>
-#include <string>
-#include <cassert>
-#include<sstream>
-#include<iomanip>
+
 #include <DirectXMath.h>
-#include <d3dcompiler.h>
-#define DIRECTINPUT_VERSION   0x0800
-#include <dinput.h>
-#include <math.h>
-#include <DirectXTex.h>
-#include<wrl.h>
+
 #include<d3dx12.h>
 #include<xaudio2.h>
 #include<fstream>
@@ -42,11 +31,19 @@ using namespace DirectX;
 
 class GameScene
 {
+private:
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	// DirectX::
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
+	using XMVECTOR = DirectX::XMVECTOR;
 public:
 	GameScene();
 	~GameScene();
 
-	void Initialize(WinApp* winApp, DirectXCommon* dxc, Audio *sound, Input *input);
+	void Initialize(WinApp* winApp, DirectXCommon* dxc, Audio *sound);
 	void Object3dCreate();
 	void Resource2dCreate();
 	void GameInitialize();
@@ -58,12 +55,12 @@ public:
 
 private:
 	DirectXCommon* dxCommon = nullptr;
-	Input* input;
 	ParticleManager* particleMan = nullptr;
 	Audio* audio = nullptr;
 	DebugText debugText;
 	DebugCamera* camera = nullptr;
 	Light* light = nullptr;
+
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
 	Sword* sword = nullptr;
@@ -73,14 +70,14 @@ private:
 	int debugTextTexNumber = 0;
 
 private://3Dƒ‚ƒfƒ‹
-	Object3dModel* Object3dModelSkydome;
-	Object3d* objSkydome;
-	Object3dModel* Object3dModelGround;
-	Object3d* objGround;
-	Object3dModel* Object3dModelSphere;
-	Object3d* objSphere;
-	Object3dModel* Object3dModelSphere2;
-	Object3d* objSphere2;
+	Object3dModel* Object3dModelSkydome = nullptr;
+	Object3d* objSkydome = nullptr;
+	Object3dModel* Object3dModelGround = nullptr;
+	Object3d* objGround = nullptr;
+	Object3dModel* Object3dModelSphere = nullptr;
+	Object3d* objSphere = nullptr;
+	Object3dModel* Object3dModelSphere2 = nullptr;
+	Object3d* objSphere2 = nullptr;
 
 private://FBXƒ‚ƒfƒ‹
 	FbxModel* model1 = nullptr;

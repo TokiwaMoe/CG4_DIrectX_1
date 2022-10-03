@@ -88,7 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	GameScene* gameScene = nullptr;
 	gameScene = new GameScene();
-	gameScene->Initialize(winApp, dxCommon, audio, input);
+	gameScene->Initialize(winApp, dxCommon, audio);
 	gameScene->Object3dCreate();
 	gameScene->Resource2dCreate();
 	gameScene->GameInitialize();
@@ -281,6 +281,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//object1->Update();
 		//sword->Update(player);
 		//skill->Update(player);
+		//gameScene->GameUpdate();
+		gameScene->Update();
+		//gameScene->ResourcesUpdate();
+		
 		
 
 		//background->SetColor({ 0,0,0,1 });
@@ -341,71 +345,73 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 
 		postEffect->PreDrawScene(dxCommon->GetCmdList());
-#pragma region 3D描画
-		
-		Object3d::PreDraw(dxCommon->GetCmdList());
-		/*player->Draw();
-		enemy->Draw();
-		objSkydome->Draw();
-		objGround->Draw();
-		sword->Draw();
-		skill->Draw();*/
-		//objFighter->Draw();
-		//objSphere->Draw();
-		//objSphere2->Draw();
-		//object1->Draw(dxCommon->GetCmdList());
-
-		Object3d::PostDraw();
-		// パーティクルの描画
-		//particleMan->Draw(dxCommon->GetCmdList());
-#pragma endregion
 		postEffect->PostDrawScene(dxCommon->GetCmdList());
+		gameScene->Draw();
+//#pragma region 3D描画
+//		
+//		Object3d::PreDraw(dxCommon->GetCmdList());
+//		/*player->Draw();
+//		enemy->Draw();
+//		objSkydome->Draw();
+//		objGround->Draw();
+//		sword->Draw();
+//		skill->Draw();*/
+//		//objFighter->Draw();
+//		//objSphere->Draw();
+//		//objSphere2->Draw();
+//		//object1->Draw(dxCommon->GetCmdList());
+//
+//		Object3d::PostDraw();
+//		// パーティクルの描画
+//		//particleMan->Draw(dxCommon->GetCmdList());
+//#pragma endregion
+		
 
-		dxCommon->PreDraw();
-#pragma region 背景スプライト描画
-		Sprite::PreDraw(dxCommon->GetCmdList());
-
-		//background->Draw();
-
-		Sprite::PostDraw();
-		//深度バッファクリア
-		dxCommon->ClearDepthBuffer();
-#pragma endregion
-
-		postEffect->Draw(dxCommon->GetCmdList());
-
-#pragma region 前景スプライト描画
-		Sprite::PreDraw(dxCommon->GetCmdList());
-
-		/*char str[256];
-		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
-		debugText.Print(str, 0, 10, 1.0f);
-
-		char str2[256];
-		sprintf_s(str2, "angle : %f", enemy->Angle);
-		debugText.Print(str2, 0, 30, 1.0f);*/
-
-		/*char str3[256];
-		sprintf_s(str3, "preAssaultTime : %f bfoAssaultTime : %f", enemy->preAssaultTime, enemy->bfoAssaultTime);
-		debugText.Print(str3, 0, 50, 1.0f);*/
-
-		/*char str4[256];
-		sprintf_s(str4, "bulletPos x : %f y : %f z : %f t : %f", enemy->airfoilPosRight[0][0].x, enemy->airfoilPosRight[0][0].y, enemy->airfoilPosRight[0][0].z);
-		debugText.Print(str4, 0, 70, 1.0f);*/
-
-		/*char str5[256];
-		sprintf_s(str5, "playerOldPos x : %f y : %f z : %f", enemy->playerOldPos.x, enemy->playerOldPos.y, enemy->playerOldPos.z);
-		debugText.Print(str5, 0, 90, 1.0f);
-
-		char str6[256];
-		sprintf_s(str6, "enemyOldPos x : %f y : %f z : %f", enemy->oldPos.x, enemy->oldPos.y, enemy->oldPos.z);
-		debugText.Print(str6, 0, 110, 1.0f);*/
-
-		//debugText.DrawAll(dxCommon->GetCmdList());
-		Sprite::PostDraw();
+//		dxCommon->PreDraw();
+//#pragma region 背景スプライト描画
+//		Sprite::PreDraw(dxCommon->GetCmdList());
+//
+//		//background->Draw();
+//
+//		Sprite::PostDraw();
+//		//深度バッファクリア
+//		dxCommon->ClearDepthBuffer();
+//#pragma endregion
+//
+//		postEffect->Draw(dxCommon->GetCmdList());
+//
+//#pragma region 前景スプライト描画
+//		Sprite::PreDraw(dxCommon->GetCmdList());
+//
+//		/*char str[256];
+//		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
+//		debugText.Print(str, 0, 10, 1.0f);
+//
+//		char str2[256];
+//		sprintf_s(str2, "angle : %f", enemy->Angle);
+//		debugText.Print(str2, 0, 30, 1.0f);*/
+//
+//		/*char str3[256];
+//		sprintf_s(str3, "preAssaultTime : %f bfoAssaultTime : %f", enemy->preAssaultTime, enemy->bfoAssaultTime);
+//		debugText.Print(str3, 0, 50, 1.0f);*/
+//
+//		/*char str4[256];
+//		sprintf_s(str4, "bulletPos x : %f y : %f z : %f t : %f", enemy->airfoilPosRight[0][0].x, enemy->airfoilPosRight[0][0].y, enemy->airfoilPosRight[0][0].z);
+//		debugText.Print(str4, 0, 70, 1.0f);*/
+//
+//		/*char str5[256];
+//		sprintf_s(str5, "playerOldPos x : %f y : %f z : %f", enemy->playerOldPos.x, enemy->playerOldPos.y, enemy->playerOldPos.z);
+//		debugText.Print(str5, 0, 90, 1.0f);
+//
+//		char str6[256];
+//		sprintf_s(str6, "enemyOldPos x : %f y : %f z : %f", enemy->oldPos.x, enemy->oldPos.y, enemy->oldPos.z);
+//		debugText.Print(str6, 0, 110, 1.0f);*/
+//
+//		//debugText.DrawAll(dxCommon->GetCmdList());
+//		Sprite::PostDraw();
 #pragma endregion
 		// ４．描画コマンドここまで
-		dxCommon->PostDraw();
+		//dxCommon->PostDraw();
 
 		//DirectX毎フレーム処理　ここまで
 
