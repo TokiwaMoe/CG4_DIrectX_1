@@ -60,7 +60,7 @@ struct Ray
 //OBBとOBBの当たり判定
 class OBB
 {
-protected:
+public:
 	DirectX::XMVECTOR m_Pos;				//位置
 	DirectX::XMVECTOR m_NormaDirect[3];	//方向ベクトル
 	float m_fLength[3];		//各軸方向の長さ

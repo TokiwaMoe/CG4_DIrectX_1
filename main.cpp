@@ -188,7 +188,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	enemy->Initialize();
 
 	Sword* sword = new Sword();
-	sword->Initialize();
+	sword->Initialize(enemy);
 
 	Skill* skill = new Skill();
 	skill->Initialize();
@@ -265,7 +265,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		objSphere->Update();
 		objSphere2->Update();
 		object1->Update();
-		sword->Update(player);
+		sword->Update(player, enemy);
 		skill->Update(player);
 		
 
@@ -330,10 +330,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D•`‰æ
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
-		player->Draw();
+		//player->Draw();
 		enemy->Draw();
 		objSkydome->Draw();
-		objGround->Draw();
+		//objGround->Draw();
 		sword->Draw();
 		skill->Draw();
 		//objFighter->Draw();
@@ -363,27 +363,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
 		Sprite::PreDraw(dxCommon->GetCmdList());
 
-		/*char str[256];
-		sprintf_s(str, "playeyPosition x : %f y : %f z : %f", player->position.x, player->position.y, player->position.z);
-		debugText.Print(str, 0, 10, 1.0f);
+		if (sword->GetIsHit())
+		{
+			char str[256];
+			sprintf_s(str, "Hit");
+			debugText.Print(str, 0, 10, 1.0f);
+		}
+		
 
 		char str2[256];
-		sprintf_s(str2, "angle : %f", enemy->Angle);
-		debugText.Print(str2, 0, 30, 1.0f);*/
+		sprintf_s(str2, "swordDirect x : %f y : %f z : %f", sword->GetNormalDirectA().m128_f32[0], sword->GetNormalDirectA().m128_f32[1], sword->GetNormalDirectA().m128_f32[2]);
+		debugText.Print(str2, 0, 30, 1.0f);
 
-		/*char str3[256];
-		sprintf_s(str3, "preAssaultTime : %f bfoAssaultTime : %f", enemy->preAssaultTime, enemy->bfoAssaultTime);
-		debugText.Print(str3, 0, 50, 1.0f);*/
+		char str3[256];
+		sprintf_s(str3, "enemyDirect x : %f y : %f z : %f", sword->GetNormalDirectB().m128_f32[0], sword->GetNormalDirectB().m128_f32[1], sword->GetNormalDirectB().m128_f32[2]);
+		debugText.Print(str3, 0, 50, 1.0f);
 
-		/*char str4[256];
-		sprintf_s(str4, "bulletPos x : %f y : %f z : %f t : %f", enemy->airfoilPosRight[0][0].x, enemy->airfoilPosRight[0][0].y, enemy->airfoilPosRight[0][0].z);
-		debugText.Print(str4, 0, 70, 1.0f);*/
+		char str4[256];
+		sprintf_s(str4, "sword m_Pos x : %f y : %f z : %f", sword->GetPositionA().m128_f32[0], sword->GetPositionA().m128_f32[1], sword->GetPositionA().m128_f32[2]);
+		debugText.Print(str4, 0, 70, 1.0f);
 
-		/*char str5[256];
-		sprintf_s(str5, "playerOldPos x : %f y : %f z : %f", enemy->playerOldPos.x, enemy->playerOldPos.y, enemy->playerOldPos.z);
+		char str5[256];
+		sprintf_s(str5, "enemy m_Pos x : %f y : %f z : %f", sword->GetPositionB().m128_f32[0], sword->GetPositionB().m128_f32[1], sword->GetPositionB().m128_f32[2]);
 		debugText.Print(str5, 0, 90, 1.0f);
 
-		char str6[256];
+		/*char str6[256];
 		sprintf_s(str6, "enemyOldPos x : %f y : %f z : %f", enemy->oldPos.x, enemy->oldPos.y, enemy->oldPos.z);
 		debugText.Print(str6, 0, 110, 1.0f);*/
 

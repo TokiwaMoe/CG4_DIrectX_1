@@ -210,6 +210,8 @@ public: // メンバ関数
 	/// <returns>座標</returns>
 	const XMFLOAT3& GetPosition() { return position; }
 
+	const XMFLOAT3& GetRotation() { return rotation; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -236,6 +238,8 @@ public: // メンバ関数
 	/// <returns>ワールド行列</returns>
 	const XMMATRIX& GetMatWorld() { return matWorld; }
 
+	const XMMATRIX& GetMatRot() { return matRot; }
+
 	///<summary>
 	///コライダーのセット
 	///</summary>
@@ -259,6 +263,8 @@ protected:// メンバ変数
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 0,0,0 };
+
+	XMMATRIX matScale, matRot, matTrans;
 	
 	// 親オブジェクト
 	Object3d* parent = nullptr;

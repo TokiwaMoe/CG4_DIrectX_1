@@ -64,11 +64,11 @@ void Enemy::Initialize()
 
 void Enemy::Update(Player* player)
 {
-	Target(player);
-	Assault(player);
-	BoundBullet(player);
-	HomingBullet(player);
-	AirfoilBullet(player);
+	//Target(player);
+	//Assault(player);
+	//BoundBullet(player);
+	//HomingBullet(player);
+	//AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();

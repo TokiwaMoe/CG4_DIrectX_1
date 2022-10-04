@@ -392,6 +392,7 @@ float Collision::LenSegOnSeparateAxis(XMVECTOR& Sep, XMVECTOR& e1, XMVECTOR& e2,
 {
 	//3‚Â‚Ì“àÏ‚Ìâ‘Î’l‚Ì˜a‚Å“Š‰eü•ª’·‚ğŒvZ
 	//•ª—£²Sep‚Í•W€‰»‚³‚ê‚Ä‚¢‚é‚±‚Æ
+	//XMVECTOR r1 = fabs(XMVector3Dot(Sep, e1 ));
 	float r1 = fabs(XMVectorGetX(XMVector3Dot(Sep, e1)));
 	float r2 = fabs(XMVectorGetX(XMVector3Dot(Sep, e2)));
 	float r3;

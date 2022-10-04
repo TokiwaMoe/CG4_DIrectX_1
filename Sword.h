@@ -6,6 +6,9 @@
 #include"Object3dModel.h"
 #include"Easing.h"
 #include"Player.h"
+#include"Enemy.h"
+#include"Collision.h"
+#include"CollisionPrimitive.h"
 
 class Sword {
 private:
@@ -20,15 +23,21 @@ public:
 	/*Sword();
 	~Sword();*/
 
-	void Initialize();
+	void Initialize(Enemy *enemy);
 
-	void Update(Player* player);
+	void Update(Player* player, Enemy *enemy);
 
 	void Move(Player *player);
 
 	void Draw();
 
 	void SetPosition(XMFLOAT3 pos);
+
+	bool GetIsHit() { return isHit; }
+	XMVECTOR GetNormalDirectA() { return swordOBB.GetDirect(0); }
+	XMVECTOR GetNormalDirectB() { return enemyOBB.GetDirect(0); }
+	XMVECTOR GetPositionA() { return swordOBB.GetPos_W(); }
+	XMVECTOR GetPositionB() { return enemyOBB.GetPos_W(); }
 
 public:
 	Object3dModel* swordModel = nullptr;
@@ -40,6 +49,10 @@ public:
 	XMFLOAT3 rotation = { 0,0,0 };
 	// プレイヤー座標
 	XMFLOAT3 position = { 0,0,0 };
+
+	OBB swordOBB;
+	OBB enemyOBB;
+	bool isHit = false;
 
 private:
 	bool Attack = false;
