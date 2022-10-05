@@ -31,23 +31,26 @@ void Sword::Update(Player* player, Enemy *enemy)
 	swordOBB.m_Pos = { position.x, position.y, position.z };
 	for (int i = 0; i < 3; i++)
 	{
-		XMMATRIX rotM = DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(90.0f));
-		XMVECTOR vector = XMVector3TransformNormal({0,0,0}, rotM);
-		swordOBB.m_NormaDirect[i] = { objSword->GetRotation().x, 0, 0};
-		
-		swordOBB.m_fLength[0] = 0.5f;
-		swordOBB.m_fLength[1] = 0.5f;
-		swordOBB.m_fLength[2] = 0.5f;
+		XMMATRIX sword_vector;
+		sword_vector = DirectX::XMMatrixRotationRollPitchYaw(objSword->GetRotation().y, objSword->GetRotation().x, objSword->GetRotation().z);
+
+		swordOBB.m_NormaDirect[i] = { sword_vector.r->m128_f32[0], sword_vector.r->m128_f32[1], sword_vector.r->m128_f32[2] };
+
+		swordOBB.m_fLength[0] = 0.25f;
+		swordOBB.m_fLength[1] = 1.0f;
+		swordOBB.m_fLength[2] = 2.0f;
 	}
 
-	enemyOBB.m_Pos = { enemy->GetPosition().x - 1.0f, enemy->GetPosition().y, enemy->GetPosition().z };
+	enemyOBB.m_Pos = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z + 1.5f };
 	for (int i = 0; i < 3; i++)
 	{
-		enemyOBB.m_NormaDirect[i] = { 0, 0, 0 };
+		XMMATRIX enemy_vector;
+		enemy_vector = DirectX::XMMatrixRotationRollPitchYaw(enemy->objEnemy->GetRotation().y, enemy->objEnemy->GetRotation().x, enemy->objEnemy->GetRotation().z);
+		enemyOBB.m_NormaDirect[i] = { 0,0,0 };
 
-		enemyOBB.m_fLength[0] = 0.5f;
-		enemyOBB.m_fLength[1] = 0.5f;
-		enemyOBB.m_fLength[2] = 3.0f;
+		enemyOBB.m_fLength[0] = 1.0f;
+		enemyOBB.m_fLength[1] = 1.0f;
+		enemyOBB.m_fLength[2] = 1.5f;
 	}
 	isHit = Collision::ColOBBs(swordOBB, enemyOBB);
 	

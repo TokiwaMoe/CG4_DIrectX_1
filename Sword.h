@@ -34,8 +34,13 @@ public:
 	void SetPosition(XMFLOAT3 pos);
 
 	bool GetIsHit() { return isHit; }
-	XMVECTOR GetNormalDirectA() { return swordOBB.GetDirect(0); }
-	XMVECTOR GetNormalDirectB() { return enemyOBB.GetDirect(0); }
+	XMVECTOR GetNormalDirect_SwordA() { return swordOBB.GetDirect(0); }
+	XMVECTOR GetNormalDirect_SwordB() { return swordOBB.GetDirect(1); }
+	XMVECTOR GetNormalDirect_SwordC() { return swordOBB.GetDirect(2); }
+
+	XMVECTOR GetNormalDirectA() { return enemyOBB.GetDirect(0); }
+	XMVECTOR GetNormalDirectB() { return enemyOBB.GetDirect(1); }
+	XMVECTOR GetNormalDirectC() { return enemyOBB.GetDirect(2); }
 	XMVECTOR GetPositionA() { return swordOBB.GetPos_W(); }
 	XMVECTOR GetPositionB() { return enemyOBB.GetPos_W(); }
 

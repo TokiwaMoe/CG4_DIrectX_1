@@ -70,3 +70,10 @@ public:
 	float GetLen_W(int elem);		//Žw’èŽ²•ûŒü‚Ì’·‚³‚ðŽæ“¾
 	DirectX::XMVECTOR GetPos_W();			//ˆÊ’u‚ðŽæ“¾
 };
+
+struct setOBB
+{
+	DirectX::XMFLOAT3 position;
+	DirectX::XMFLOAT3 normalize[3];
+	DirectX::XMFLOAT3 length;
+};

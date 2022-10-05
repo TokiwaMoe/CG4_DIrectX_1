@@ -36,7 +36,7 @@ void Player::Update(Camera *camera)
 
 void Player::Move(Camera* camera)
 {
-	XMVECTOR forvardvec = {0.5,0.5,0.5,0.5};
+	XMVECTOR forvardvec = {0.1,0.1,0.1,0};
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		position.z += forvardvec.m128_f32[2];
 		objPlayer->SetRotation({ 0,0,0 });

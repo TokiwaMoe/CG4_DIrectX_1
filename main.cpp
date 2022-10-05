@@ -371,21 +371,37 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 		
 
-		char str2[256];
-		sprintf_s(str2, "swordDirect x : %f y : %f z : %f", sword->GetNormalDirectA().m128_f32[0], sword->GetNormalDirectA().m128_f32[1], sword->GetNormalDirectA().m128_f32[2]);
-		debugText.Print(str2, 0, 30, 1.0f);
+		char swordDirect0[256];
+		sprintf_s(swordDirect0, "swordDirect(0) x : %f y : %f z : %f", sword->GetNormalDirect_SwordA().m128_f32[0], sword->GetNormalDirect_SwordA().m128_f32[1], sword->GetNormalDirect_SwordA().m128_f32[2]);
+		debugText.Print(swordDirect0, 0, 30, 1.0f);
 
-		char str3[256];
-		sprintf_s(str3, "enemyDirect x : %f y : %f z : %f", sword->GetNormalDirectB().m128_f32[0], sword->GetNormalDirectB().m128_f32[1], sword->GetNormalDirectB().m128_f32[2]);
-		debugText.Print(str3, 0, 50, 1.0f);
+		char swordDirect1[256];
+		sprintf_s(swordDirect1, "swordDirect(1) x : %f y : %f z : %f", sword->GetNormalDirect_SwordB().m128_f32[0], sword->GetNormalDirect_SwordB().m128_f32[1], sword->GetNormalDirect_SwordB().m128_f32[2]);
+		debugText.Print(swordDirect1, 0, 50, 1.0f);
+
+		char swordDirect2[256];
+		sprintf_s(swordDirect2, "swordDirect(2) x : %f y : %f z : %f", sword->GetNormalDirect_SwordC().m128_f32[0], sword->GetNormalDirect_SwordC().m128_f32[1], sword->GetNormalDirect_SwordC().m128_f32[2]);
+		debugText.Print(swordDirect2, 0, 70, 1.0f);
+
+		/*char enemyDirect0[256];
+		sprintf_s(enemyDirect0, "enemyDirect(0) x : %f y : %f z : %f", sword->GetNormalDirectA().m128_f32[0], sword->GetNormalDirectA().m128_f32[1], sword->GetNormalDirectB().m128_f32[2]);
+		debugText.Print(enemyDirect0, 0, 90, 1.0f);
+
+		char enemyDirect1[256];
+		sprintf_s(enemyDirect1, "enemyDirect(1) x : %f y : %f z : %f", sword->GetNormalDirectB().m128_f32[0], sword->GetNormalDirectB().m128_f32[1], sword->GetNormalDirectB().m128_f32[2]);
+		debugText.Print(enemyDirect1, 0, 110, 1.0f);
+
+		char enemyDirect2[256];
+		sprintf_s(enemyDirect2, "enemyDirect(2) x : %f y : %f z : %f", sword->GetNormalDirectC().m128_f32[0], sword->GetNormalDirectC().m128_f32[1], sword->GetNormalDirectC().m128_f32[2]);
+		debugText.Print(enemyDirect2, 0, 130, 1.0f);*/
 
 		char str4[256];
 		sprintf_s(str4, "sword m_Pos x : %f y : %f z : %f", sword->GetPositionA().m128_f32[0], sword->GetPositionA().m128_f32[1], sword->GetPositionA().m128_f32[2]);
-		debugText.Print(str4, 0, 70, 1.0f);
+		debugText.Print(str4, 0, 150, 1.0f);
 
 		char str5[256];
 		sprintf_s(str5, "enemy m_Pos x : %f y : %f z : %f", sword->GetPositionB().m128_f32[0], sword->GetPositionB().m128_f32[1], sword->GetPositionB().m128_f32[2]);
-		debugText.Print(str5, 0, 90, 1.0f);
+		debugText.Print(str5, 0, 170, 1.0f);
 
 		/*char str6[256];
 		sprintf_s(str6, "enemyOldPos x : %f y : %f z : %f", enemy->oldPos.x, enemy->oldPos.y, enemy->oldPos.z);
