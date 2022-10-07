@@ -1,31 +1,51 @@
 #include "GameScene.h"
+#include"Input.h"
 
-
-void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxCommon, Input* input, Audio* audio)
+GameScene::GameScene()
 {
-	this->dxCommon = dxCommon;
-	this->input = input;
-	this->audio = audio;
-	this->winApp = winApp;
 
-	winApp->Initialize();
+}
 
-	dxCommon = new DirectXCommon();
-	dxCommon->Initialize(winApp);
+GameScene::~GameScene(){}
 
-#pragma region キー取得
-	input = Input::GetInstance();
-	input->Initialize(winApp);
-	input->MouseInitialize(winApp);
-#pragma endregion
+void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
+{
+	
+	this->dxCommon = dxc;
+	this->audio = sound;
 
 #pragma region カメラ
 	// カメラ生成
-	camera = new DebugCamera(WinApp::window_width, WinApp::window_height, input);
+	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
+	// 3Dオブジェクトにカメラをセット
+	Object3d::SetCamera(camera);
 #pragma endregion
 
 #pragma region Object3d
 	Object3d::StaticInitialize(dxCommon->GetDev(), camera);
+	Object3dModelSkydome = Object3dModel::LoadFromOBJ("skydome");
+	Object3dModelGround = Object3dModel::LoadFromOBJ("ground");
+	Object3dModelSphere = Object3dModel::LoadFromOBJ("sphere");
+	Object3dModelSphere2 = Object3dModel::LoadFromOBJ("sphere");
+
+	objSkydome = Object3d::Create();
+	objSkydome->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objSkydome->SetObject3dModel(Object3dModelSkydome);
+	objGround = Object3d::Create();
+	objGround->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objGround->SetObject3dModel(Object3dModelGround);
+	objSphere = Object3d::Create();
+	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+	objSphere->SetObject3dModel(Object3dModelSphere);
+	objSphere2 = Object3d::Create();
+	objSphere2->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
+	objSphere2->SetObject3dModel(Object3dModelSphere2);
+
+	objSphere->SetPosition({ +10,0,0 });
+	objSphere2->SetPosition({ -10,0,0 });
+	objSkydome->SetScale({ 3,3,3 });
+
+	
 #pragma endregion
 
 #pragma region FBX
@@ -37,28 +57,73 @@ void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxCommon, Input* input
 	FbxObject3d::CreateGraphicsPipline();
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
+	//モデル名を指定してファイル読み込み
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("boneTest");
+	object1 = new FbxObject3d;
+	object1->Initialize();
+	object1->SetModel(model1);
+	object1->PlayAnimation();
+	object1->SetRotation({ 0, 90, 0 });
 #pragma endregion
 
 #pragma region スプライト
 	Sprite::StaticInitialize(dxCommon->GetDev(), WinApp::window_width, WinApp::window_height);
 
-	Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfon.png");
-	Sprite::LoadTexture(1, L"Resource/back.png");
-
 	debugText.Initialize(debugTextTexNumber);
 #pragma endregion
 
-#pragma region サウンド
-	audio = new Audio;
-	audio->Initialize();
+#pragma region パーティクル
+	particleMan = ParticleManager::Create(dxCommon->GetDev(), WinApp::window_width, WinApp::window_height);
 #pragma endregion
+
+#pragma region サウンド
+	/*audio = new Audio;
+	audio->Initialize();*/
+#pragma endregion
+
+#pragma region ライト
+	Light::StaticInitialize(dxCommon->GetDev());
+	//ライト生成
+	light = Light::Create();
+	//ライト色を設定
+	light->SetLightColor({ 1,1,1 });
+	//3Dオブジェクトにライトをセット
+	Object3d::SetLight(light);
+#pragma endregion
+
+	// カメラ注視点をセット
+	camera->SetTarget({ 0, 2.5f, 0 });
+	camera->SetDistance(8.0f);
+}
+
+//void GameScene::Object3dCreate()
+//{
+//	
+//}
+
+void GameScene::Resource2dCreate()
+{
+	Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfon.png");
+	Sprite::LoadTexture(1, L"Resource/back.png");
+
+	background = Sprite::Create(1, { 0.0f,0.0f });
+}
+
+void GameScene::GameInitialize()
+{
+	player = new Player();
+	player->Initialize();
+	enemy = new Enemy();
+	enemy->Initialize();
+	sword = new Sword();
+	sword->Initialize();
+	skill = new Skill();
+	skill->Initialize();
 }
 
 void GameScene::Update()
 {
 	//DirectX毎フレーム処理　ここから
-	input->KeyUpdate();
-	input->MouseUpdate();
 	//マウス座標
 	POINT mousePos;
 	GetCursorPos(&mousePos);
@@ -105,10 +170,33 @@ void GameScene::Update()
 
 	////background->SetColor({ 0,0,0,1 });
 	//background->Update();
+	camera->Update();
+	particleMan->Update();
+	light->Update();
+	ResourcesUpdate();
+	GameUpdate();
+}
+
+void GameScene::ResourcesUpdate()
+{
+	objSkydome->Update();
+	objGround->Update();
+	objSphere->Update();
+	objSphere2->Update();
+	object1->Update();
+}
+
+void GameScene::GameUpdate()
+{
+	enemy->Update(player);
+	player->Update(camera);
+	sword->Update(player);
+	skill->Update(player);
 }
 
 void GameScene::Draw()
 {
+	dxCommon->PreDraw();
 #pragma region 背景スプライト描画
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
@@ -122,17 +210,21 @@ void GameScene::Draw()
 #pragma region 3D描画
 	Object3d::PreDraw(dxCommon->GetCmdList());
 
-	/*objSkydome->Draw();
+	objSkydome->Draw();
 	objGround->Draw();
-	objFighter->Draw();
-	objSphere->Draw();
-	objSphere2->Draw();*/
-	//object1->Draw(dxCommon->GetCmdList());
+	player->Draw();
+	enemy->Draw();
+	sword->Draw();
+	skill->Draw();
+	//objFighter->Draw();
+	/*objSphere->Draw();
+	objSphere2->Draw();
+	object1->Draw(dxCommon->GetCmdList());*/
 
 	Object3d::PostDraw();
 
 	// パーティクルの描画
-	particleMan->Draw(dxCommon->GetCmdList());
+	//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
 
 #pragma region 前景スプライト描画
@@ -146,7 +238,7 @@ void GameScene::Draw()
 	debugText.DrawAll(dxCommon->GetCmdList());
 	Sprite::PostDraw();
 
-	dxCommon->PreDraw();
+	
 	dxCommon->PostDraw();
 }
 
