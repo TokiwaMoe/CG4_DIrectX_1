@@ -116,7 +116,7 @@ void GameScene::GameInitialize()
 	enemy = new Enemy();
 	enemy->Initialize();
 	sword = new Sword();
-	sword->Initialize();
+	sword->Initialize(enemy);
 	skill = new Skill();
 	skill->Initialize();
 }
@@ -190,7 +190,7 @@ void GameScene::GameUpdate()
 {
 	enemy->Update(player);
 	player->Update(camera);
-	sword->Update(player);
+	sword->Update(player, enemy);
 	skill->Update(player);
 }
 

@@ -348,12 +348,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3D•`‰æ
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
-		player->Draw();
+		/*player->Draw();
 		enemy->Draw();
 		objSkydome->Draw();
 		objGround->Draw();
 		sword->Draw();
-		skill->Draw();
+		skill->Draw();*/
 		//objFighter->Draw();
 		//objSphere->Draw();
 		//objSphere2->Draw();

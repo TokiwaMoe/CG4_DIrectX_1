@@ -61,10 +61,10 @@ void Enemy::Initialize()
 	speed = 0.5f;
 	boundHeight = 5.0f;
 
-	for (int i = 0; i < 10; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
 		airfoilFlag[i] = false;
-	}
+	}*/
 }
 
 void Enemy::Update(Player* player)
