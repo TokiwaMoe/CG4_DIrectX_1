@@ -198,13 +198,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//camera->SetTarget({0, 2.5f, 0});
 	//camera->SetDistance(8.0f);
 
-<<<<<<< HEAD
-	Sword* sword = new Sword();
-	sword->Initialize(enemy);
-=======
 	//Enemy* enemy = new Enemy();
 	//enemy->Initialize();
->>>>>>> gamescene
 
 	//Sword* sword = new Sword();
 	//sword->Initialize();
@@ -290,44 +285,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		gameScene->Update();
 		//gameScene->ResourcesUpdate();
 		
-<<<<<<< HEAD
-
-		for (int i = 0; i < 10; i++) {
-			// X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
-			const float rnd_pos = 10.0f;
-			XMFLOAT3 pos{};
-			pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-			pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-			pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-
-			const float rnd_vel = 0.1f;
-			XMFLOAT3 vel{};
-			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-
-			XMFLOAT3 acc{};
-			const float rnd_acc = 0.001f;
-			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
-
-			// 追加
-			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
-		}
-
-		enemy->Update(player);
-		player->Update(camera);
-		camera->Update();
-		particleMan->Update();
-		light->Update();
-		objSkydome->Update();
-		objGround->Update();
-		objSphere->Update();
-		objSphere2->Update();
-		object1->Update();
-		sword->Update(player, enemy);
-		skill->Update(player);
-=======
->>>>>>> gamescene
 		
 
 		//background->SetColor({ 0,0,0,1 });
@@ -388,14 +345,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 
 		postEffect->PreDrawScene(dxCommon->GetCmdList());
-<<<<<<< HEAD
 #pragma region 3D描画
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
-		//player->Draw();
+		player->Draw();
 		enemy->Draw();
 		objSkydome->Draw();
-		//objGround->Draw();
+		objGround->Draw();
 		sword->Draw();
 		skill->Draw();
 		//objFighter->Draw();
@@ -407,8 +363,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		// パーティクルの描画
 		//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion
-=======
->>>>>>> gamescene
 		postEffect->PostDrawScene(dxCommon->GetCmdList());
 		gameScene->Draw();
 //#pragma region 3D描画
@@ -431,70 +385,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 //#pragma endregion
 		
 
-<<<<<<< HEAD
-		dxCommon->PreDraw();
-#pragma region 背景スプライト描画
-		Sprite::PreDraw(dxCommon->GetCmdList());
-
-		//background->Draw();
-
-		Sprite::PostDraw();
-		//深度バッファクリア
-		dxCommon->ClearDepthBuffer();
-#pragma endregion
-
-		postEffect->Draw(dxCommon->GetCmdList());
-
-#pragma region 前景スプライト描画
-		Sprite::PreDraw(dxCommon->GetCmdList());
-
-		if (sword->GetIsHit())
-		{
-			char str[256];
-			sprintf_s(str, "Hit");
-			debugText.Print(str, 0, 10, 1.0f);
-		}
-		
-
-		char swordDirect0[256];
-		sprintf_s(swordDirect0, "swordDirect(0) x : %f y : %f z : %f", sword->GetNormalDirect_SwordA().m128_f32[0], sword->GetNormalDirect_SwordA().m128_f32[1], sword->GetNormalDirect_SwordA().m128_f32[2]);
-		debugText.Print(swordDirect0, 0, 30, 1.0f);
-
-		char swordDirect1[256];
-		sprintf_s(swordDirect1, "swordDirect(1) x : %f y : %f z : %f", sword->GetNormalDirect_SwordB().m128_f32[0], sword->GetNormalDirect_SwordB().m128_f32[1], sword->GetNormalDirect_SwordB().m128_f32[2]);
-		debugText.Print(swordDirect1, 0, 50, 1.0f);
-
-		char swordDirect2[256];
-		sprintf_s(swordDirect2, "swordDirect(2) x : %f y : %f z : %f", sword->GetNormalDirect_SwordC().m128_f32[0], sword->GetNormalDirect_SwordC().m128_f32[1], sword->GetNormalDirect_SwordC().m128_f32[2]);
-		debugText.Print(swordDirect2, 0, 70, 1.0f);
-
-		/*char enemyDirect0[256];
-		sprintf_s(enemyDirect0, "enemyDirect(0) x : %f y : %f z : %f", sword->GetNormalDirectA().m128_f32[0], sword->GetNormalDirectA().m128_f32[1], sword->GetNormalDirectB().m128_f32[2]);
-		debugText.Print(enemyDirect0, 0, 90, 1.0f);
-
-		char enemyDirect1[256];
-		sprintf_s(enemyDirect1, "enemyDirect(1) x : %f y : %f z : %f", sword->GetNormalDirectB().m128_f32[0], sword->GetNormalDirectB().m128_f32[1], sword->GetNormalDirectB().m128_f32[2]);
-		debugText.Print(enemyDirect1, 0, 110, 1.0f);
-
-		char enemyDirect2[256];
-		sprintf_s(enemyDirect2, "enemyDirect(2) x : %f y : %f z : %f", sword->GetNormalDirectC().m128_f32[0], sword->GetNormalDirectC().m128_f32[1], sword->GetNormalDirectC().m128_f32[2]);
-		debugText.Print(enemyDirect2, 0, 130, 1.0f);*/
-
-		char str4[256];
-		sprintf_s(str4, "sword m_Pos x : %f y : %f z : %f", sword->GetPositionA().m128_f32[0], sword->GetPositionA().m128_f32[1], sword->GetPositionA().m128_f32[2]);
-		debugText.Print(str4, 0, 150, 1.0f);
-
-		char str5[256];
-		sprintf_s(str5, "enemy m_Pos x : %f y : %f z : %f", sword->GetPositionB().m128_f32[0], sword->GetPositionB().m128_f32[1], sword->GetPositionB().m128_f32[2]);
-		debugText.Print(str5, 0, 170, 1.0f);
-
-		/*char str6[256];
-		sprintf_s(str6, "enemyOldPos x : %f y : %f z : %f", enemy->oldPos.x, enemy->oldPos.y, enemy->oldPos.z);
-		debugText.Print(str6, 0, 110, 1.0f);*/
-
-		debugText.DrawAll(dxCommon->GetCmdList());
-		Sprite::PostDraw();
-=======
 //		dxCommon->PreDraw();
 //#pragma region 背景スプライト描画
 //		Sprite::PreDraw(dxCommon->GetCmdList());
@@ -537,7 +427,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 //
 //		//debugText.DrawAll(dxCommon->GetCmdList());
 //		Sprite::PostDraw();
->>>>>>> gamescene
 #pragma endregion
 		// ４．描画コマンドここまで
 		//dxCommon->PostDraw();
