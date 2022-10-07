@@ -88,8 +88,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	GameScene* gameScene = nullptr;
 	gameScene = new GameScene();
-	gameScene->Initialize(winApp, dxCommon, audio);
-	gameScene->Object3dCreate();
+	gameScene->Initialize(dxCommon, audio);
+	//gameScene->Object3dCreate();
 	gameScene->Resource2dCreate();
 	gameScene->GameInitialize();
 

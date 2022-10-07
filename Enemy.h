@@ -45,8 +45,8 @@ public:
 	Object3dModel* enemyBulletModel = nullptr;
 	Object3d* objBoundBullet = nullptr;
 	Object3d* objHomingBullet = nullptr;
-	Object3d* objAirfoilBulletRight[10][13];
-	Object3d* objAirfoilBulletLeft[10][13];
+	/*Object3d* objAirfoilBulletRight[10][13];
+	Object3d* objAirfoilBulletLeft[10][13];*/
 
 	Easing* easing = nullptr;
 
@@ -94,7 +94,7 @@ public:
 	float homingMaxTime = 100;
 
 	//—ƒŒ^’e
-	struct RightPoint
+	/*struct RightPoint
 	{
 		XMFLOAT3 p0[10][13];
 		XMFLOAT3 p1[10][13];
@@ -121,6 +121,6 @@ public:
 	XMFLOAT3 e[10][13];
 	bool airfoilFlag[10];
 	XMFLOAT3 playerOldPos_airfoil;
-	float airfoilTime = 0;
+	float airfoilTime = 0;*/
 
 };

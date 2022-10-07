@@ -8,8 +8,9 @@ GameScene::GameScene()
 
 GameScene::~GameScene(){}
 
-void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxc, Audio* sound)
+void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 {
+	
 	this->dxCommon = dxc;
 	this->audio = sound;
 
@@ -29,12 +30,16 @@ void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxc, Audio* sound)
 
 	objSkydome = Object3d::Create();
 	objSkydome->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objSkydome->SetObject3dModel(Object3dModelSkydome);
 	objGround = Object3d::Create();
 	objGround->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objGround->SetObject3dModel(Object3dModelGround);
 	objSphere = Object3d::Create();
 	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+	objSphere->SetObject3dModel(Object3dModelSphere);
 	objSphere2 = Object3d::Create();
 	objSphere2->InitializeGraphicsPipeline(L"Resource/shaders/ToonVS.hlsl", L"Resource/shaders/ToonPS.hlsl");
+	objSphere2->SetObject3dModel(Object3dModelSphere2);
 
 	objSphere->SetPosition({ +10,0,0 });
 	objSphere2->SetPosition({ -10,0,0 });
@@ -91,10 +96,10 @@ void GameScene::Initialize(WinApp* winApp, DirectXCommon* dxc, Audio* sound)
 	camera->SetDistance(8.0f);
 }
 
-void GameScene::Object3dCreate()
-{
-	
-}
+//void GameScene::Object3dCreate()
+//{
+//	
+//}
 
 void GameScene::Resource2dCreate()
 {

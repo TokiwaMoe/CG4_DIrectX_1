@@ -43,7 +43,7 @@ public:
 	GameScene();
 	~GameScene();
 
-	void Initialize(WinApp* winApp, DirectXCommon* dxc, Audio *sound);
+	void Initialize(DirectXCommon* dxc, Audio *sound);
 	void Object3dCreate();
 	void Resource2dCreate();
 	void GameInitialize();
