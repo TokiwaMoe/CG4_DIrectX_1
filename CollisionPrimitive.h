@@ -8,8 +8,9 @@
 ///<summary>
 ///‹…
 /// </summary>
-struct Sphere
+class Sphere
 {
+public:
 	//’†SÀ•W
 	DirectX::XMVECTOR center = { 0,0,0,1 };
 	//”¼Œa
