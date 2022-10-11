@@ -1,14 +1,13 @@
 ﻿#include "DebugCamera.h"
+#include"Input.h"
 #include <cassert>
 
 using namespace DirectX;
 
-DebugCamera::DebugCamera(int window_width, int window_height, Input* input)
+DebugCamera::DebugCamera(int window_width, int window_height)
 	: Camera(window_width, window_height)
 {
-	assert(input);
-
-	this->input = input;
+	
 	// 画面サイズに対する相対的なスケールに調整
 	scaleX = 1.0f / (float)window_width;
 	scaleY = 1.0f / (float)window_height;
@@ -21,10 +20,10 @@ void DebugCamera::Update()
 	float angleY = 0;
 
 	// マウスの入力を取得
-	Input::MouseMove mouseMove = input->GetMouseMove();
+	Input::MouseMove mouseMove = Input::GetInstance()->GetMouseMove();
 
 	// マウスの左ボタンが押されていたらカメラを回転させる
-	if (input->PushMouse(input->M_Left))
+	if (Input::GetInstance()->PushMouse(input->M_Left))
 	{
 		float dy = mouseMove.lX * scaleY;
 		float dx = mouseMove.lY * scaleX;
@@ -35,7 +34,7 @@ void DebugCamera::Update()
 	}
 
 	// マウスの中ボタンが押されていたらカメラを並行移動させる
-	if (input->PushMouse(input->M_Middle))
+	if (Input::GetInstance()->PushMouse(input->M_Middle))
 	{
 		float dx = mouseMove.lX / 100.0f;
 		float dy = mouseMove.lY / 100.0f;
