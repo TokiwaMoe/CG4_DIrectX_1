@@ -36,7 +36,7 @@ void Sword::Update(Player* player, Enemy *enemy)
 
 		swordOBB.m_NormaDirect[i] = { sword_vector.r->m128_f32[0], sword_vector.r->m128_f32[1], sword_vector.r->m128_f32[2] };
 
-		swordOBB.m_fLength[0] = 0.25f;
+		swordOBB.m_fLength[0] = 0.5f;
 		swordOBB.m_fLength[1] = 1.0f;
 		swordOBB.m_fLength[2] = 2.0f;
 	}

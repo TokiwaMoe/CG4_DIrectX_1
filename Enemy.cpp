@@ -236,9 +236,10 @@ void Enemy::AirfoilBullet(Player* player)
 
 void Enemy::Draw()
 {
-	objEnemy->Draw();
+	
 	objBoundBullet->Draw();
 	objHomingBullet->Draw();
+	objEnemy->Draw();
 	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)

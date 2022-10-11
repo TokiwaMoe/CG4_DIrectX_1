@@ -331,11 +331,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		
 		Object3d::PreDraw(dxCommon->GetCmdList());
 		//player->Draw();
-		enemy->Draw();
+		
 		objSkydome->Draw();
 		//objGround->Draw();
 		sword->Draw();
 		skill->Draw();
+		enemy->Draw();
 		//objFighter->Draw();
 		//objSphere->Draw();
 		//objSphere2->Draw();
