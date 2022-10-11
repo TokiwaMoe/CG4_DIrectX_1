@@ -73,7 +73,7 @@ public:
 		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 
 	//‹…‚Æ‹…
-	static bool CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Radius, float sphere2Radius);
+	static bool CheckSphere2(Sphere& sphere1, Sphere& sphere2);
 
 	//OBB‚Ì“–‚½‚è”»’è
 	static bool ColOBBs(OBB& obb1, OBB& obb2);

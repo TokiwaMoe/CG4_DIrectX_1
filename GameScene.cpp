@@ -210,10 +210,11 @@ void GameScene::Draw()
 #pragma region 3D•`‰æ
 	Object3d::PreDraw(dxCommon->GetCmdList());
 
+	enemy->Draw();
 	objSkydome->Draw();
 	objGround->Draw();
 	player->Draw();
-	enemy->Draw();
+	
 	sword->Draw();
 	skill->Draw();
 	//objFighter->Draw();
@@ -232,9 +233,9 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
-	/*char str[256];
+	char str[256];
 	sprintf_s(str, "60");
-	debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);*/
+	debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);
 	debugText.DrawAll(dxCommon->GetCmdList());
 	Sprite::PostDraw();
 

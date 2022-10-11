@@ -215,12 +215,12 @@ bool Collision::CheckRay2Sphere(const Ray& ray, const Sphere& sphere, float* dis
 	return true;
 }
 
-bool Collision::CheckSphere2(XMFLOAT3 sphere1, XMFLOAT3 sphere2, float sphere1Radius, float sphere2Radius)
+bool Collision::CheckSphere2(Sphere &sphere1, Sphere &sphere2)
 {
-		float x = (sphere2.x - sphere1.x) * (sphere2.x - sphere1.x);
-		float y = (sphere2.y - sphere1.y) * (sphere2.y - sphere1.y);
-		float z = (sphere2.z - sphere1.z) * (sphere2.z - sphere1.z);
-		float r = (sphere1Radius + sphere2Radius) * (sphere1Radius + sphere2Radius);
+		float x = (sphere2.center.m128_f32[0] - sphere1.center.m128_f32[0]) * (sphere2.center.m128_f32[0] - sphere1.center.m128_f32[0]);
+		float y = (sphere2.center.m128_f32[1] - sphere1.center.m128_f32[1]) * (sphere2.center.m128_f32[1] - sphere1.center.m128_f32[1]);
+		float z = (sphere2.center.m128_f32[2] - sphere1.center.m128_f32[2]) * (sphere2.center.m128_f32[2] - sphere1.center.m128_f32[2]);
+		float r = (sphere1.radius + sphere2.radius) * (sphere1.radius + sphere2.radius);
 
 		if (x + y + z <= r)
 		{
