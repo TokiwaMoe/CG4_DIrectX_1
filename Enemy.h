@@ -45,6 +45,8 @@ public:
 	Object3dModel* enemyBulletModel = nullptr;
 	Object3d* objBoundBullet = nullptr;
 	Object3d* objHomingBullet = nullptr;
+	Object3d* objSphere[3];
+	int isDraw = 0;
 	/*Object3d* objAirfoilBulletRight[10][13];
 	Object3d* objAirfoilBulletLeft[10][13];*/
 

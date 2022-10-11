@@ -47,6 +47,9 @@ public:
 public:
 	Object3dModel* swordModel = nullptr;
 	Object3d* objSword = nullptr;
+	Object3dModel* sphereModel = nullptr;
+	Object3d* objsphere[13];
+
 	
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
@@ -57,6 +60,10 @@ public:
 
 	OBB swordOBB;
 	OBB enemyOBB;
+	
+
+	Sphere swordSphere[13];
+	Sphere enemySphere1;
 	bool isHit = false;
 
 private:

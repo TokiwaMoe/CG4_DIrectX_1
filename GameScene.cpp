@@ -92,7 +92,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 #pragma endregion
 
 	// カメラ注視点をセット
-	camera->SetTarget({ 0, 2.5f, 0 });
+	camera->SetTarget({ 0, 0, 0 });
 	camera->SetDistance(8.0f);
 }
 
@@ -210,13 +210,13 @@ void GameScene::Draw()
 #pragma region 3D描画
 	Object3d::PreDraw(dxCommon->GetCmdList());
 
-	enemy->Draw();
-	objSkydome->Draw();
-	objGround->Draw();
-	player->Draw();
 	
-	sword->Draw();
-	skill->Draw();
+	//objSkydome->Draw();
+	//objGround->Draw();
+	//player->Draw();
+	enemy->Draw();
+	/*sword->Draw();
+	skill->Draw();*/
 	//objFighter->Draw();
 	/*objSphere->Draw();
 	objSphere2->Draw();

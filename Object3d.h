@@ -212,6 +212,8 @@ public: // ƒƒ“ƒoŠÖ”
 
 	const XMFLOAT3& GetRotation() { return rotation; }
 
+	const XMFLOAT3& GetScale() { return scale; }
+
 	/// <summary>
 	/// À•W‚Ìİ’è
 	/// </summary>
