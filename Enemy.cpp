@@ -24,12 +24,6 @@ void Enemy::Initialize()
 	objHomingBullet = Object3d::Create();
 	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
-	for (int i = 0; i < 3; i++)
-	{
-		objSphere[i] = Object3d::Create();
-		objSphere[i]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
-	}
-	
 	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
@@ -49,15 +43,6 @@ void Enemy::Initialize()
 
 	objHomingBullet->SetObject3dModel(enemyBulletModel);
 	objHomingBullet->SetScale({ 0.5,0.5,0.5 });
-
-	for (int i = 0; i < 3; i++)
-	{
-		objSphere[i]->SetObject3dModel(enemyBulletModel);
-		objSphere[i]->SetScale({0.65,0.65,0.65});
-		objSphere[0]->SetPosition({position.x - 0.95f, position.y, position.z + 0.5f});
-		objSphere[1]->SetPosition({ position.x - 0.95f, position.y, position.z + 0.5f + objSphere[1]->GetScale().z * 1.5f});
-		objSphere[2]->SetPosition({ position.x - 0.95f, position.y, position.z + 0.5f + objSphere[1]->GetScale().z * 3.0f });
-	}
 	
 
 	/*for (int y = 0; y < 10; y++)
@@ -85,18 +70,14 @@ void Enemy::Initialize()
 
 void Enemy::Update(Player* player)
 {
-	//Target(player);
-	//Assault(player);
-	//BoundBullet(player);
-	//HomingBullet(player);
+	Target(player);
+	Assault(player);
+	BoundBullet(player);
+	HomingBullet(player);
 	//AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
-	for (int i = 0; i < 3; i++)
-	{
-		objSphere[i]->Update();
-	}
 	
 	
 	/*for (int y = 0; y < 10; y++)
@@ -107,15 +88,6 @@ void Enemy::Update(Player* player)
 			objAirfoilBulletLeft[y][x]->Update();
 		}
 	}*/
-
-	if (Input::GetInstance()->TriggerKey(DIK_Z))
-	{
-		isDraw++;
-		if (isDraw == 2)
-		{
-			isDraw = 0;
-		}
-	}
 }
 
 void Enemy::Move()
@@ -157,10 +129,6 @@ void Enemy::Assault(Player* player)
 	}
 
 	objEnemy->SetPosition(position);
-	for (int i = 0; i < 2; i++)
-	{
-		objSphere[i]->SetPosition(position);
-	}
 	
 }
 
@@ -279,22 +247,10 @@ void Enemy::Draw()
 {
 	
 	
-	/*objBoundBullet->Draw();
-	objHomingBullet->Draw();*/
+	objBoundBullet->Draw();
+	objHomingBullet->Draw();
 
-	if (isDraw == 1 || isDraw == 0)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			objSphere[i]->Draw();
-		}
-		
-	}
-	
-	if (isDraw == 0 || isDraw == 2)
-	{
-		objEnemy->Draw();
-	}
+	objEnemy->Draw();
 	
 	/*for (int y = 0; y < 10; y++)
 	{

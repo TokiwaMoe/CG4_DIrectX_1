@@ -38,6 +38,7 @@ public:
 	Object3d* objFriend = nullptr;
 	Object3dModel* bulletModel = nullptr;
 	Object3d* objBullet = nullptr;
+	Object3d* objPlayerBullet = nullptr;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };

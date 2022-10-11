@@ -226,6 +226,10 @@ bool Collision::CheckSphere2(Sphere &sphere1, Sphere &sphere2)
 		{
 			return true;
 		}
+		else
+		{
+			return false;
+		}
 }
 
 bool Collision::ColOBBs(OBB& obb1, OBB& obb2)

@@ -65,6 +65,7 @@ public: // サブクラス
 		XMMATRIX viewproj;	//3D変換行列
 		XMMATRIX world;
 		XMFLOAT3 cameraPos;
+		XMFLOAT4 color = { 1,1,1,1 };
 	};
 
 	//定数バッファ用データ構造体B1
@@ -223,6 +224,8 @@ public: // メンバ関数
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
+
+	void SetColor(XMFLOAT4 color) { this->color = color; }
 
 	virtual void Draw();
 

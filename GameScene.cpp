@@ -16,7 +16,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 #pragma region カメラ
 	// カメラ生成
-	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
+	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 #pragma endregion
@@ -92,8 +92,8 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 #pragma endregion
 
 	// カメラ注視点をセット
-	camera->SetTarget({ 0, 0, 0 });
-	camera->SetDistance(8.0f);
+	camera->SetTarget(player->GetPosition());
+
 }
 
 //void GameScene::Object3dCreate()
@@ -210,13 +210,13 @@ void GameScene::Draw()
 #pragma region 3D描画
 	Object3d::PreDraw(dxCommon->GetCmdList());
 
-	
-	//objSkydome->Draw();
-	//objGround->Draw();
-	//player->Draw();
+	sword->Draw();
+	objSkydome->Draw();
+	objGround->Draw();
 	enemy->Draw();
-	/*sword->Draw();
-	skill->Draw();*/
+	skill->Draw();
+	player->Draw();
+	
 	//objFighter->Draw();
 	/*objSphere->Draw();
 	objSphere2->Draw();
@@ -233,9 +233,33 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
-	char str[256];
-	sprintf_s(str, "60");
-	debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);
+	if (sword->GetIsHit1())
+	{
+		char str[256];
+		sprintf_s(str, "Hit");
+		debugText.Print(str, 0, 40, 1.0f);
+	}
+	if (sword->GetIsHit2())
+	{
+		char str4[256];
+		sprintf_s(str4, "Hit");
+		debugText.Print(str4, 0, 55, 1.0f);
+	}
+	if (sword->GetIsHit3())
+	{
+		char str5[256];
+		sprintf_s(str5, "Hit");
+		debugText.Print(str5, 0, 70, 1.0f);
+	}
+
+	char str2[256];
+	sprintf_s(str2, "x : %f y : %f z : %f", sword->GetCenter().m128_f32[0], sword->GetCenter().m128_f32[1], sword->GetCenter().m128_f32[2]);
+	debugText.Print(str2, 0, 10, 1.0f);
+
+	char str3[256];
+	sprintf_s(str3, "x : %f y : %f z : %f", sword->GetCenter_enemy().m128_f32[0], sword->GetCenter_enemy().m128_f32[1], sword->GetCenter_enemy().m128_f32[2]);
+	debugText.Print(str3, 0, 25, 1.0f);
+	
 	debugText.DrawAll(dxCommon->GetCmdList());
 	Sprite::PostDraw();
 

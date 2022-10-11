@@ -29,11 +29,18 @@ public:
 
 	void Move(Player *player);
 
+	void SwordEnemyCollision(Enemy* enemy);
+
 	void Draw();
 
 	void SetPosition(XMFLOAT3 pos);
 
-	bool GetIsHit() { return isHit; }
+	bool GetIsHit1() { return isHit_enemy1[12]; }
+	bool GetIsHit2() { return isHit_enemy2[12]; }
+	bool GetIsHit3() { return isHit_enemy3[12]; }
+	XMVECTOR GetCenter() { return swordSphere[0].center; }
+	XMVECTOR GetCenter_enemy() { return enemySphere[0].center; }
+	bool GetIsDecrease() { return isDecrease; }
 	XMVECTOR GetNormalDirect_SwordA() { return swordOBB.GetDirect(0); }
 	XMVECTOR GetNormalDirect_SwordB() { return swordOBB.GetDirect(1); }
 	XMVECTOR GetNormalDirect_SwordC() { return swordOBB.GetDirect(2); }
@@ -49,6 +56,7 @@ public:
 	Object3d* objSword = nullptr;
 	Object3dModel* sphereModel = nullptr;
 	Object3d* objsphere[13];
+	Object3d* objsphere_enemy[3];
 
 	
 	// ローカルスケール
@@ -63,8 +71,13 @@ public:
 	
 
 	Sphere swordSphere[13];
-	Sphere enemySphere1;
-	bool isHit = false;
+	Sphere enemySphere[3];
+	const float swordRadius = 0.05f;
+	const float enemyRadius = 0.5f;
+	bool isHit_enemy1[13];
+	bool isHit_enemy2[13];
+	bool isHit_enemy3[13];
+	bool isDecrease = false;
 
 private:
 	bool Attack = false;
