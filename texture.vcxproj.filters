@@ -157,6 +157,9 @@
     <Filter Include="ソース ファイル\Skill">
       <UniqueIdentifier>{6fce3c29-f85a-4e71-b502-d9dc60087c64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Effect">
+      <UniqueIdentifier>{e39a72cc-a580-4fff-89ea-aea19df470b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>ソース ファイル\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="Effects.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffecseerInput.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -509,6 +518,12 @@
     </ClInclude>
     <ClInclude Include="Skill.h">
       <Filter>ソース ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffecseerInput.h">
+      <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
