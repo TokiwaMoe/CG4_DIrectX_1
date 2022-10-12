@@ -92,7 +92,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 #pragma endregion
 
 	// カメラ注視点をセット
-	camera->SetTarget(player->GetPosition());
+	camera->SetTarget({0,0,0});
 
 }
 
