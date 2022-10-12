@@ -37,50 +37,33 @@ void Player::Update(Camera *camera)
 void Player::Move(Camera* camera)
 {
 	XMVECTOR forvardvec = {0.1,0.1,0.1,0};
-	if (Input::GetInstance()->PushKey(DIK_W)) {
+	if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
 		position.z += forvardvec.m128_f32[2];
+		camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
 		objPlayer->SetRotation({ 0,0,0 });
 		defence_direction = Previous;
 	}
-	if (Input::GetInstance()->PushKey(DIK_S)) {
+	if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
 		position.z -= forvardvec.m128_f32[2];
+		camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
 		objPlayer->SetRotation({ 0,180,0 });
 		defence_direction = Back;
 	}
-	if (Input::GetInstance()->PushKey(DIK_A)) {
+	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
 		position.x -= forvardvec.m128_f32[0];
+		camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
 		objPlayer->SetRotation({ 0,-90,0 });
 		defence_direction = Left;
 	}
-	if (Input::GetInstance()->PushKey(DIK_D)) {
+	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
 		position.x += forvardvec.m128_f32[0];
-		objPlayer->SetRotation({ 0,90,0 });
-		defence_direction = Right;
-	}
-
-
-	if (Input::GetInstance()->StickTilt(Input::Stick_Up)) {
-		position.z += forvardvec.m128_f32[2];
-		objPlayer->SetRotation({ 0,0,0 });
-		defence_direction = Previous;
-	}
-	if (Input::GetInstance()->StickTilt(Input::Stick_Down)) {
-		position.z -= forvardvec.m128_f32[2];
-		objPlayer->SetRotation({ 0,180,0 });
-		defence_direction = Back;
-	}
-	if (Input::GetInstance()->StickTilt(Input::Stick_Left)) {
-		position.x -= forvardvec.m128_f32[0];
-		objPlayer->SetRotation({ 0,-90,0 });
-		defence_direction = Left;
-	}
-	if (Input::GetInstance()->StickTilt(Input::Stick_Right)) {
-		position.x += forvardvec.m128_f32[0];
+		camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
 		objPlayer->SetRotation({ 0,90,0 });
 		defence_direction = Right;
 	}
 
 	objPlayer->SetPosition(position);
+
 }
 
 void Player::defenseKey()

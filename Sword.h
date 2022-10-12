@@ -39,7 +39,7 @@ public:
 	bool GetIsHit2() { return isHit_enemy2[12]; }
 	bool GetIsHit3() { return isHit_enemy3[12]; }
 	XMVECTOR GetCenter() { return swordSphere[0].center; }
-	XMVECTOR GetCenter_enemy() { return enemySphere[0].center; }
+	XMFLOAT3 GetCenter_enemy() { return pos[1]; }
 	bool GetIsDecrease() { return isDecrease; }
 	XMVECTOR GetNormalDirect_SwordA() { return swordOBB.GetDirect(0); }
 	XMVECTOR GetNormalDirect_SwordB() { return swordOBB.GetDirect(1); }
@@ -50,6 +50,7 @@ public:
 	XMVECTOR GetNormalDirectC() { return enemyOBB.GetDirect(2); }
 	XMVECTOR GetPositionA() { return swordOBB.GetPos_W(); }
 	XMVECTOR GetPositionB() { return enemyOBB.GetPos_W(); }
+	float GetAngle() { return Angle; }
 
 public:
 	Object3dModel* swordModel = nullptr;
@@ -73,11 +74,14 @@ public:
 	Sphere swordSphere[13];
 	Sphere enemySphere[3];
 	const float swordRadius = 0.05f;
-	const float enemyRadius = 0.5f;
+	const float enemyRadius = 1.0f;
 	bool isHit_enemy1[13];
 	bool isHit_enemy2[13];
 	bool isHit_enemy3[13];
 	bool isDecrease = false;
+	float Angle;
+	bool isRote = false;
+	XMFLOAT3 pos[3];
 
 private:
 	bool Attack = false;

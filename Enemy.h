@@ -5,6 +5,8 @@
 #include"Object3dModel.h"
 #include"Player.h"
 #include"easing.h"
+#include"Collision.h"
+#include"CollisionPrimitive.h"
 
 class Enemy
 {
@@ -37,6 +39,7 @@ public:
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
+	bool GetIsHit() { return isHit; }
 
 
 public:
@@ -47,6 +50,8 @@ public:
 	Object3d* objHomingBullet = nullptr;
 	/*Object3d* objAirfoilBulletRight[10][13];
 	Object3d* objAirfoilBulletLeft[10][13];*/
+	Object3d* objenemySp = nullptr;
+	Object3d* objplayerSp = nullptr;
 
 	Easing* easing = nullptr;
 
@@ -92,6 +97,10 @@ public:
 	const float homingBulletSpeed = 0.5;
 	float homingTime = 0;
 	float homingMaxTime = 100;
+
+	Sphere enemySphere;
+	Sphere playerSphere;
+	bool isHit = false;
 
 	//—ƒŒ^’e
 	/*struct RightPoint

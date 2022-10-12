@@ -120,4 +120,6 @@ protected://メンバ変数
 	FbxTime currentTime;
 	//アニメーション再生
 	bool isPlay = false;
+
+	Node* node = nullptr;
 };

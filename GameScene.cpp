@@ -92,7 +92,8 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 #pragma endregion
 
 	// カメラ注視点をセット
-	camera->SetTarget({0,0,0});
+	camera->SetTarget({ 0,0,0 });
+	camera->SetEye({ 0,2.5f,-7.0f });
 
 }
 
@@ -123,58 +124,77 @@ void GameScene::GameInitialize()
 
 void GameScene::Update()
 {
-	//DirectX毎フレーム処理　ここから
-	//マウス座標
-	POINT mousePos;
-	GetCursorPos(&mousePos);
-	for (int i = 0; i < 10; i++) {
-		// X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
-		const float rnd_pos = 10.0f;
-		XMFLOAT3 pos{};
-		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+	{
+		sceneNo++;
 
-		const float rnd_vel = 0.1f;
-		XMFLOAT3 vel{};
-		vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-		vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+		if (sceneNo > 2)
+		{
+			sceneNo = 0;
+		}
 
-		XMFLOAT3 acc{};
-		const float rnd_acc = 0.001f;
-		acc.y = -(float)rand() / RAND_MAX * rnd_acc;
-
-		// 追加
-		particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
+		if (sceneNo == 0)
+		{
+			GameInitialize();
+			camera->SetTarget({ 0,0,0 });
+			camera->SetEye({ 0,2.5f,-7.0f });
+		}
 	}
+	//DirectX毎フレーム処理　ここから
+	if (sceneNo == 1)
+	{
+		//マウス座標
+		POINT mousePos;
+		GetCursorPos(&mousePos);
+		for (int i = 0; i < 10; i++) {
+			// X,Y,Z全て[-5.0f,+5.0f]でランダムに分布
+			const float rnd_pos = 10.0f;
+			XMFLOAT3 pos{};
+			pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+			pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+			pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 
-	//std::ostringstream debugstr;
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-	//const XMFLOAT3& cameraPos = camera->GetEye();
-	//debugstr << "cameraPo("
-	//	<< std::fixed << std::setprecision(2)
-	//	<< cameraPos.x << ","
-	//	<< cameraPos.y << ","
-	//	<< cameraPos.z << ")",
-	//	debugText.Print(debugstr.str(), 50, 70, 1.0f);
-	//camera->Update();
-	//particleMan->Update();
+			XMFLOAT3 acc{};
+			const float rnd_acc = 0.001f;
+			acc.y = -(float)rand() / RAND_MAX * rnd_acc;
 
-	//objSkydome->Update();
-	//objGround->Update();
-	//objFighter->Update();
-	//objSphere->Update();
-	//objSphere2->Update();
-	//object1->Update();
+			// 追加
+			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
+		}
 
-	////background->SetColor({ 0,0,0,1 });
-	//background->Update();
-	camera->Update();
-	particleMan->Update();
-	light->Update();
-	ResourcesUpdate();
-	GameUpdate();
+		camera->Update();
+		particleMan->Update();
+		light->Update();
+		ResourcesUpdate();
+		GameUpdate();
+
+		if (enemy->GetIsHit())
+		{
+			sceneNo = 2;
+		}
+
+		//std::ostringstream debugstr;
+
+		//const XMFLOAT3& cameraPos = camera->GetEye();
+		//debugstr << "cameraPo("
+		//	<< std::fixed << std::setprecision(2)
+		//	<< cameraPos.x << ","
+		//	<< cameraPos.y << ","
+		//	<< cameraPos.z << ")",
+		//	debugText.Print(debugstr.str(), 50, 70, 1.0f);
+		//camera->Update();
+		//particleMan->Update();
+
+		////background->SetColor({ 0,0,0,1 });
+		//background->Update();
+		
+	}
 }
 
 void GameScene::ResourcesUpdate()
@@ -210,12 +230,16 @@ void GameScene::Draw()
 #pragma region 3D描画
 	Object3d::PreDraw(dxCommon->GetCmdList());
 
-	sword->Draw();
-	objSkydome->Draw();
-	objGround->Draw();
-	enemy->Draw();
-	skill->Draw();
-	player->Draw();
+	if (sceneNo == 1)
+	{
+		sword->Draw();
+		objSkydome->Draw();
+		objGround->Draw();
+		enemy->Draw();
+		skill->Draw();
+		player->Draw();
+	}
+	
 	
 	//objFighter->Draw();
 	/*objSphere->Draw();
@@ -257,8 +281,26 @@ void GameScene::Draw()
 	debugText.Print(str2, 0, 10, 1.0f);
 
 	char str3[256];
-	sprintf_s(str3, "x : %f y : %f z : %f", sword->GetCenter_enemy().m128_f32[0], sword->GetCenter_enemy().m128_f32[1], sword->GetCenter_enemy().m128_f32[2]);
+	sprintf_s(str3, "x : %f y : %f z : %f", sword->GetCenter_enemy().x, sword->GetCenter_enemy().y, sword->GetCenter_enemy().z);
 	debugText.Print(str3, 0, 25, 1.0f);
+
+	char str6[256];
+	sprintf_s(str6, "%f", sword->GetAngle());
+	debugText.Print(str6, 0, 90, 1.0f);
+
+	if (sceneNo == 0)
+	{
+		char str7[256];
+		sprintf_s(str7, "Title");
+		debugText.Print(str7, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
+	}
+
+	if (sceneNo == 2)
+	{
+		char str8[256];
+		sprintf_s(str8, "end");
+		debugText.Print(str8, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
+	}
 	
 	debugText.DrawAll(dxCommon->GetCmdList());
 	Sprite::PostDraw();

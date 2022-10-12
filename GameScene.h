@@ -11,7 +11,7 @@
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Sprite.h"
-#include"DebugText.h"
+#include"DebugText.h" 
 #include"Collision.h"
 #include"Audio.h"
 #include"ParticleManager.h"
@@ -78,6 +78,8 @@ private://3Dƒ‚ƒfƒ‹
 	Object3d* objSphere = nullptr;
 	Object3dModel* Object3dModelSphere2 = nullptr;
 	Object3d* objSphere2 = nullptr;
+
+	int sceneNo = 0;
 
 private://FBXƒ‚ƒfƒ‹
 	FbxModel* model1 = nullptr;

@@ -227,6 +227,8 @@ public: // ƒƒ“ƒoŠÖ”
 
 	void SetColor(XMFLOAT4 color) { this->color = color; }
 
+	void SetParent(Object3d* object) { this->parent = object; }
+
 	virtual void Draw();
 
 	void SetObject3dModel(Object3dModel* Object3dModel) { this->object3dModel = Object3dModel; }

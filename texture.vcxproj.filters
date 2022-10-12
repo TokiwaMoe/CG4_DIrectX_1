@@ -261,6 +261,12 @@
     <ClCompile Include="Title.cpp">
       <Filter>ソース ファイル\Scene\Title</Filter>
     </ClCompile>
+    <ClCompile Include="Clear.cpp">
+      <Filter>ソース ファイル\Scene\Clear</Filter>
+    </ClCompile>
+    <ClCompile Include="Over.cpp">
+      <Filter>ソース ファイル\Scene\Over</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resource\shaders\OBJPixelShader.hlsl">
@@ -542,6 +548,12 @@
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>ソース ファイル\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Clear.h">
+      <Filter>ソース ファイル\Scene\Clear</Filter>
+    </ClInclude>
+    <ClInclude Include="Over.h">
+      <Filter>ソース ファイル\Scene\Over</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

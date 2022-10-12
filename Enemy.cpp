@@ -24,6 +24,12 @@ void Enemy::Initialize()
 	objHomingBullet = Object3d::Create();
 	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
+	objenemySp = Object3d::Create();
+	objenemySp->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+
+	objplayerSp = Object3d::Create();
+	objplayerSp->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+
 	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
@@ -43,6 +49,13 @@ void Enemy::Initialize()
 
 	objHomingBullet->SetObject3dModel(enemyBulletModel);
 	objHomingBullet->SetScale({ 0.5,0.5,0.5 });
+
+	objenemySp->SetObject3dModel(enemyBulletModel);
+	objenemySp->SetScale({ 0.5,0.5,0.5 });
+	objenemySp->SetPosition({position.x, position.y, position.z + 0.5f});
+
+	objplayerSp->SetObject3dModel(enemyBulletModel);
+	objplayerSp->SetScale({ 0.3,0.3,0.3 });
 	
 
 	/*for (int y = 0; y < 10; y++)
@@ -74,10 +87,23 @@ void Enemy::Update(Player* player)
 	Assault(player);
 	BoundBullet(player);
 	HomingBullet(player);
+
+	objplayerSp->SetPosition(player->GetPosition());
+	XMFLOAT3 pos = { position.x, position.y, position.z + 0.5f };
+	objenemySp->SetPosition(pos);
+	playerSphere.center = { player->GetPosition().x,player->GetPosition().y,player->GetPosition().z };
+	playerSphere.radius = 0.3f;
+	enemySphere.center = { position.x,position.y,position.z };
+	enemySphere.radius = 0.5f;
+
 	//AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
+	objenemySp->Update();
+	objplayerSp->Update();
+
+
 	
 	
 	/*for (int y = 0; y < 10; y++)
@@ -111,7 +137,7 @@ void Enemy::Assault(Player* player)
 	if (preAssaultTime >= maxPreAssaultTime && assaultFlag == false)
 	{
 		playerOldPos = player->GetPosition();
-		oldPos = position;
+		oldPos = { position.x, 0, position.z };
 		assaultFlag = true;
 		bfoAssaultTime = 0;
 	}
@@ -121,6 +147,10 @@ void Enemy::Assault(Player* player)
 		bfoAssaultTime += 0.01f;
 		position = easing->ease(oldPos, playerOldPos, bfoAssaultTime);
 		preAssaultTime = 0;
+
+		
+		isHit = Collision::CheckSphere2(playerSphere, enemySphere);
+		
 		if (bfoAssaultTime >= easing->maxflame)
 		{
 			assaultFlag = false;
@@ -251,6 +281,9 @@ void Enemy::Draw()
 	objHomingBullet->Draw();
 
 	objEnemy->Draw();
+
+	objenemySp->Draw();
+	objplayerSp->Draw();
 	
 	/*for (int y = 0; y < 10; y++)
 	{
