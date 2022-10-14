@@ -174,6 +174,11 @@ void GameScene::Update()
 			cameraAngle++;
 			player->SetAngle(cameraAngle);
 		}
+		if (Input::GetInstance()->PushKey(DIK_LEFT))
+		{
+			cameraAngle--;
+			player->SetAngle(cameraAngle);
+		}
 		
 		camera->TargetRot({ 0,2.5f,-7.0f }, player->GetPosition(), cameraAngle);
 		camera->SetTarget(player->GetPosition());
