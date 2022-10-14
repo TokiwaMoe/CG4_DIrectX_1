@@ -137,6 +137,11 @@ public: // メンバ関数
 	void Move(const XMFLOAT3& move);
 	void MoveVector(const XMVECTOR& move);
 
+	/// <summary>
+	/// 注視点を中心に回転
+	/// </summary>
+	void TargetRot(XMVECTOR distance, XMFLOAT3 target, float angle);
+
 protected: // メンバ変数
 	// ビュー行列
 	XMMATRIX matView = DirectX::XMMatrixIdentity();
@@ -148,6 +153,7 @@ protected: // メンバ変数
 	XMMATRIX matProjection = DirectX::XMMatrixIdentity();
 	// ビュー射影行列
 	XMMATRIX matViewProjection = DirectX::XMMatrixIdentity();
+	
 	// ビュー行列ダーティフラグ
 	bool viewDirty = false;
 	// 射影行列ダーティフラグ
@@ -160,5 +166,11 @@ protected: // メンバ変数
 	XMFLOAT3 up = {0, 1, 0};
 	// アスペクト比
 	float aspectRatio = 1.0f;
+	XMFLOAT3 cameraTarget;
+	XMFLOAT3 cameraEye;
+
+public:
+	//回転
+	XMMATRIX matCameraRot;
 };
 

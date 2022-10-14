@@ -90,4 +90,5 @@ private://2D
 
 public:
 	XMFLOAT3 playerPosition = { 1,0,0 };
+	float cameraAngle = 0;
 };

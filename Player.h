@@ -34,6 +34,8 @@ public:
 
 	const XMFLOAT3& GetPosition() { return position; }
 
+	float SetAngle(float angle) { return cameraAngle = angle; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;
@@ -104,5 +106,6 @@ public:
 	float otomoAngle = 0;
 	float raise = 0.2f;
 	bool toggle = false;
+	float cameraAngle = 0;
 
 };

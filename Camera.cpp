@@ -72,7 +72,7 @@ void Camera::UpdateViewMatrix()
 	//（ワールド座標系でのカメラの右方向、上方向、前方向）	
 
 	// カメラ回転行列
-	XMMATRIX matCameraRot;
+	
 	// カメラ座標系→ワールド座標系の変換行列
 	matCameraRot.r[0] = cameraAxisX;
 	matCameraRot.r[1] = cameraAxisY;
@@ -187,4 +187,21 @@ void Camera::MoveVector(const XMVECTOR & move)
 
 	SetEye(eye_moved);
 	SetTarget(target_moved);
+}
+
+void Camera::TargetRot(XMVECTOR distance, XMFLOAT3 target, float angle)
+{
+	XMVECTOR v0 = distance;
+	//angleラジアンだけy軸まわりに回転。半径は-100
+	XMMATRIX rotM = XMMatrixIdentity();
+	rotM *= XMMatrixRotationY(XMConvertToRadians(angle));
+	XMVECTOR v = XMVector3TransformNormal(v0, rotM);
+	XMVECTOR playerTarget = { target.x, target.y, target.z };
+	XMVECTOR v3 = playerTarget + v;
+	XMFLOAT3 f = { v3.m128_f32[0], v3.m128_f32[1], v3.m128_f32[2] };
+	cameraTarget = { playerTarget.m128_f32[0], playerTarget.m128_f32[1], playerTarget.m128_f32[2] };
+	cameraEye = f;
+
+	SetTarget(cameraTarget);
+	SetEye(cameraEye);
 }

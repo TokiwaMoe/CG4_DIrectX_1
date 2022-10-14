@@ -120,6 +120,7 @@ void GameScene::GameInitialize()
 	sword->Initialize(enemy);
 	skill = new Skill();
 	skill->Initialize();
+	cameraAngle = 0;
 }
 
 void GameScene::Update()
@@ -168,16 +169,25 @@ void GameScene::Update()
 			particleMan->Add(60, pos, vel, acc, 1.0f, 0.0f);
 		}
 
+		if (Input::GetInstance()->PushKey(DIK_RIGHT))
+		{
+			cameraAngle++;
+			player->SetAngle(cameraAngle);
+		}
+		
+		camera->TargetRot({ 0,2.5f,-7.0f }, player->GetPosition(), cameraAngle);
+		camera->SetTarget(player->GetPosition());
+
 		camera->Update();
 		particleMan->Update();
 		light->Update();
 		ResourcesUpdate();
 		GameUpdate();
 
-		if (enemy->GetIsHit())
+		/*if (enemy->GetIsHit())
 		{
 			sceneNo = 2;
-		}
+		}*/
 
 		//std::ostringstream debugstr;
 

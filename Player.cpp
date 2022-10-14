@@ -36,31 +36,46 @@ void Player::Update(Camera *camera)
 
 void Player::Move(Camera* camera)
 {
-	XMVECTOR forvardvec = {0.1,0.1,0.1,0};
+	XMVECTOR speedZ = {0,0,0.1,0};//z
+	XMVECTOR speedX = { 0.1,0,0,0 };//x
+
 	if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
-		position.z += forvardvec.m128_f32[2];
-		camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
+		position.z += speedZ.m128_f32[2];
+		//camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
 		objPlayer->SetRotation({ 0,0,0 });
 		defence_direction = Previous;
 	}
 	if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
-		position.z -= forvardvec.m128_f32[2];
-		camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
+		position.z -= speedZ.m128_f32[2];
+		//camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
 		objPlayer->SetRotation({ 0,180,0 });
 		defence_direction = Back;
 	}
 	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
-		position.x -= forvardvec.m128_f32[0];
-		camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
+		position.x -= speedX.m128_f32[0];
+		//camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
 		objPlayer->SetRotation({ 0,-90,0 });
 		defence_direction = Left;
 	}
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
-		position.x += forvardvec.m128_f32[0];
-		camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
+		position.x += speedX.m128_f32[0];
+		//camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
 		objPlayer->SetRotation({ 0,90,0 });
 		defence_direction = Right;
 	}
+
+	XMMATRIX rotM = XMMatrixIdentity();
+	rotM *= XMMatrixRotationY(XMConvertToRadians(angle));
+	XMVECTOR v = XMVector3TransformNormal(v0, rotM);
+	XMVECTOR playerTarget = { target.x, target.y, target.z };
+	XMVECTOR v3 = playerTarget + v;
+	XMFLOAT3 f = { v3.m128_f32[0], v3.m128_f32[1], v3.m128_f32[2] };
+	cameraTarget = { playerTarget.m128_f32[0], playerTarget.m128_f32[1], playerTarget.m128_f32[2] };
+	cameraEye = f;
+
+	float speed = 1.0f;
+
+	//Vector3 move = { forvardvec.m128_f32[0] * speed,forvardvec.m128_f32[1] * speed,forvardvec.m128_f32[2] * speed };
 
 	objPlayer->SetPosition(position);
 
