@@ -28,18 +28,8 @@ void Sword::Update(Player* player, Enemy *enemy)
 	Move(player);
 	objSword->Update();
 
-	swordOBB.m_Pos = { position.x, position.y, position.z };
-	for (int i = 0; i < 3; i++)
-	{
-		XMMATRIX sword_vector;
-		sword_vector = DirectX::XMMatrixRotationRollPitchYaw(objSword->GetRotation().y, objSword->GetRotation().x, objSword->GetRotation().z);
-
-		swordOBB.m_NormaDirect[i] = { sword_vector.r->m128_f32[0], sword_vector.r->m128_f32[1], sword_vector.r->m128_f32[2] };
-
-		swordOBB.m_fLength[0] = 0.5f;
-		swordOBB.m_fLength[1] = 1.0f;
-		swordOBB.m_fLength[2] = 2.0f;
-	}
+	
+	
 
 	enemyOBB.m_Pos = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z + 1.5f };
 	for (int i = 0; i < 3; i++)
@@ -59,11 +49,30 @@ void Sword::Update(Player* player, Enemy *enemy)
 void Sword::Move(Player* player)
 {
 	position = player->GetPosition();
+	XMVECTOR sword_vectorX = { 1,0,0,0 };//x
+	XMVECTOR sword_vectorZ = { 0,0,1,0 };//z
+	XMMATRIX matRot_Sword = XMMatrixIdentity();
+	matRot_Sword *= XMMatrixRotationX(XMConvertToRadians(objSword->GetRotation().x));//y軸を中心に回転するマトリックスを作成
+	matRot_Sword *= XMMatrixRotationZ(XMConvertToRadians(objSword->GetRotation().z));//y軸を中心に回転するマトリックスを作成
+	sword_vectorX = XMVector3TransformNormal(sword_vectorX, matRot_Sword);
+	sword_vectorZ = XMVector3TransformNormal(sword_vectorZ, matRot_Sword);
+
+	for (int i = 0; i < 3; i++)
+	{
+		swordOBB.m_Pos = { position.x, position.y, position.z };
+
+		swordOBB.m_NormaDirect[i] = { matRot_Sword.r->m128_f32[0], matRot_Sword.r->m128_f32[1], matRot_Sword.r->m128_f32[2] };
+
+		swordOBB.m_fLength[0] = 0.5f;
+		swordOBB.m_fLength[1] = 1.0f;
+		swordOBB.m_fLength[2] = 2.0f;
+	}
 
 	if (Input::GetInstance()->PushKey(DIK_4))
 	{
 		position.x -= 1;
 		position.y -= 1;
+		swordOBB.m_Pos.x -= sword_vectorX.m128
 		objSword->SetRotation({ 90, 0, 30 });
 	}
 	
