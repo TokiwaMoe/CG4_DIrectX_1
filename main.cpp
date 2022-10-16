@@ -197,14 +197,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//// カメラ注視点をセット
 	//camera->SetTarget({0, 2.5f, 0});
 	//camera->SetDistance(8.0f);
-
-<<<<<<< HEAD
-	Sword* sword = new Sword();
-	sword->Initialize(enemy);
-=======
 	//Enemy* enemy = new Enemy();
 	//enemy->Initialize();
->>>>>>> 9133958087353e155dad3ed9c055aaa1ccd5d8d3
 
 	//Sword* sword = new Sword();
 	//sword->Initialize();

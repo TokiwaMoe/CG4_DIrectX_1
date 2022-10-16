@@ -111,7 +111,7 @@ void GameScene::GameInitialize()
 	enemy = new Enemy();
 	enemy->Initialize();
 	sword = new Sword();
-	sword->Initialize();
+	sword->Initialize(enemy);
 	skill = new Skill();
 	skill->Initialize();
 }
@@ -185,7 +185,7 @@ void GameScene::GameUpdate()
 {
 	enemy->Update(player);
 	player->Update(camera);
-	sword->Update(player);
+	sword->Update(player, enemy);
 	skill->Update(player);
 }
 
@@ -227,9 +227,13 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
-	/*char str[256];
-	sprintf_s(str, "60");
-	debugText.Print(str, WinApp::window_width / 2 - 70, 10, 8.0f);*/
+	if (sword->GetIsHit())
+	{
+		char str[256];
+		sprintf_s(str, "Hit");
+		debugText.Print(str, 0, 10, 1.0f);
+	}
+	
 	debugText.DrawAll(dxCommon->GetCmdList());
 	Sprite::PostDraw();
 
