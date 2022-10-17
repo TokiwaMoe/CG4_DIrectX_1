@@ -83,10 +83,10 @@ void Enemy::Initialize()
 
 void Enemy::Update(Player* player)
 {
-	Target(player);
-	Assault(player);
-	BoundBullet(player);
-	HomingBullet(player);
+	//Target(player);
+	//Assault(player);
+	//BoundBullet(player);
+	//HomingBullet(player);
 
 	objplayerSp->SetPosition(player->GetPosition());
 	XMFLOAT3 pos = { position.x, position.y, position.z + 0.5f };

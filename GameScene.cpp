@@ -272,7 +272,7 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
-	if (sword->GetIsHit1())
+	/*if (sword->GetIsHit())
 	{
 		char str[256];
 		sprintf_s(str, "Hit");
@@ -301,7 +301,15 @@ void GameScene::Draw()
 
 	char str6[256];
 	sprintf_s(str6, "%f", sword->GetAngle());
-	debugText.Print(str6, 0, 90, 1.0f);
+	debugText.Print(str6, 0, 90, 1.0f);*/
+
+	char str7[256];
+	sprintf_s(str7, "%f %f %f", sword->GetPositionA().m128_f32[0], sword->GetPositionA().m128_f32[1], sword->GetPositionA().m128_f32[2]);
+	debugText.Print(str7, 0, 10, 1.0f);
+
+	char str6[256];
+	sprintf_s(str6, "%f", sword->GetNormalDirect_SwordB().m128_f32[1]);
+	debugText.Print(str6, 0, 30, 1.0f);
 
 	if (sceneNo == 0)
 	{

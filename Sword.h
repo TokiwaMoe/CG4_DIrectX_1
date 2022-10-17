@@ -34,7 +34,8 @@ public:
 	void Draw();
 
 	void SetPosition(XMFLOAT3 pos);
-
+	
+	bool GetIsHit() { return isHit; }
 	bool GetIsHit1() { return isHit_enemy1[12]; }
 	bool GetIsHit2() { return isHit_enemy2[12]; }
 	bool GetIsHit3() { return isHit_enemy3[12]; }
@@ -82,6 +83,7 @@ public:
 	float Angle;
 	bool isRote = false;
 	XMFLOAT3 pos[3];
+	bool isHit = false;
 
 private:
 	bool Attack = false;

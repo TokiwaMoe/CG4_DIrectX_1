@@ -45,28 +45,24 @@ void Player::Move(Camera* camera)
 	if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
 		position.z += speedZ.m128_f32[2];
 		position.x += speedZ.m128_f32[0];
-		//camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
 		objPlayer->SetRotation({ 0,0,0 });
 		defence_direction = Previous;
 	}
 	if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
 		position.z -= speedZ.m128_f32[2];
 		position.x -= speedZ.m128_f32[0];
-		//camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
 		objPlayer->SetRotation({ 0,180,0 });
 		defence_direction = Back;
 	}
 	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
 		position.x -= speedX.m128_f32[0];
 		position.z -= speedX.m128_f32[2];
-		//camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
 		objPlayer->SetRotation({ 0,-90,0 });
 		defence_direction = Left;
 	}
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
 		position.x += speedX.m128_f32[0];
 		position.z += speedX.m128_f32[2];
-		//camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
 		objPlayer->SetRotation({ 0,90,0 });
 		defence_direction = Right;
 	}
