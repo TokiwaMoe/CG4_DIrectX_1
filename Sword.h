@@ -69,7 +69,7 @@ public:
 
 	OBB swordOBB;
 	OBB enemyOBB;
-	
+	bool Decrease = false;
 
 	Sphere swordSphere[13];
 	Sphere enemySphere[3];

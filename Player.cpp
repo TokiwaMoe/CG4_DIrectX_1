@@ -24,6 +24,7 @@ void Player::Initialize()
 	distance = { 0,0,0 };
 
 	otomoAngle = 0;
+	HP = 2;
 }
 
 void Player::Update(Camera *camera)

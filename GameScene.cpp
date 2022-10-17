@@ -189,10 +189,15 @@ void GameScene::Update()
 		ResourcesUpdate();
 		GameUpdate();
 
-		/*if (enemy->GetIsHit())
+		if (enemy->GetHP() == 0)
+		{
+			sceneNo = 3;
+		}
+
+		if (player->GetHP() == 0)
 		{
 			sceneNo = 2;
-		}*/
+		}
 
 		//std::ostringstream debugstr;
 
@@ -272,7 +277,7 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
-	if (sword->GetIsHit1())
+	/*if (sword->GetIsHit1())
 	{
 		char str[256];
 		sprintf_s(str, "Hit");
@@ -297,11 +302,15 @@ void GameScene::Draw()
 
 	char str3[256];
 	sprintf_s(str3, "x : %f y : %f z : %f", sword->GetCenter_enemy().x, sword->GetCenter_enemy().y, sword->GetCenter_enemy().z);
-	debugText.Print(str3, 0, 25, 1.0f);
+	debugText.Print(str3, 0, 25, 1.0f);*/
 
 	char str6[256];
-	sprintf_s(str6, "%f", sword->GetAngle());
-	debugText.Print(str6, 0, 90, 1.0f);
+	sprintf_s(str6, "enemyHP : %d", enemy->GetHP());
+	debugText.Print(str6, 0, 10, 1.0f);
+
+	char str5[256];
+	sprintf_s(str5, "playerHP : %d", player->GetHP());
+	debugText.Print(str5, 0, 30, 1.0f);
 
 	if (sceneNo == 0)
 	{
@@ -313,8 +322,15 @@ void GameScene::Draw()
 	if (sceneNo == 2)
 	{
 		char str8[256];
-		sprintf_s(str8, "end");
+		sprintf_s(str8, "over");
 		debugText.Print(str8, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
+	}
+
+	if (sceneNo == 3)
+	{
+		char str9[256];
+		sprintf_s(str9, "clear");
+		debugText.Print(str9, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
 	}
 	
 	debugText.DrawAll(dxCommon->GetCmdList());

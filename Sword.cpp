@@ -60,7 +60,7 @@ void Sword::Update(Player* player, Enemy *enemy)
 
 void Sword::Move(Player* player)
 {
-	position = { player->GetPosition().x, player->GetPosition().y, player->GetPosition().z };
+	position = player->GetPosition();
 
 	if (Input::GetInstance()->TriggerKey(DIK_4))
 	{
@@ -78,7 +78,23 @@ void Sword::Move(Player* player)
 		}
 	}
 	
-	objSword->SetRotation({ Angle,0,0 });
+	if (player->defence_direction == player->Previous)
+	{
+		objSword->SetRotation({ Angle,0,0 });
+	}
+	else if (player->defence_direction == player->Back)
+	{
+		objSword->SetRotation({ Angle,180,0 });
+	}
+	else if (player->defence_direction == player->Left)
+	{
+		objSword->SetRotation({ Angle,-90,0 });
+	}
+	else if (player->defence_direction == player->Right)
+	{
+		objSword->SetRotation({ Angle,90,0 });
+	}
+	
 	objSword->SetPosition(position);
 	
 }
@@ -124,7 +140,23 @@ void Sword::SwordEnemyCollision(Enemy *enemy)
 		isHit_enemy1[i] = Collision::CheckSphere2(swordSphere[i], enemySphere[0]);
 		isHit_enemy2[i] = Collision::CheckSphere2(swordSphere[i], enemySphere[1]);
 		isHit_enemy3[i] = Collision::CheckSphere2(swordSphere[i], enemySphere[2]);
+	
+		if (isRote)
+		{
+			if (isHit_enemy1[i] && Decrease == false || isHit_enemy2[i] && Decrease == false || isHit_enemy3[i] && Decrease == false)
+			{
+				enemy->SetHP(enemy->GetHP() - 1);
+				Decrease = true;
+			}
+		}
+		else
+		{
+			Decrease = false;
+		}
+		
 	}
+
+	
 
 	
 }

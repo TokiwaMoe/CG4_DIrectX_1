@@ -41,7 +41,10 @@ public:
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
-	bool GetIsHit() { return isHit; }
+	//bool GetIsHit() { return isHit; }
+
+	int SetHP(int hp) { return HP = hp; }
+	int GetHP() { return HP; }
 
 
 public:
@@ -102,9 +105,13 @@ public:
 
 	Sphere enemySphere[3];
 	Sphere playerSphere[2];
-	bool isHit[2];
+	bool isHit_Down[3];
+	bool isHit_Up[3];
 	float enemyRad = 0.6f;
 	float playerRad = 0.3f;
+	bool Hit = false;
+
+	int HP;
 
 	//—ƒŒ^’e
 	/*struct RightPoint

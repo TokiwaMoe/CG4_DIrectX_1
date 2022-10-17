@@ -76,6 +76,7 @@ void Enemy::Initialize()
 
 	speed = 0.5f;
 	boundHeight = 5.0f;
+	HP = 3;
 
 	/*for (int i = 0; i < 10; i++)
 	{
@@ -85,7 +86,7 @@ void Enemy::Initialize()
 
 void Enemy::Update(Player* player)
 {
-	Target(player);
+	//Target(player);
 	Assault(player);
 	BoundBullet(player);
 	HomingBullet(player);
@@ -337,10 +338,24 @@ void Enemy::PlayerenemyCollision(Player* player)
 
 
 
-	/*for (int i = 0; i < 13; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		isHit_enemy1[i] = Collision::CheckSphere2(playerSphere[i], enemySphere[0]);
-		isHit_enemy2[i] = Collision::CheckSphere2(playerSphere[i], enemySphere[1]);
-		isHit_enemy3[i] = Collision::CheckSphere2(playerSphere[i], enemySphere[2]);
-	}*/
+		isHit_Down[i] = Collision::CheckSphere2(playerSphere[0], enemySphere[i]);
+		isHit_Up[i] = Collision::CheckSphere2(playerSphere[1], enemySphere[i]);
+	
+		if (assaultFlag)
+		{
+			if (isHit_Down[i] && Hit == false || isHit_Up[i] && Hit == false)
+			{
+				player->SetHP(player->GetHP() - 1);
+				Hit = true;
+			}
+		}
+		else
+		{
+			Hit = false;
+		}
+	}
+
+	
 }

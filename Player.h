@@ -38,6 +38,9 @@ public:
 
 	float GetAngle() { return cameraAngle; }
 
+	int GetHP() { return HP; }
+	int SetHP(int hp) { return HP = hp; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;
@@ -109,5 +112,7 @@ public:
 	float raise = 0.2f;
 	bool toggle = false;
 	float cameraAngle = 0;
+
+	int HP;
 
 };
