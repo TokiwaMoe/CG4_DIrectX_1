@@ -35,15 +35,8 @@ void Sword::Initialize(Enemy *enemy)
 		objsphere_enemy[i] = Object3d::Create();
 		objsphere_enemy[i]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 		objsphere_enemy[i]->SetObject3dModel(sphereModel);
-		objsphere_enemy[i]->SetParent(enemy->objEnemy);
 		objsphere_enemy[i]->SetScale({ enemyRadius,enemyRadius,enemyRadius });
 		enemySphere[i].radius = enemyRadius;
-		objsphere_enemy[i]->SetPosition(
-			{ enemy->GetPosition().x - enemyRadius,
-			  enemy->GetPosition().y,
-			enemy->GetPosition().z + enemyRadius + (enemyRadius * (2.0f * i)) }
-		);
-
 	}
 }
 
@@ -67,7 +60,7 @@ void Sword::Update(Player* player, Enemy *enemy)
 
 void Sword::Move(Player* player)
 {
-	position = { player->GetPosition().x, player->GetPosition().y + 2.5f, player->GetPosition().z };
+	position = { player->GetPosition().x, player->GetPosition().y, player->GetPosition().z };
 
 	if (Input::GetInstance()->TriggerKey(DIK_4))
 	{
@@ -92,25 +85,34 @@ void Sword::Move(Player* player)
 
 void Sword::SwordEnemyCollision(Enemy *enemy)
 {
+	
+
 	for (int i = 0; i < 3; i++)
 	{
-		pos[i].x = objsphere_enemy[i]->GetPosition().x;
-		pos[i].y = objsphere_enemy[i]->GetPosition().y;
-		pos[i].z = objsphere_enemy[i]->GetPosition().z;
+		XMVECTOR distanse = { 0, 0, enemyRadius + (enemyRadius * (2.0f * i)) };
+		//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
+		XMMATRIX rotM_Enemy = DirectX::XMMatrixIdentity();
+		rotM_Enemy *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(enemy->Angle));
+		XMVECTOR v_enemy = XMVector3TransformNormal(distanse, rotM_Enemy);
+		XMVECTOR enemyVec = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z};
+		XMVECTOR enemyPos = { enemyVec.m128_f32[0] + v_enemy.m128_f32[0], enemyVec.m128_f32[1] + v_enemy.m128_f32[1], enemyVec.m128_f32[2] + v_enemy.m128_f32[2] };
 
-		//objsphere_enemy[i]->SetPosition(pos[i]);
-		/*enemySphere[i].center = {
-		objsphere_enemy[i]->GetPosition().x,
-		objsphere_enemy[i]->GetPosition().y,
-		objsphere_enemy[i]->GetPosition().z
-		};*/
+		enemySphere[i].center = enemyPos;
+		objsphere_enemy[i]->SetPosition({ enemySphere[i].center.m128_f32[0], enemySphere[i].center.m128_f32[1], enemySphere[i].center.m128_f32[2] });
 	}
 	
 	
 	for (int i = 0; i < 13; i++)
 	{
-		
-		swordSphere[i].center = {position.x, position.y - 0.5f + swordRadius * 2 * i, position.z};
+		XMVECTOR v0_Sword = { 0, swordRadius * 2 * i - 0.5f, 0 };
+		//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
+		XMMATRIX rotM_Sword = DirectX::XMMatrixIdentity();
+		rotM_Sword *= DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(Angle));
+		XMVECTOR v = XMVector3TransformNormal(v0_Sword, rotM_Sword);
+		XMVECTOR swordVec = { position.x, position.y, position.z };
+		XMVECTOR swordPos = { swordVec.m128_f32[0] + v.m128_f32[0], swordVec.m128_f32[1] + v.m128_f32[1], swordVec.m128_f32[2] + v.m128_f32[2] };
+
+		swordSphere[i].center = swordPos;
 		swordSphere[i].radius = swordRadius;
 		objsphere[i]->SetPosition({ swordSphere[i].center.m128_f32[0], swordSphere[i].center.m128_f32[1], swordSphere[i].center.m128_f32[2] });
 	}

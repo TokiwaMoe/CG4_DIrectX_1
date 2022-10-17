@@ -36,6 +36,8 @@ public:
 
 	void AirfoilBullet(Player* player);
 
+	void PlayerenemyCollision(Player* player);
+
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
@@ -50,8 +52,8 @@ public:
 	Object3d* objHomingBullet = nullptr;
 	/*Object3d* objAirfoilBulletRight[10][13];
 	Object3d* objAirfoilBulletLeft[10][13];*/
-	Object3d* objenemySp = nullptr;
-	Object3d* objplayerSp = nullptr;
+	Object3d* objenemySp[3];
+	Object3d* objplayerSp[2];
 
 	Easing* easing = nullptr;
 
@@ -98,9 +100,11 @@ public:
 	float homingTime = 0;
 	float homingMaxTime = 100;
 
-	Sphere enemySphere;
-	Sphere playerSphere;
-	bool isHit = false;
+	Sphere enemySphere[3];
+	Sphere playerSphere[2];
+	bool isHit[2];
+	float enemyRad = 0.6f;
+	float playerRad = 0.3f;
 
 	//—ƒŒ^’e
 	/*struct RightPoint

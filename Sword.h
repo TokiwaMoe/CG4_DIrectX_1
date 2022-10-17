@@ -74,7 +74,7 @@ public:
 	Sphere swordSphere[13];
 	Sphere enemySphere[3];
 	const float swordRadius = 0.05f;
-	const float enemyRadius = 1.0f;
+	const float enemyRadius = 0.6f;
 	bool isHit_enemy1[13];
 	bool isHit_enemy2[13];
 	bool isHit_enemy3[13];

@@ -36,6 +36,8 @@ public:
 
 	float SetAngle(float angle) { return cameraAngle = angle; }
 
+	float GetAngle() { return cameraAngle; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;
