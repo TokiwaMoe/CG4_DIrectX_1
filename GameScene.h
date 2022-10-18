@@ -58,7 +58,7 @@ private:
 	ParticleManager* particleMan = nullptr;
 	Audio* audio = nullptr;
 	DebugText debugText;
-	Camera* camera = nullptr;
+	DebugCamera* camera = nullptr;
 	Light* light = nullptr;
 
 	Player* player = nullptr;

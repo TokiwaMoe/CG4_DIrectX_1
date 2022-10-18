@@ -16,7 +16,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 #pragma region カメラ
 	// カメラ生成
-	camera = new Camera(WinApp::window_width, WinApp::window_height);
+	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 #pragma endregion
@@ -70,7 +70,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
 	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Left_arm_Press");
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
 	object1 = new FbxObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
@@ -194,8 +194,8 @@ void GameScene::Update()
 			player->SetAngle(cameraAngle);
 		}
 		
-		camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
-		camera->SetTarget(player->GetPosition());
+		/*camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
+		camera->SetTarget(player->GetPosition());*/
 
 		camera->Update();
 		particleMan->Update();
