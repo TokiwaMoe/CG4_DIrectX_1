@@ -231,7 +231,7 @@ void GameScene::GameUpdate()
 	enemy->Update(player);
 	player->Update(camera);
 	sword->Update(player, enemy);
-	skill->Update(player);
+	skill->Update(player, enemy);
 }
 
 void GameScene::Draw()

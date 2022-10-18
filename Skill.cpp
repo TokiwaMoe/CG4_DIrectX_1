@@ -24,10 +24,10 @@ void Skill::Initialize()
 	easing->Initialize();
 }
 
-void Skill::Update(Player* player)
+void Skill::Update(Player* player, Enemy *enemy)
 {
 	Move(player);
-	HomingBullet(player);
+	HomingBullet(player, enemy);
 	objFriend->Update();
 	objBullet->Update();
 }
@@ -51,18 +51,18 @@ void Skill::Move(Player* player)
 	objFriend->SetPosition(position);
 }
 
-void Skill::HomingBullet(Player* player)
+void Skill::HomingBullet(Player* player, Enemy *enemy)
 {
 	
 	if (Input::GetInstance()->TriggerKey(DIK_3) && bulletFlag == false)
 	{
-		bulletPos = player->GetPosition();
-		enemyOldPos = { 0,0,0 };
+		bulletPos = position;
+		enemyOldPos = enemy->GetPosition();
 		bulletTime = 0;
 		bulletFlag = true;
 		point.p0 = bulletPos;
-		point.p1 = { point.p0.x + 0.5f, point.p0.y + 2.0f, point.p0.z - 0.5f };
-		point.p2 = { point.p1.x + 0.5f, point.p1.y, point.p1.z - 0.5f };
+		point.p1 = { point.p0.x + 1.0f, point.p0.y + 2.0f, point.p0.z - 0.5f };
+		point.p2 = { point.p1.x + 1.0f, point.p1.y, point.p1.z - 0.5f };
 		point.p3 = enemyOldPos;
 	}
 

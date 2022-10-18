@@ -282,7 +282,7 @@ void Enemy::Draw()
 
 	objEnemy->Draw();
 
-	for (int i = 0; i < 2; i++)
+	/*for (int i = 0; i < 2; i++)
 	{
 		objplayerSp[i]->Draw();
 	}
@@ -290,7 +290,7 @@ void Enemy::Draw()
 	for (int i = 0; i < 3; i++)
 	{
 		objenemySp[i]->Draw();
-	}
+	}*/
 	
 	
 	

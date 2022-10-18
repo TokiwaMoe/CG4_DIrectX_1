@@ -6,6 +6,7 @@
 #include"Object3dModel.h"
 #include"Easing.h"
 #include"Player.h"
+#include"Enemy.h"
 
 class Skill {
 private:
@@ -19,11 +20,11 @@ private:
 public:
 	void Initialize();
 
-	void Update(Player* player);
+	void Update(Player* player, Enemy *enemy);
 
 	void Move(Player *player);
 
-	void HomingBullet(Player* player);
+	void HomingBullet(Player* player, Enemy *enemy);
 
 	void Draw();
 
