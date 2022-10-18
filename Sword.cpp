@@ -25,8 +25,8 @@ void Sword::Initialize(Enemy *enemy)
 		//objsphere[i]->SetParent(objSword);
 		objsphere[i]->SetObject3dModel(sphereModel);
 		objsphere[i]->SetPosition({ 0.5,0.5,0.5 });
-		objsphere[i]->SetScale({0.05,0.05,0.05});
-		swordSphere[i].radius = objsphere[i]->GetScale().x;
+		objsphere[i]->SetScale({ swordRadius,swordRadius,swordRadius });
+		swordSphere[i].radius = swordRadius;
 		
 	}
 
@@ -155,10 +155,6 @@ void Sword::SwordEnemyCollision(Enemy *enemy)
 		}
 		
 	}
-
-	
-
-	
 }
 
 void Sword::Draw()

@@ -70,7 +70,7 @@ public:
 	// X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position = { 1,0,0 };
+	XMFLOAT3 position = { 1,0.5,0 };
 
 	//プレイヤーに向く処理
 	float targetTime = 0;

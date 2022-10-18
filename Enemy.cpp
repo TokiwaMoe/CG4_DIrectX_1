@@ -76,7 +76,7 @@ void Enemy::Initialize()
 
 	speed = 0.5f;
 	boundHeight = 5.0f;
-	HP = 3;
+	HP = 10;
 
 	/*for (int i = 0; i < 10; i++)
 	{
@@ -86,7 +86,6 @@ void Enemy::Initialize()
 
 void Enemy::Update(Player* player)
 {
-	//Target(player);
 	Assault(player);
 	BoundBullet(player);
 	HomingBullet(player);
@@ -136,8 +135,8 @@ void Enemy::Assault(Player* player)
 	preAssaultTime++;
 	if (preAssaultTime >= maxPreAssaultTime && assaultFlag == false)
 	{
-		playerOldPos = player->GetPosition();
-		oldPos = { position.x, 0, position.z };
+		playerOldPos = { player->GetPosition().x, 0.5f, player->GetPosition().z };
+		oldPos = { position.x, 0.5f, position.z };
 		assaultFlag = true;
 		bfoAssaultTime = 0;
 	}
@@ -277,8 +276,8 @@ void Enemy::Draw()
 {
 	
 	
-	objBoundBullet->Draw();
-	objHomingBullet->Draw();
+	//objBoundBullet->Draw();
+	//objHomingBullet->Draw();
 
 	objEnemy->Draw();
 
@@ -349,6 +348,7 @@ void Enemy::PlayerenemyCollision(Player* player)
 			{
 				player->SetHP(player->GetHP() - 1);
 				Hit = true;
+				player->SetIsKnock(true);
 			}
 		}
 		else

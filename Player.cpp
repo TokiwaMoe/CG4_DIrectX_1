@@ -9,12 +9,12 @@ using namespace DirectX;
 void Player::Initialize()
 {
 
-	playerModel = Object3dModel::LoadFromOBJ("chr_sword");
+	playerModel = Object3dModel::LoadFromOBJ("player");
 	objPlayer = Object3d::Create();
 	objPlayer->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
 	objPlayer->SetObject3dModel(playerModel);
-	objPlayer->SetScale({ 0.5,0.5,0.5 });
+	objPlayer->SetScale({ 0.05,0.05,0.05 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -25,6 +25,7 @@ void Player::Initialize()
 
 	otomoAngle = 0;
 	HP = 2;
+	isKnock = false;
 }
 
 void Player::Update(Camera *camera)
@@ -32,6 +33,7 @@ void Player::Update(Camera *camera)
 	Move(camera);
 	Jump();
 	defense();
+	knockBack();
 	objPlayer->Update();
 }
 
@@ -78,18 +80,12 @@ void Player::Move(Camera* camera)
 
 void Player::defenseKey()
 {
-	/*if (Input::GetInstance()->PushKey(DIK_W)) {
-		distance = { 0,0,5 };
-	}
-	if (Input::GetInstance()->PushKey(DIK_S)) {
-		distance = { 0,0,-5 };
-	}
-	if (Input::GetInstance()->PushKey(DIK_A)) {
-		distance = { -5,0,0 };
-	}
-	if (Input::GetInstance()->PushKey(DIK_D)) {
-		distance = { 5,0,0 };
-	}*/
+	XMVECTOR speedZ = { 0,0,0.1,0 };//z
+	XMVECTOR speedX = { 0.1,0,0,0 };//x
+	XMMATRIX matRot = XMMatrixRotationY(XMConvertToRadians(cameraAngle));//y軸を中心に回転するマトリックスを作成
+	speedZ = XMVector3TransformNormal(speedZ, matRot);
+	speedX = XMVector3TransformNormal(speedX, matRot);
+
 	if (defence_direction == Previous)
 	{
 		distance = { 0,0,5 };
@@ -149,7 +145,6 @@ void Player::defenseMove(XMFLOAT3 FinalPos)
 
 void Player::Jump()
 {
-
 	if (Input::GetInstance()->TriggerKey(DIK_2) && jumpFlag == false)
 	{
 		jumpFlag = true;
@@ -172,6 +167,36 @@ void Player::Jump()
 		if (position.y < 0)
 		{
 			gravityFlag = false;
+		}
+	}
+
+	objPlayer->SetPosition(position);
+}
+
+void Player::knockBack()
+{
+	XMVECTOR v0_Player = { 0, 0, 0.5f };
+	//angleラジアンだけy軸まわりに回転。半径は-100
+	XMMATRIX rotM_Player = DirectX::XMMatrixIdentity();
+	rotM_Player *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(cameraAngle));
+	XMVECTOR v = XMVector3TransformNormal(v0_Player, rotM_Player);
+	XMVECTOR playerVec = { position.x, position.y, position.z };
+	XMVECTOR playerPos_V = { playerVec.m128_f32[0] - v.m128_f32[0], playerVec.m128_f32[1] + v.m128_f32[1], playerVec.m128_f32[2] - v.m128_f32[2] };
+	XMFLOAT3 playerPos = { playerPos_V.m128_f32[0], playerPos_V.m128_f32[1], playerPos_V.m128_f32[2] };
+
+	knock_OldPos = position;
+	knock_EndPos = playerPos;
+	//isKnock = true;
+
+	if (isKnock)
+	{
+		knockTime += 0.1f;
+		position = easing->ease(knock_OldPos, knock_EndPos, knockTime);
+
+		if (knockTime >= easing->maxflame)
+		{
+			knockTime = 0;
+			isKnock = false;
 		}
 	}
 

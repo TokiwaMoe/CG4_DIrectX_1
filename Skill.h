@@ -7,6 +7,8 @@
 #include"Easing.h"
 #include"Player.h"
 #include"Enemy.h"
+#include"Collision.h"
+#include"CollisionPrimitive.h"
 
 class Skill {
 private:
@@ -28,6 +30,8 @@ public:
 
 	void Draw();
 
+	void bulletEnemyCollision(Enemy* enemy);
+
 	const XMFLOAT3& GetPosition() { return position; }
 
 
@@ -38,7 +42,7 @@ public:
 	Object3dModel* friendModel = nullptr;
 	Object3d* objFriend = nullptr;
 	Object3dModel* bulletModel = nullptr;
-	Object3d* objBullet = nullptr;
+	Object3d* objBullet[5];
 	Object3d* objPlayerBullet = nullptr;
 
 	// ローカルスケール
@@ -48,7 +52,7 @@ public:
 	//座標
 	XMFLOAT3 position = { 0,0,0 };
 	//弾座標
-	XMFLOAT3 bulletPos = { 0,0,0 };
+	XMFLOAT3 bulletPos[5];
 
 	enum direction
 	{
@@ -68,24 +72,30 @@ public:
 
 public:
 	//弾変数
-	bool bulletFlag = false;
+	bool bulletFlag[5];
 	const float bulletSpeed = 0.5;
-	float bulletTime = 0;
+	float bulletTime[5];
 	const float m = 1;	//物量
 	const float PI = 3.141592;
 	const float angle = 30;
 	XMVECTOR lengthVec;
 	XMFLOAT3 enemyOldPos = { 0,0,0 };
-	Point point;
-	XMFLOAT3 a;
-	XMFLOAT3 b;
-	XMFLOAT3 c;
-	XMFLOAT3 d;
-	XMFLOAT3 e;
+	Point point[5];
+	XMFLOAT3 a[5];
+	XMFLOAT3 b[5];
+	XMFLOAT3 c[5];
+	XMFLOAT3 d[5];
+	XMFLOAT3 e[5];
 
 	//おとも
 	float otomoAngle = 0;
 	float raise = 0.2f;
 	bool toggle = false;
+
+	Sphere bulletSp[5];
+	Sphere enemySp;
+	float bulletRad = 0.1f;
+	float enemyRad = 0.6f;
+	bool isHit = false;
 
 };

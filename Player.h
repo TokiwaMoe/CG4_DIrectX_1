@@ -30,6 +30,8 @@ public:
 
 	void Jump();
 
+	void knockBack();
+
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
@@ -40,6 +42,8 @@ public:
 
 	int GetHP() { return HP; }
 	int SetHP(int hp) { return HP = hp; }
+
+	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
 
 public:
@@ -113,6 +117,11 @@ public:
 	bool toggle = false;
 	float cameraAngle = 0;
 
+	//ノックバック
+	float knockTime = 0;
+	XMFLOAT3 knock_EndPos = { 0,0,0 };
+	XMFLOAT3 knock_OldPos = { 0,0,0 };
+	bool isKnock;
 	int HP;
 
 };

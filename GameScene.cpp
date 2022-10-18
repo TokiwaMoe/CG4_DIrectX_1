@@ -23,17 +23,26 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 #pragma region Object3d
 	Object3d::StaticInitialize(dxCommon->GetDev(), camera);
-	Object3dModelSkydome = Object3dModel::LoadFromOBJ("skydome");
+	modelScene1 = Object3dModel::LoadFromOBJ("scene1");
+	modelScene2 = Object3dModel::LoadFromOBJ("scene2");
+	modelScene3 = Object3dModel::LoadFromOBJ("scene3");
+	modelScene4 = Object3dModel::LoadFromOBJ("scene4");
 	Object3dModelGround = Object3dModel::LoadFromOBJ("ground");
 	Object3dModelSphere = Object3dModel::LoadFromOBJ("sphere");
 	Object3dModelSphere2 = Object3dModel::LoadFromOBJ("sphere");
 
-	objSkydome = Object3d::Create();
-	objSkydome->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
-	objSkydome->SetObject3dModel(Object3dModelSkydome);
-	objGround = Object3d::Create();
-	objGround->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
-	objGround->SetObject3dModel(Object3dModelGround);
+	objScene1 = Object3d::Create();
+	objScene1->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objScene1->SetObject3dModel(modelScene1);
+	objScene2 = Object3d::Create();
+	objScene2->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objScene2->SetObject3dModel(modelScene2);
+	objScene3 = Object3d::Create();
+	objScene3->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objScene3->SetObject3dModel(modelScene3);
+	objScene4 = Object3d::Create();
+	objScene4->InitializeGraphicsPipeline(L"Resource/shaders/OBJVertexShader.hlsl", L"Resource/shaders/OBJPixelShader.hlsl");
+	objScene4->SetObject3dModel(modelScene4);
 	objSphere = Object3d::Create();
 	objSphere->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 	objSphere->SetObject3dModel(Object3dModelSphere);
@@ -43,7 +52,10 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 	objSphere->SetPosition({ +10,0,0 });
 	objSphere2->SetPosition({ -10,0,0 });
-	objSkydome->SetScale({ 3,3,3 });
+	objScene1->SetScale({ 0.25,0.25,0.25 });
+	objScene2->SetScale({ 0.25,0.25,0.25 });
+	objScene3->SetScale({ 0.25,0.25,0.25 });
+	objScene4->SetScale({ 0.25,0.25,0.25 });
 
 	
 #pragma endregion
@@ -58,7 +70,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
 	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("boneTest");
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
 	object1 = new FbxObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
@@ -180,7 +192,7 @@ void GameScene::Update()
 			player->SetAngle(cameraAngle);
 		}
 		
-		camera->TargetRot({ 0,2.5f,-7.0f }, player->GetPosition(), cameraAngle);
+		camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
 		camera->SetTarget(player->GetPosition());
 
 		camera->Update();
@@ -219,8 +231,10 @@ void GameScene::Update()
 
 void GameScene::ResourcesUpdate()
 {
-	objSkydome->Update();
-	objGround->Update();
+	objScene1->Update();
+	objScene3->Update();
+	objScene2->Update();
+	objScene4->Update();
 	objSphere->Update();
 	objSphere2->Update();
 	object1->Update();
@@ -253,8 +267,10 @@ void GameScene::Draw()
 	if (sceneNo == 1)
 	{
 		sword->Draw();
-		objSkydome->Draw();
-		objGround->Draw();
+		objScene1->Draw();
+		objScene3->Draw();
+		objScene2->Draw();
+		objScene4->Draw();
 		enemy->Draw();
 		skill->Draw();
 		player->Draw();
@@ -262,9 +278,9 @@ void GameScene::Draw()
 	
 	
 	//objFighter->Draw();
-	/*objSphere->Draw();
-	objSphere2->Draw();
-	object1->Draw(dxCommon->GetCmdList());*/
+	//objSphere->Draw();
+	//objSphere2->Draw();
+	object1->Draw(dxCommon->GetCmdList());
 
 	Object3d::PostDraw();
 

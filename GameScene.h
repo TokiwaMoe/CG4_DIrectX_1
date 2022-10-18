@@ -70,8 +70,14 @@ private:
 	int debugTextTexNumber = 0;
 
 private://3Dƒ‚ƒfƒ‹
-	Object3dModel* Object3dModelSkydome = nullptr;
-	Object3d* objSkydome = nullptr;
+	Object3dModel* modelScene1 = nullptr;
+	Object3d* objScene1 = nullptr;
+	Object3dModel* modelScene2 = nullptr;
+	Object3d* objScene2 = nullptr;
+	Object3dModel* modelScene3 = nullptr;
+	Object3d* objScene3 = nullptr;
+	Object3dModel* modelScene4 = nullptr;
+	Object3d* objScene4 = nullptr;
 	Object3dModel* Object3dModelGround = nullptr;
 	Object3d* objGround = nullptr;
 	Object3dModel* Object3dModelSphere = nullptr;
