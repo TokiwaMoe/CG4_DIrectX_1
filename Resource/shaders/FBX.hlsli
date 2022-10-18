@@ -30,3 +30,10 @@ cbuffer skinning:register(b3)//ボーンのスキニング行列が入る
 {
 	matrix matSkinning[MAX_BONES];
 }
+
+//スキニング後の頂点・法線が入る
+struct SkinOutput
+{
+	float4 pos;
+	float3 normal;
+};

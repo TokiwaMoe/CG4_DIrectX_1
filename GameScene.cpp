@@ -70,12 +70,14 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
 	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Left_arm_Press");
 	object1 = new FbxObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
 	object1->PlayAnimation();
-	object1->SetRotation({ 0, 90, 0 });
+	object1->SetRotation({ 0, 0, 0 });
+	object1->SetScale({ 0.1,0.1,0.1 });
+	//object1->SetPosition({ 10,-20, 0 });
 #pragma endregion
 
 #pragma region スプライト
@@ -231,10 +233,10 @@ void GameScene::Update()
 
 void GameScene::ResourcesUpdate()
 {
-	objScene1->Update();
+	/*objScene1->Update();
 	objScene3->Update();
 	objScene2->Update();
-	objScene4->Update();
+	objScene4->Update();*/
 	objSphere->Update();
 	objSphere2->Update();
 	object1->Update();

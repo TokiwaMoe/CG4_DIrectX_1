@@ -458,6 +458,11 @@ void FbxLoader::ParseSkin(FbxModel* model, FbxMesh* fbxMesh)
                 return lhs.weight > rhs.weight;
             });
 
+        if (weightList.size() > 4)
+        {
+            weightList.resize(4);
+        }
+
         int weightArrayIndex = 0;
         //降順ソート済みのウェイトリストから
         for (auto &weightSet : weightList)
