@@ -16,7 +16,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 #pragma region カメラ
 	// カメラ生成
-	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
+	camera = new Camera(WinApp::window_width, WinApp::window_height);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 #pragma endregion
@@ -194,8 +194,8 @@ void GameScene::Update()
 			player->SetAngle(cameraAngle);
 		}
 		
-		/*camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
-		camera->SetTarget(player->GetPosition());*/
+		camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
+		camera->SetTarget(player->GetPosition());
 
 		camera->Update();
 		particleMan->Update();
