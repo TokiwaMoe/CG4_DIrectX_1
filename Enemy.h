@@ -5,6 +5,8 @@
 #include"Object3dModel.h"
 #include"Player.h"
 #include"easing.h"
+#include"Collision.h"
+#include"CollisionPrimitive.h"
 
 class Enemy
 {
@@ -34,9 +36,15 @@ public:
 
 	void AirfoilBullet(Player* player);
 
+	void PlayerenemyCollision(Player* player);
+
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
+	//bool GetIsHit() { return isHit; }
+
+	int SetHP(int hp) { return HP = hp; }
+	int GetHP() { return HP; }
 
 
 public:
@@ -47,6 +55,8 @@ public:
 	Object3d* objHomingBullet = nullptr;
 	/*Object3d* objAirfoilBulletRight[10][13];
 	Object3d* objAirfoilBulletLeft[10][13];*/
+	Object3d* objenemySp[3];
+	Object3d* objplayerSp[2];
 
 	Easing* easing = nullptr;
 
@@ -60,7 +70,7 @@ public:
 	// X,Y,Z軸回りのローカル回転角
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position = { 1,0,0 };
+	XMFLOAT3 position = { 1,0.5,0 };
 
 	//プレイヤーに向く処理
 	float targetTime = 0;
@@ -92,6 +102,16 @@ public:
 	const float homingBulletSpeed = 0.5;
 	float homingTime = 0;
 	float homingMaxTime = 100;
+
+	Sphere enemySphere[3];
+	Sphere playerSphere[2];
+	bool isHit_Down[3];
+	bool isHit_Up[3];
+	float enemyRad = 0.6f;
+	float playerRad = 0.3f;
+	bool Hit = false;
+
+	int HP;
 
 	//翼型弾
 	/*struct RightPoint

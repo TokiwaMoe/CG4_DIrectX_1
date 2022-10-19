@@ -11,7 +11,7 @@
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Sprite.h"
-#include"DebugText.h"
+#include"DebugText.h" 
 #include"Collision.h"
 #include"Audio.h"
 #include"ParticleManager.h"
@@ -58,7 +58,7 @@ private:
 	ParticleManager* particleMan = nullptr;
 	Audio* audio = nullptr;
 	DebugText debugText;
-	DebugCamera* camera = nullptr;
+	Camera* camera = nullptr;
 	Light* light = nullptr;
 
 	Player* player = nullptr;
@@ -70,14 +70,22 @@ private:
 	int debugTextTexNumber = 0;
 
 private://3Dƒ‚ƒfƒ‹
-	Object3dModel* Object3dModelSkydome = nullptr;
-	Object3d* objSkydome = nullptr;
+	Object3dModel* modelScene1 = nullptr;
+	Object3d* objScene1 = nullptr;
+	Object3dModel* modelScene2 = nullptr;
+	Object3d* objScene2 = nullptr;
+	Object3dModel* modelScene3 = nullptr;
+	Object3d* objScene3 = nullptr;
+	Object3dModel* modelScene4 = nullptr;
+	Object3d* objScene4 = nullptr;
 	Object3dModel* Object3dModelGround = nullptr;
 	Object3d* objGround = nullptr;
 	Object3dModel* Object3dModelSphere = nullptr;
 	Object3d* objSphere = nullptr;
 	Object3dModel* Object3dModelSphere2 = nullptr;
 	Object3d* objSphere2 = nullptr;
+
+	int sceneNo = 0;
 
 private://FBXƒ‚ƒfƒ‹
 	FbxModel* model1 = nullptr;
@@ -88,4 +96,5 @@ private://2D
 
 public:
 	XMFLOAT3 playerPosition = { 1,0,0 };
+	float cameraAngle = 0;
 };

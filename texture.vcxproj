@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Clear.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionPrimitive.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
@@ -171,15 +172,19 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object3dModel.cpp" />
     <ClCompile Include="Object3d.cpp" />
+    <ClCompile Include="Over.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp">
       <UseUnicodeForAssemblerListing Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</UseUnicodeForAssemblerListing>
     </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="PostEffect.cpp" />
+    <ClCompile Include="SceneManegar.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -513,6 +518,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseCollider.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Clear.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="CollisionPrimitive.h" />
@@ -532,13 +538,17 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Object3dModel.h" />
     <ClInclude Include="Object3d.h" />
+    <ClInclude Include="Over.h" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="PostEffect.h" />
+    <ClInclude Include="SceneManegar.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

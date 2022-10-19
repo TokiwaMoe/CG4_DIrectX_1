@@ -29,11 +29,18 @@ public:
 
 	void Move(Player *player);
 
+	void SwordEnemyCollision(Enemy* enemy);
+
 	void Draw();
 
 	void SetPosition(XMFLOAT3 pos);
 
-	bool GetIsHit() { return isHit; }
+	bool GetIsHit1() { return isHit_enemy1[12]; }
+	bool GetIsHit2() { return isHit_enemy2[12]; }
+	bool GetIsHit3() { return isHit_enemy3[12]; }
+	XMVECTOR GetCenter() { return swordSphere[0].center; }
+	XMFLOAT3 GetCenter_enemy() { return pos[1]; }
+	bool GetIsDecrease() { return isDecrease; }
 	XMVECTOR GetNormalDirect_SwordA() { return swordOBB.GetDirect(0); }
 	XMVECTOR GetNormalDirect_SwordB() { return swordOBB.GetDirect(1); }
 	XMVECTOR GetNormalDirect_SwordC() { return swordOBB.GetDirect(2); }
@@ -43,10 +50,15 @@ public:
 	XMVECTOR GetNormalDirectC() { return enemyOBB.GetDirect(2); }
 	XMVECTOR GetPositionA() { return swordOBB.GetPos_W(); }
 	XMVECTOR GetPositionB() { return enemyOBB.GetPos_W(); }
+	float GetAngle() { return Angle; }
 
 public:
 	Object3dModel* swordModel = nullptr;
 	Object3d* objSword = nullptr;
+	Object3dModel* sphereModel = nullptr;
+	Object3d* objsphere[13];
+	Object3d* objsphere_enemy[3];
+
 	
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
@@ -57,7 +69,19 @@ public:
 
 	OBB swordOBB;
 	OBB enemyOBB;
-	bool isHit = false;
+	bool Decrease = false;
+
+	Sphere swordSphere[13];
+	Sphere enemySphere[3];
+	const float swordRadius = 0.05f;
+	const float enemyRadius = 0.6f;
+	bool isHit_enemy1[13];
+	bool isHit_enemy2[13];
+	bool isHit_enemy3[13];
+	bool isDecrease = false;
+	float Angle;
+	bool isRote = false;
+	XMFLOAT3 pos[3];
 
 private:
 	bool Attack = false;

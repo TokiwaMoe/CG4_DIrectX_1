@@ -24,6 +24,22 @@ void Enemy::Initialize()
 	objHomingBullet = Object3d::Create();
 	objHomingBullet->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 
+	for (int i = 0; i < 3; i++)
+	{
+		objenemySp[i] = Object3d::Create();
+		objenemySp[i]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+		objenemySp[i]->SetObject3dModel(enemyBulletModel);
+		objenemySp[i]->SetScale({ enemyRad,enemyRad,enemyRad });
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		objplayerSp[i] = Object3d::Create();
+		objplayerSp[i]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
+		objplayerSp[i]->SetObject3dModel(enemyBulletModel);
+		objplayerSp[i]->SetScale({ playerRad,playerRad,playerRad });
+	}
+
 	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
@@ -60,6 +76,7 @@ void Enemy::Initialize()
 
 	speed = 0.5f;
 	boundHeight = 5.0f;
+	HP = 10;
 
 	/*for (int i = 0; i < 10; i++)
 	{
@@ -69,14 +86,25 @@ void Enemy::Initialize()
 
 void Enemy::Update(Player* player)
 {
-	//Target(player);
-	//Assault(player);
-	//BoundBullet(player);
-	//HomingBullet(player);
+	Assault(player);
+	BoundBullet(player);
+	HomingBullet(player);
+	PlayerenemyCollision(player);
 	//AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
+
+	for (int i = 0; i < 3; i++)
+	{
+		objenemySp[i]->Update();
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		objplayerSp[i]->Update();
+	}
+	
 	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
@@ -107,8 +135,8 @@ void Enemy::Assault(Player* player)
 	preAssaultTime++;
 	if (preAssaultTime >= maxPreAssaultTime && assaultFlag == false)
 	{
-		playerOldPos = player->GetPosition();
-		oldPos = position;
+		playerOldPos = { player->GetPosition().x, 0.5f, player->GetPosition().z };
+		oldPos = { position.x, 0.5f, position.z };
 		assaultFlag = true;
 		bfoAssaultTime = 0;
 	}
@@ -118,6 +146,10 @@ void Enemy::Assault(Player* player)
 		bfoAssaultTime += 0.01f;
 		position = easing->ease(oldPos, playerOldPos, bfoAssaultTime);
 		preAssaultTime = 0;
+
+		
+		//isHit = Collision::CheckSphere2(playerSphere, enemySphere);
+		
 		if (bfoAssaultTime >= easing->maxflame)
 		{
 			assaultFlag = false;
@@ -126,6 +158,7 @@ void Enemy::Assault(Player* player)
 	}
 
 	objEnemy->SetPosition(position);
+	
 }
 
 void Enemy::HomingBullet(Player* player)
@@ -241,9 +274,25 @@ void Enemy::AirfoilBullet(Player* player)
 
 void Enemy::Draw()
 {
+	
+	
+	//objBoundBullet->Draw();
+	//objHomingBullet->Draw();
+
 	objEnemy->Draw();
-	objBoundBullet->Draw();
-	objHomingBullet->Draw();
+
+	/*for (int i = 0; i < 2; i++)
+	{
+		objplayerSp[i]->Draw();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		objenemySp[i]->Draw();
+	}*/
+	
+	
+	
 	/*for (int y = 0; y < 10; y++)
 	{
 		for (int x = 0; x < 13; x++)
@@ -252,4 +301,61 @@ void Enemy::Draw()
 			objAirfoilBulletLeft[y][x]->Draw();
 		}
 	}*/
+}
+
+void Enemy::PlayerenemyCollision(Player* player)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		XMVECTOR distanse = { 0, 0, enemyRad + (enemyRad * (2.0f * i)) };
+		//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
+		XMMATRIX rotM_Enemy = DirectX::XMMatrixIdentity();
+		rotM_Enemy *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(Angle));
+		XMVECTOR v_enemy = XMVector3TransformNormal(distanse, rotM_Enemy);
+		XMVECTOR enemyVec = { position.x, position.y, position.z };
+		XMVECTOR enemyPos = { enemyVec.m128_f32[0] + v_enemy.m128_f32[0], enemyVec.m128_f32[1] + v_enemy.m128_f32[1], enemyVec.m128_f32[2] + v_enemy.m128_f32[2] };
+
+		enemySphere[i].center = enemyPos;
+		objenemySp[i]->SetPosition({ enemySphere[i].center.m128_f32[0], enemySphere[i].center.m128_f32[1], enemySphere[i].center.m128_f32[2] });
+	}
+
+
+	for (int i = 0; i < 2; i++)
+	{
+		XMVECTOR v0_Player = { 0, playerRad * 2 * i, 0 };
+		//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
+		XMMATRIX rotM_Player = DirectX::XMMatrixIdentity();
+		rotM_Player *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->GetAngle()));
+		XMVECTOR v = XMVector3TransformNormal(v0_Player, rotM_Player);
+		XMVECTOR playerVec = { player->GetPosition().x, player->GetPosition().y, player->GetPosition().z};
+		XMVECTOR playerPos = { playerVec.m128_f32[0] + v.m128_f32[0], playerVec.m128_f32[1] + v.m128_f32[1], playerVec.m128_f32[2] + v.m128_f32[2] };
+
+		playerSphere[i].center = playerPos;
+		playerSphere[i].radius = playerRad;
+		objplayerSp[i]->SetPosition({ playerSphere[i].center.m128_f32[0], playerSphere[i].center.m128_f32[1], playerSphere[i].center.m128_f32[2] });
+	}
+
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		isHit_Down[i] = Collision::CheckSphere2(playerSphere[0], enemySphere[i]);
+		isHit_Up[i] = Collision::CheckSphere2(playerSphere[1], enemySphere[i]);
+	
+		if (assaultFlag)
+		{
+			if (isHit_Down[i] && Hit == false || isHit_Up[i] && Hit == false)
+			{
+				player->SetHP(player->GetHP() - 1);
+				Hit = true;
+				player->SetIsKnock(true);
+			}
+		}
+		else
+		{
+			Hit = false;
+		}
+	}
+
+	
 }

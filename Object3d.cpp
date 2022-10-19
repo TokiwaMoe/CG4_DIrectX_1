@@ -329,6 +329,7 @@ void Object3d::Update()
 	constMap0->viewproj = matViewProjection;
 	constMap0->world = matWorld;
 	constMap0->cameraPos = cameraPos;
+	constMap0->color = this->color;
 	constBuffB0->Unmap(0, nullptr);
 
 	if (collider)

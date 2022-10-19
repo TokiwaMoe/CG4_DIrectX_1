@@ -30,9 +30,20 @@ public:
 
 	void Jump();
 
+	void knockBack();
+
 	void Draw();
 
 	const XMFLOAT3& GetPosition() { return position; }
+
+	float SetAngle(float angle) { return cameraAngle = angle; }
+
+	float GetAngle() { return cameraAngle; }
+
+	int GetHP() { return HP; }
+	int SetHP(int hp) { return HP = hp; }
+
+	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
 
 public:
@@ -104,5 +115,13 @@ public:
 	float otomoAngle = 0;
 	float raise = 0.2f;
 	bool toggle = false;
+	float cameraAngle = 0;
+
+	//ノックバック
+	float knockTime = 0;
+	XMFLOAT3 knock_EndPos = { 0,0,0 };
+	XMFLOAT3 knock_OldPos = { 0,0,0 };
+	bool isKnock;
+	int HP;
 
 };

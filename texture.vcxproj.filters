@@ -94,9 +94,6 @@
     <Filter Include="リソース ファイル\PostEffect">
       <UniqueIdentifier>{873ad512-5698-4fe1-b04d-458cbaa0e42d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameScene">
-      <UniqueIdentifier>{edd20c44-7ee3-45ad-9708-1b279d631390}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Light">
       <UniqueIdentifier>{22ff1854-ecf7-433b-9cdd-cc44e00ecb5c}</UniqueIdentifier>
     </Filter>
@@ -157,8 +154,28 @@
     <Filter Include="ソース ファイル\Skill">
       <UniqueIdentifier>{6fce3c29-f85a-4e71-b502-d9dc60087c64}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="ソース ファイル\Effect">
       <UniqueIdentifier>{e39a72cc-a580-4fff-89ea-aea19df470b2}</UniqueIdentifier>
+=======
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{4d4ff509-6ddb-4fe9-b5b1-8ea89770dec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\GameScene">
+      <UniqueIdentifier>{edd20c44-7ee3-45ad-9708-1b279d631390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\Title">
+      <UniqueIdentifier>{b5fe5b3c-c411-4613-99c8-4b9b1583b42f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\Clear">
+      <UniqueIdentifier>{32e8134f-68c8-4578-b590-2c539460c2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\Over">
+      <UniqueIdentifier>{2884ffd9-6d92-4a61-a36a-c3cd5a95fd43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\SceneManegar">
+      <UniqueIdentifier>{cb947688-0147-4b18-b678-52787630e478}</UniqueIdentifier>
+>>>>>>> gamescene
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,7 +237,7 @@
       <Filter>ソース ファイル\2d\ソース</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル\GameScene</Filter>
+      <Filter>ソース ファイル\Scene\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>ソース ファイル\Light</Filter>
@@ -240,11 +257,28 @@
     <ClCompile Include="Skill.cpp">
       <Filter>ソース ファイル\Skill</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Effects.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="EffecseerInput.cpp">
       <Filter>ソース ファイル\Effect</Filter>
+=======
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>ソース ファイル\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManegar.cpp">
+      <Filter>ソース ファイル\Scene\SceneManegar</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>ソース ファイル\Scene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Clear.cpp">
+      <Filter>ソース ファイル\Scene\Clear</Filter>
+    </ClCompile>
+    <ClCompile Include="Over.cpp">
+      <Filter>ソース ファイル\Scene\Over</Filter>
+>>>>>>> gamescene
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -499,7 +533,7 @@
       <Filter>ソース ファイル\2d\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
-      <Filter>ソース ファイル\GameScene</Filter>
+      <Filter>ソース ファイル\Scene\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>ソース ファイル\Light</Filter>
@@ -519,11 +553,28 @@
     <ClInclude Include="Skill.h">
       <Filter>ソース ファイル\Skill</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Effects.h">
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffecseerInput.h">
       <Filter>ソース ファイル\Effect</Filter>
+=======
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>ソース ファイル\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManegar.h">
+      <Filter>ソース ファイル\Scene\SceneManegar</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>ソース ファイル\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Clear.h">
+      <Filter>ソース ファイル\Scene\Clear</Filter>
+    </ClInclude>
+    <ClInclude Include="Over.h">
+      <Filter>ソース ファイル\Scene\Over</Filter>
+>>>>>>> gamescene
     </ClInclude>
   </ItemGroup>
 </Project>

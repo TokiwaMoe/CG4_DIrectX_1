@@ -45,7 +45,7 @@ void FbxLoader::Initiallize(ID3D12Device* device)
     fbxImporter = FbxImporter::Create(fbxManager, "");
 }
 
-FbxModel* FbxLoader::LoadMadelFromFile(
+std::unique_ptr<FbxModel> FbxLoader::LoadMadelFromFile(
     const string& modelName)
 {
     //モデルと同じ名前のフォルダから読み込む
@@ -80,7 +80,7 @@ FbxModel* FbxLoader::LoadMadelFromFile(
     //バッファ生成
     model->CreateBuffers(device);
 
-    return model;
+    return std::unique_ptr<FbxModel>(model);
 }
 
 void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent)
@@ -457,6 +457,11 @@ void FbxLoader::ParseSkin(FbxModel* model, FbxMesh* fbxMesh)
                 //左の要素の方が大きければtrue それでなければfalseを返す
                 return lhs.weight > rhs.weight;
             });
+
+        if (weightList.size() > 4)
+        {
+            weightList.resize(4);
+        }
 
         int weightArrayIndex = 0;
         //降順ソート済みのウェイトリストから
