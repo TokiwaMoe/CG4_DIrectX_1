@@ -25,6 +25,13 @@
 #include"Enemy.h"
 #include"Sword.h"
 #include"Skill.h"
+#include<Effekseer.h>
+#include<EffekseerRendererDX12.h>
+
+#pragma comment(lib, "EffekseerRendererDX12.lib")
+#pragma comment(lib, "Effekseer.lib")
+#pragma comment(lib, "LLGI.lib")
+
 
 using namespace Microsoft::WRL;
 using namespace DirectX;
