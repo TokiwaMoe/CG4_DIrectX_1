@@ -73,7 +73,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Player_Attack");
 	object1 = new FbxObject3d;
 	object1->Initialize();
-	object1->SetModel(model1);
+	object1->SetModel(model1.get());
 	object1->PlayAnimation();
 	object1->SetRotation({ 0, 0, 0 });
 	object1->SetScale({ 0.001,0.001,0.001 });
