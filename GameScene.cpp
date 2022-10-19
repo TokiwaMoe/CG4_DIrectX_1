@@ -70,7 +70,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
 	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Left_arm_Press");
+	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Player_Attack");
 	object1 = new FbxObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
