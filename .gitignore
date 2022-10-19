@@ -98,8 +98,6 @@ StyleCopReport.xml
 *.scc
 *.obj
 *.fbx
-*.jpeg
-*.png
 *.mtl
 
 # Chutzpah Test files
