@@ -153,7 +153,7 @@ void FbxLoader::ParseMesh(FbxModel* model, FbxNode* fbxNode)
     FbxMesh* fbxMesh = fbxNode->GetMesh();
 
     //頂点座標読み取り
-    //ParseMeshVertices(model, fbxMesh);
+    ParseMeshVertices(model, fbxMesh);
     //面を構成するデータの読み取り
     ParseMeshFaces(model, fbxMesh);
     //マテリアルの読み取り
