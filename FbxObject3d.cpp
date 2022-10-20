@@ -238,7 +238,7 @@ void FbxObject3d::Update()
 	{
 		constMapSkin->bones[i] = XMMatrixIdentity();
 	}
-	auto a = bones.size();
+	//auto a = bones.size();
 	assert(bones.size() <= MAX_BONES);
 	for (int i = 0; i < bones.size(); i++)
 	{

@@ -69,15 +69,6 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	FbxObject3d::CreateGraphicsPipline();
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
-	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Player_Attack");
-	object1 = new FbxObject3d;
-	object1->Initialize();
-	object1->SetModel(model1.get());
-	object1->PlayAnimation();
-	object1->SetRotation({ 0, 0, 0 });
-	object1->SetScale({ 0.001,0.001,0.001 });
-	object1->SetPosition({ 0,0, 5.5 });
 #pragma endregion
 
 #pragma region スプライト
@@ -229,6 +220,8 @@ void GameScene::Update()
 		//background->Update();
 		
 	}
+	ResourcesUpdate();
+	GameUpdate();
 }
 
 void GameScene::ResourcesUpdate()
@@ -239,7 +232,6 @@ void GameScene::ResourcesUpdate()
 	objScene4->Update();
 	objSphere->Update();
 	objSphere2->Update();
-	object1->Update();
 }
 
 void GameScene::GameUpdate()
@@ -275,14 +267,13 @@ void GameScene::Draw()
 		objScene4->Draw();
 		enemy->Draw();
 		skill->Draw();
-		player->Draw();
+		player->Draw(dxCommon);
 	}
 	
 	
 	//objFighter->Draw();
 	//objSphere->Draw();
 	//objSphere2->Draw();
-	object1->Draw(dxCommon->GetCmdList());
 
 	Object3d::PostDraw();
 

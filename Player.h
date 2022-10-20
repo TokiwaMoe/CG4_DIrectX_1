@@ -5,6 +5,10 @@
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Easing.h"
+#include"fbxsdk.h"
+#include"FbxLoader.h"
+#include"FbxObject3d.h"
+#include"DirectXCommon.h"
 
 class Player {
 private:
@@ -32,7 +36,7 @@ public:
 
 	void knockBack();
 
-	void Draw();
+	void Draw(DirectXCommon* dxCommon);
 
 	const XMFLOAT3& GetPosition() { return position; }
 
@@ -49,6 +53,8 @@ public:
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* objPlayer = nullptr;
+	std::unique_ptr<FbxModel> playerFbxModel = nullptr;
+	FbxObject3d* fbxPlayer = nullptr;
 	Easing* easing = nullptr;
 
 	// ローカルスケール
@@ -123,5 +129,9 @@ public:
 	XMFLOAT3 knock_OldPos = { 0,0,0 };
 	bool isKnock;
 	int HP;
+
+	//
+	bool isWalk = false;
+	float rote = 0;
 
 };

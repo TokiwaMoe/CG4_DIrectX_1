@@ -16,6 +16,14 @@ void Player::Initialize()
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.05,0.05,0.05 });
 
+	playerFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
+	fbxPlayer = new FbxObject3d;
+	fbxPlayer->Initialize();
+	fbxPlayer->SetModel(playerFbxModel.get());
+	fbxPlayer->PlayAnimation();
+	fbxPlayer->SetScale({ 0.01,0.01,0.01 });
+	fbxPlayer->SetPosition({ 0,0, 5.5 });
+
 	easing = new Easing();
 	easing->Initialize();
 
@@ -26,6 +34,8 @@ void Player::Initialize()
 	otomoAngle = 0;
 	HP = 2;
 	isKnock = false;
+	isWalk = false;
+	rote = 0;
 }
 
 void Player::Update(Camera *camera)
@@ -35,46 +45,62 @@ void Player::Update(Camera *camera)
 	defense();
 	knockBack();
 	objPlayer->Update();
+	fbxPlayer->Update();
 }
 
 void Player::Move(Camera* camera)
 {
 	XMVECTOR speedZ = {0,0,0.1,0};//z
 	XMVECTOR speedX = { 0.1,0,0,0 };//x
+	XMVECTOR rotY = { 0,0.1,0,0 };//x
 	XMMATRIX matRot = XMMatrixRotationY(XMConvertToRadians(cameraAngle));//y軸を中心に回転するマトリックスを作成
 	speedZ = XMVector3TransformNormal(speedZ, matRot);
 	speedX = XMVector3TransformNormal(speedX, matRot);
+	rotY = XMVector3TransformNormal(rotY, matRot);
+	rotY = XMVector3Normalize(rotY);
+
+	isWalk = false;
 
 	if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
 		position.z += speedZ.m128_f32[2];
 		position.x += speedZ.m128_f32[0];
 		//camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
-		objPlayer->SetRotation({ 0,0,0 });
+		rote = 0;
+		isWalk = true;
 		defence_direction = Previous;
+
 	}
 	if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
 		position.z -= speedZ.m128_f32[2];
 		position.x -= speedZ.m128_f32[0];
 		//camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
-		objPlayer->SetRotation({ 0,180,0 });
+		rote = 180;
+		isWalk = true;
 		defence_direction = Back;
 	}
 	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
 		position.x -= speedX.m128_f32[0];
 		position.z -= speedX.m128_f32[2];
 		//camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
-		objPlayer->SetRotation({ 0,-90,0 });
+		rote = -90;
+		isWalk = true;
 		defence_direction = Left;
 	}
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
 		position.x += speedX.m128_f32[0];
 		position.z += speedX.m128_f32[2];
 		//camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
-		objPlayer->SetRotation({ 0,90,0 });
+		rote = 90;
+		isWalk = true;
 		defence_direction = Right;
 	}
 
-	objPlayer->SetPosition(position);
+	if (isWalk)
+	{
+		fbxPlayer->SetRotation({ 0,rote + cameraAngle,0 });
+	}
+	
+	fbxPlayer->SetPosition(position);
 
 }
 
@@ -125,6 +151,7 @@ void Player::defense()
 
 
 	objPlayer->SetPosition(position);
+	fbxPlayer->SetPosition(position);
 }
 
 void Player::defenseMove(XMFLOAT3 FinalPos)
@@ -171,6 +198,7 @@ void Player::Jump()
 	}
 
 	objPlayer->SetPosition(position);
+	fbxPlayer->SetPosition(position);
 }
 
 void Player::knockBack()
@@ -201,9 +229,11 @@ void Player::knockBack()
 	}
 
 	objPlayer->SetPosition(position);
+	fbxPlayer->SetPosition(position);
 }
 
-void Player::Draw()
+void Player::Draw(DirectXCommon* dxCommon)
 {
-	objPlayer->Draw();
+	//objPlayer->Draw();
+	fbxPlayer->Draw(dxCommon->GetCmdList());
 }
