@@ -177,6 +177,7 @@ void FbxObject3d::CreateGraphicsPipline()
 
 	// グラフィックスパイプラインの生成
 	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
+	pipelinestate->SetName(L"FBX");
 }
 
 void FbxObject3d::Update()
@@ -237,6 +238,8 @@ void FbxObject3d::Update()
 	{
 		constMapSkin->bones[i] = XMMatrixIdentity();
 	}
+	auto a = bones.size();
+	assert(bones.size() <= MAX_BONES);
 	for (int i = 0; i < bones.size(); i++)
 	{
 		//今の姿勢行列

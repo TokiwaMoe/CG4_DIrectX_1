@@ -142,7 +142,7 @@ void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* pare
     //子ノードに対して再帰呼び出し
     for (int i = 0; i < fbxNode->GetChildCount(); i++)
     {
-        ParseNodeRecursive(model, fbxNode->GetChild(i));
+        ParseNodeRecursive(model, fbxNode->GetChild(i), &node);
     }
   
 }
@@ -164,29 +164,29 @@ void FbxLoader::ParseMesh(FbxModel* model, FbxNode* fbxNode)
 
 void FbxLoader::ParseMeshVertices(FbxModel* model, FbxMesh* fbxMesh)
 {
-    auto& vertices = model->vertices;
+    //auto& vertices = model->vertices;
 
-    //頂点座標データの数
-    const int controlPointsCount =
-        fbxMesh->GetControlPointsCount();
-    //必要数だけ頂点データ配列を確保
-    FbxModel::VertexPosNormalUvSkin vert{};
-    model->vertices.resize(controlPointsCount, vert);
+    ////頂点座標データの数
+    //const int controlPointsCount =
+    //    fbxMesh->GetControlPointsCount();
+    ////必要数だけ頂点データ配列を確保
+    //FbxModel::VertexPosNormalUvSkin vert{};
+    //model->vertices.resize(controlPointsCount, vert);
 
-    //FBXメッシュの頂点座標を取得
-    FbxVector4* pCood =
-        fbxMesh->GetControlPoints();
+    ////FBXメッシュの頂点座標を取得
+    //FbxVector4* pCood =
+    //    fbxMesh->GetControlPoints();
 
-    //FBXメッシュの全頂点座標をモデル内の配列にコピーする
-    for (int i = 0; i < controlPointsCount; i++)
-    {
-        FbxModel::VertexPosNormalUvSkin& vertex =
-            vertices[i];
-        //座標のコピー
-        vertex.pos.x = (float)pCood[i][0];
-        vertex.pos.y = (float)pCood[i][1];
-        vertex.pos.z = (float)pCood[i][2];
-    }
+    ////FBXメッシュの全頂点座標をモデル内の配列にコピーする
+    //for (int i = 0; i < controlPointsCount; i++)
+    //{
+    //    FbxModel::VertexPosNormalUvSkin& vertex =
+    //        vertices[i];
+    //    //座標のコピー
+    //    vertex.pos.x = (float)pCood[i][0];
+    //    vertex.pos.y = (float)pCood[i][1];
+    //    vertex.pos.z = (float)pCood[i][2];
+    //}
 }
 
 void FbxLoader::ParseMeshFaces(FbxModel* model, FbxMesh* fbxMesh)

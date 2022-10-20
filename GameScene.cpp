@@ -156,7 +156,7 @@ void GameScene::Update()
 		}
 	}
 	//DirectX毎フレーム処理　ここから
-	if (sceneNo == 1)
+	//if (sceneNo == 1)
 	{
 		//マウス座標
 		POINT mousePos;
