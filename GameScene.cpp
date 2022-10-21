@@ -98,7 +98,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 	// カメラ注視点をセット
 	camera->SetTarget({ 0,0,0 });
-	camera->SetEye({ 0,2.5f,-7.0f });
+	camera->SetEye({ 0,2.0f,-7.0f });
 
 }
 
@@ -143,11 +143,11 @@ void GameScene::Update()
 		{
 			GameInitialize();
 			camera->SetTarget({ 0,0,0 });
-			camera->SetEye({ 0,2.5f,-7.0f });
+			camera->SetEye({ 0,2.0f,-7.0f });
 		}
 	}
 	//DirectX毎フレーム処理　ここから
-	//if (sceneNo == 1)
+	if (sceneNo == 1)
 	{
 		//マウス座標
 		POINT mousePos;
@@ -185,14 +185,14 @@ void GameScene::Update()
 			player->SetAngle(cameraAngle);
 		}
 		
-		camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
+		camera->TargetRot({ 0,1.5f,-5.0f }, player->GetPosition(), cameraAngle);
 		camera->SetTarget(player->GetPosition());
 
 		camera->Update();
 		particleMan->Update();
 		light->Update();
-		ResourcesUpdate();
-		GameUpdate();
+		/*ResourcesUpdate();
+		GameUpdate();*/
 
 		/*if (enemy->GetHP() == 0)
 		{
@@ -320,6 +320,10 @@ void GameScene::Draw()
 	char str5[256];
 	sprintf_s(str5, "playerHP : %d", player->GetHP());
 	debugText.Print(str5, 0, 30, 1.0f);
+
+	char str7[256];
+	sprintf_s(str7, "playerHP : %f", player->GetAngle());
+	debugText.Print(str7, 0, 0, 1.0f);
 
 	if (sceneNo == 0)
 	{

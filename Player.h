@@ -53,8 +53,12 @@ public:
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* objPlayer = nullptr;
-	std::unique_ptr<FbxModel> playerFbxModel = nullptr;
-	FbxObject3d* fbxPlayer = nullptr;
+	std::unique_ptr<FbxModel> player_RunFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Run = nullptr;
+	std::unique_ptr<FbxModel> player_DamageFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Damage = nullptr;
+	std::unique_ptr<FbxModel> player_WaitFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Wait = nullptr;
 	Easing* easing = nullptr;
 
 	// ローカルスケール
@@ -129,6 +133,8 @@ public:
 	XMFLOAT3 knock_OldPos = { 0,0,0 };
 	bool isKnock;
 	int HP;
+	FbxTime AnimationTime = 0;
+	bool AnimetionKnock = false;
 
 	//
 	bool isWalk = false;

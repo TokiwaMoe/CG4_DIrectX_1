@@ -16,13 +16,29 @@ void Player::Initialize()
 	objPlayer->SetObject3dModel(playerModel);
 	objPlayer->SetScale({ 0.05,0.05,0.05 });
 
-	playerFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
-	fbxPlayer = new FbxObject3d;
-	fbxPlayer->Initialize();
-	fbxPlayer->SetModel(playerFbxModel.get());
-	fbxPlayer->PlayAnimation();
-	fbxPlayer->SetScale({ 0.01,0.01,0.01 });
-	fbxPlayer->SetPosition({ 0,0, 5.5 });
+	player_RunFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
+	fbxPlayer_Run = new FbxObject3d;
+	fbxPlayer_Run->Initialize();
+	fbxPlayer_Run->SetModel(player_RunFbxModel.get());
+	fbxPlayer_Run->PlayAnimation();
+	fbxPlayer_Run->SetScale({ 0.01,0.01,0.01 });
+	fbxPlayer_Run->SetPosition({ 0,0, 5.5 });
+
+	player_DamageFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Damage");
+	fbxPlayer_Damage = new FbxObject3d;
+	fbxPlayer_Damage->Initialize();
+	fbxPlayer_Damage->SetModel(player_DamageFbxModel.get());
+	fbxPlayer_Damage->PlayAnimation();
+	fbxPlayer_Damage->SetScale({ 0.01,0.01,0.01 });
+	fbxPlayer_Damage->SetPosition({ 0,0, 5.5 });
+
+	player_WaitFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Wait");
+	fbxPlayer_Wait = new FbxObject3d;
+	fbxPlayer_Wait->Initialize();
+	fbxPlayer_Wait->SetModel(player_WaitFbxModel.get());
+	fbxPlayer_Wait->PlayAnimation();
+	fbxPlayer_Wait->SetScale({ 0.01,0.01,0.01 });
+	fbxPlayer_Wait->SetPosition({ 0,0, 5.5 });
 
 	easing = new Easing();
 	easing->Initialize();
@@ -36,6 +52,7 @@ void Player::Initialize()
 	isKnock = false;
 	isWalk = false;
 	rote = 0;
+	AnimationTime = 0;
 }
 
 void Player::Update(Camera *camera)
@@ -45,7 +62,10 @@ void Player::Update(Camera *camera)
 	defense();
 	knockBack();
 	objPlayer->Update();
-	fbxPlayer->Update();
+	fbxPlayer_Run->Update();
+	fbxPlayer_Damage->Update();
+	fbxPlayer_Wait->Update();
+	
 }
 
 void Player::Move(Camera* camera)
@@ -97,11 +117,14 @@ void Player::Move(Camera* camera)
 
 	if (isWalk)
 	{
-		fbxPlayer->SetRotation({ 0,rote + cameraAngle,0 });
+		fbxPlayer_Run->SetRotation({ 0,rote + cameraAngle,0 });
+		fbxPlayer_Damage->SetRotation({ 0,rote + cameraAngle,0 });
+		fbxPlayer_Wait->SetRotation({ 0,rote + cameraAngle,0 });
 	}
 	
-	fbxPlayer->SetPosition(position);
-
+	fbxPlayer_Run->SetPosition(position);
+	fbxPlayer_Damage->SetPosition(position);
+	fbxPlayer_Wait->SetPosition(position);
 }
 
 void Player::defenseKey()
@@ -151,7 +174,9 @@ void Player::defense()
 
 
 	objPlayer->SetPosition(position);
-	fbxPlayer->SetPosition(position);
+	fbxPlayer_Run->SetPosition(position);
+	fbxPlayer_Damage->SetPosition(position);
+	fbxPlayer_Wait->SetPosition(position);
 }
 
 void Player::defenseMove(XMFLOAT3 FinalPos)
@@ -198,7 +223,9 @@ void Player::Jump()
 	}
 
 	objPlayer->SetPosition(position);
-	fbxPlayer->SetPosition(position);
+	fbxPlayer_Run->SetPosition(position);
+	fbxPlayer_Damage->SetPosition(position);
+	fbxPlayer_Wait->SetPosition(position);
 }
 
 void Player::knockBack()
@@ -215,25 +242,61 @@ void Player::knockBack()
 	knock_OldPos = position;
 	knock_EndPos = playerPos;
 	//isKnock = true;
-
+	
 	if (isKnock)
 	{
 		knockTime += 0.1f;
 		position = easing->ease(knock_OldPos, knock_EndPos, knockTime);
+		AnimetionKnock = true;
+		
 
 		if (knockTime >= easing->maxflame)
 		{
 			knockTime = 0;
 			isKnock = false;
+			
+			
 		}
 	}
 
-	objPlayer->SetPosition(position);
-	fbxPlayer->SetPosition(position);
+	if (AnimetionKnock)
+	{
+		AnimationTime = fbxPlayer_Damage->GetNowTime() + fbxPlayer_Damage->GetFrame();
+		if (AnimationTime >= fbxPlayer_Damage->GetEndTime())
+		{
+				AnimetionKnock = false;
+				fbxPlayer_Damage->SetNowTime(fbxPlayer_Damage->GetStartTime());
+				AnimationTime = fbxPlayer_Damage->GetStartTime();
+		}
+	}
+	else
+	{
+		AnimationTime = fbxPlayer_Damage->GetStartTime();
+		fbxPlayer_Damage->SetNowTime(fbxPlayer_Damage->GetStartTime());
+	}
+
+	fbxPlayer_Run->SetPosition(position);
+	fbxPlayer_Damage->SetPosition(position);
+	fbxPlayer_Wait->SetPosition(position);
 }
 
 void Player::Draw(DirectXCommon* dxCommon)
 {
 	//objPlayer->Draw();
-	fbxPlayer->Draw(dxCommon->GetCmdList());
+	
+	if (isWalk)
+	{
+		fbxPlayer_Run->Draw(dxCommon->GetCmdList());
+	}
+	else if (AnimetionKnock)
+	{
+		fbxPlayer_Damage->Draw(dxCommon->GetCmdList());
+	}
+	else
+	{
+		fbxPlayer_Wait->Draw(dxCommon->GetCmdList());
+	}
+
+	
+	
 }

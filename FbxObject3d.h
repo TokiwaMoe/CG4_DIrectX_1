@@ -81,6 +81,11 @@ public://メンバ変数
 	void SetPosition(XMFLOAT3 position) { this->position = position; }
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
+	FbxTime GetStartTime() { return startTime; }
+	FbxTime GetEndTime() { return endTime; }
+	FbxTime GetFrame() { return frameTime; }
+	FbxTime GetNowTime() { return currentTime; }
+	void SetNowTime(FbxTime nowTime) { this->currentTime = nowTime; }
 
 protected://メンバ変数
 	//定数バッファ
