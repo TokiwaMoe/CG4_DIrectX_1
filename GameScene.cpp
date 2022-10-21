@@ -307,11 +307,11 @@ void GameScene::Draw()
 
 	char str2[256];
 	sprintf_s(str2, "x : %f y : %f z : %f", sword->GetCenter().m128_f32[0], sword->GetCenter().m128_f32[1], sword->GetCenter().m128_f32[2]);
-	debugText.Print(str2, 0, 10, 1.0f);
+	debugText.Print(str2, 0, 10, 1.0f);*/
 
 	char str3[256];
-	sprintf_s(str3, "x : %f y : %f z : %f", sword->GetCenter_enemy().x, sword->GetCenter_enemy().y, sword->GetCenter_enemy().z);
-	debugText.Print(str3, 0, 25, 1.0f);*/
+	sprintf_s(str3, "transfom x : %f y : %f z : %f", player->GetTransform().m128_f32[0], player->GetTransform().m128_f32[1], player->GetTransform().m128_f32[2]);
+	debugText.Print(str3, 0, 50, 1.0f);
 
 	char str6[256];
 	sprintf_s(str6, "enemyHP : %d", enemy->GetHP());

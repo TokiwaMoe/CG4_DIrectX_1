@@ -49,6 +49,8 @@ public:
 
 	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
+	XMVECTOR GetTransform() { return transform; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;
@@ -139,5 +141,7 @@ public:
 	//
 	bool isWalk = false;
 	float rote = 0;
+
+	XMVECTOR transform;
 
 };

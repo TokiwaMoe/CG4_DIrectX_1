@@ -242,13 +242,14 @@ void FbxObject3d::Update()
 	assert(bones.size() <= MAX_BONES);
 	for (int i = 0; i < bones.size(); i++)
 	{
-		//今の姿勢行列
-		XMMATRIX matCurrentPose;
 		//今の姿勢行列を取得
 		FbxMatrix fbxCurrentPose =
 			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
+		FbxMatrix fbxNowPose =
+			bones[9].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		//XMMATRIXに変換
 		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose, fbxCurrentPose);
+		FbxLoader::ConvertMatrixFromFbx(&matNowPose, fbxNowPose);
 
 		XMMATRIX globalTrans = model->GetModelTransform();
 		//合成してスキニング行列に

@@ -57,6 +57,18 @@ void Player::Initialize()
 
 void Player::Update(Camera *camera)
 {
+	if (isWalk)
+	{
+		transform = { fbxPlayer_Run->GetMatNowPose().r->m128_f32[0], fbxPlayer_Run->GetMatNowPose().r->m128_f32[1], fbxPlayer_Run->GetMatNowPose().r->m128_f32[2] };
+	}
+	else if (AnimetionKnock)
+	{
+		transform = { fbxPlayer_Damage->GetMatNowPose().r->m128_f32[0], fbxPlayer_Damage->GetMatNowPose().r->m128_f32[1], fbxPlayer_Damage->GetMatNowPose().r->m128_f32[2] };
+	}
+	else
+	{
+		transform = { fbxPlayer_Wait->GetMatNowPose().r->m128_f32[0], fbxPlayer_Wait->GetMatNowPose().r->m128_f32[1], fbxPlayer_Wait->GetMatNowPose().r->m128_f32[2] };
+	}
 	Move(camera);
 	Jump();
 	defense();
@@ -72,12 +84,9 @@ void Player::Move(Camera* camera)
 {
 	XMVECTOR speedZ = {0,0,0.1,0};//z
 	XMVECTOR speedX = { 0.1,0,0,0 };//x
-	XMVECTOR rotY = { 0,0.1,0,0 };//x
 	XMMATRIX matRot = XMMatrixRotationY(XMConvertToRadians(cameraAngle));//y軸を中心に回転するマトリックスを作成
 	speedZ = XMVector3TransformNormal(speedZ, matRot);
 	speedX = XMVector3TransformNormal(speedX, matRot);
-	rotY = XMVector3TransformNormal(rotY, matRot);
-	rotY = XMVector3Normalize(rotY);
 
 	isWalk = false;
 
