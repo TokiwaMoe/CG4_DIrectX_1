@@ -61,24 +61,23 @@ void Sword::Update(Player* player, Enemy *enemy)
 void Sword::Move(Player* player)
 {
 	position = { 
-		player->GetPosition().x + player->GetTransform().m128_f32[0],
-		player->GetPosition().y + player->GetTransform().m128_f32[1],
-		player->GetPosition().z + player->GetTransform().m128_f32[2]
+		player->GetPosition().x/* + player->GetTransform().m128_f32[0]*/,
+		player->GetPosition().y/* + player->GetTransform().m128_f32[1]*/,
+		player->GetPosition().z/* + player->GetTransform().m128_f32[2]*/
 	};
 
-	XMVECTOR sword_distanse = { 0, 0, 0 };
+	XMVECTOR distanse = { 0.15f, 1.0f, 0 };
 	//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
 	XMMATRIX rotM = DirectX::XMMatrixIdentity();
-	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->fbxPlayer_Run->GetRotation().y));
-	rotM *= DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(90));
-	XMVECTOR v = DirectX::XMVector3TransformNormal(sword_distanse, rotM);
-	XMVECTOR playerVec = { position.x, position.y, position.z };
-	XMVECTOR playerPos_V = { playerVec.m128_f32[0] + v.m128_f32[0], playerVec.m128_f32[1] + v.m128_f32[1], playerVec.m128_f32[2] + v.m128_f32[2] };
-	XMFLOAT3 playerPos = { playerPos_V.m128_f32[0], playerPos_V.m128_f32[1], playerPos_V.m128_f32[2] };
+	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->objPlayer->GetRotation().y + player->GetAngle()));
+	XMVECTOR v = XMVector3TransformNormal(distanse, rotM);
+	XMVECTOR f3 = { position.x, position.y, position.z };
+	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };
+	XMFLOAT3 sword3 = { swordVec.m128_f32[0], swordVec.m128_f32[1], swordVec.m128_f32[2] };
 
-	rotation = { 90, player->fbxPlayer_Run->GetRotation().y, 0 };
+	rotation = { 0, player->fbxPlayer_Run->GetRotation().y, 0 };
 
-	/*if (Input::GetInstance()->TriggerKey(DIK_4))
+	if (Input::GetInstance()->TriggerKey(DIK_4))
 	{
 		isRote = true;
 	}
@@ -109,9 +108,9 @@ void Sword::Move(Player* player)
 	else if (player->defence_direction == player->Right)
 	{
 		objSword->SetRotation({ Angle,90,0 });
-	}*/
+	}
 	
-	objSword->SetPosition(playerPos);
+	objSword->SetPosition(sword3);
 	objSword->SetRotation(rotation);
 	
 }

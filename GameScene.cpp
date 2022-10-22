@@ -303,11 +303,11 @@ void GameScene::Draw()
 		char str5[256];
 		sprintf_s(str5, "Hit");
 		debugText.Print(str5, 0, 70, 1.0f);
-	}
+	}*/
 
 	char str2[256];
-	sprintf_s(str2, "x : %f y : %f z : %f", sword->GetCenter().m128_f32[0], sword->GetCenter().m128_f32[1], sword->GetCenter().m128_f32[2]);
-	debugText.Print(str2, 0, 10, 1.0f);*/
+	sprintf_s(str2, "x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
+	debugText.Print(str2, 0, 90, 1.0f);
 
 	char str3[256];
 	sprintf_s(str3, "transfom x : %f y : %f z : %f", player->GetTransform().m128_f32[0], player->GetTransform().m128_f32[1], player->GetTransform().m128_f32[2]);

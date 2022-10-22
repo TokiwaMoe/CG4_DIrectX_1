@@ -138,29 +138,33 @@ void Player::Move(Camera* camera)
 
 void Player::defenseKey()
 {
-	XMVECTOR speedZ = { 0,0,0.1,0 };//z
-	XMVECTOR speedX = { 0.1,0,0,0 };//x
+	XMVECTOR speedZ = { 0,0,5,0 };//z
+	XMVECTOR speedX = { 5,0,0,0 };//x
 	XMMATRIX matRot = XMMatrixRotationY(XMConvertToRadians(cameraAngle));//y軸を中心に回転するマトリックスを作成
 	speedZ = XMVector3TransformNormal(speedZ, matRot);
 	speedX = XMVector3TransformNormal(speedX, matRot);
 
 	if (defence_direction == Previous)
 	{
-		distance = { 0,0,5 };
+		endPos.x = oldPos.x + speedZ.m128_f32[0];
+		endPos.z = oldPos.z + speedZ.m128_f32[2];
 	}
 	else if (defence_direction == Back)
 	{
-		distance = { 0,0,-5 };
+		endPos.x = oldPos.x - speedZ.m128_f32[0];
+		endPos.z = oldPos.z - speedZ.m128_f32[2];
 	}
 	else if (defence_direction == Left)
 	{
-		distance = { -5,0,0 };
+		endPos.x = oldPos.x - speedX.m128_f32[0];
+		endPos.z = oldPos.z - speedX.m128_f32[2];
 	}
 	else if (defence_direction == Right)
 	{
-		distance = { 5,0,0 };
+		endPos.x = oldPos.x + speedX.m128_f32[0];
+		endPos.z = oldPos.z + speedX.m128_f32[2];
 	}
-	endPos = { oldPos.x + distance.x, oldPos.y + distance.y, oldPos.z + distance.z };
+	//endPos = { oldPos.x + distance.x, oldPos.y + distance.y, oldPos.z + distance.z };
 	defenseMove(endPos);
 }
 

@@ -143,5 +143,6 @@ public:
 	float rote = 0;
 
 	XMVECTOR transform;
+	XMVECTOR matBone = { 0,0,0,0 };
 
 };
