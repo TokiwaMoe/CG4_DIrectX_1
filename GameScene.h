@@ -92,7 +92,9 @@ private://FBXƒ‚ƒfƒ‹
 	FbxObject3d* object1 = nullptr;
 
 private://2D
-	Sprite* background = nullptr;
+	Sprite* title = nullptr;
+	Sprite* clear = nullptr;
+	Sprite* gameover = nullptr;
 
 public:
 	XMFLOAT3 playerPosition = { 1,0,0 };

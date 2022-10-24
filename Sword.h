@@ -82,6 +82,7 @@ public:
 	float Angle;
 	bool isRote = false;
 	XMFLOAT3 pos[3];
+	XMFLOAT3 sword3 = { 0,0,0 };
 
 private:
 	bool Attack = false;

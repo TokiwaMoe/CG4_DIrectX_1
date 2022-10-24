@@ -48,7 +48,7 @@ void Player::Initialize()
 	distance = { 0,0,0 };
 
 	otomoAngle = 0;
-	HP = 2;
+	HP = 3;
 	isKnock = false;
 	isWalk = false;
 	rote = 0;
@@ -90,46 +90,52 @@ void Player::Move(Camera* camera)
 
 	isWalk = false;
 
-	if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
-		position.z += speedZ.m128_f32[2];
-		position.x += speedZ.m128_f32[0];
-		//camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
-		rote = 0;
-		isWalk = true;
-		defence_direction = Previous;
-
-	}
-	if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
-		position.z -= speedZ.m128_f32[2];
-		position.x -= speedZ.m128_f32[0];
-		//camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
-		rote = 180;
-		isWalk = true;
-		defence_direction = Back;
-	}
-	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
-		position.x -= speedX.m128_f32[0];
-		position.z -= speedX.m128_f32[2];
-		//camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
-		rote = -90;
-		isWalk = true;
-		defence_direction = Left;
-	}
-	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
-		position.x += speedX.m128_f32[0];
-		position.z += speedX.m128_f32[2];
-		//camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
-		rote = 90;
-		isWalk = true;
-		defence_direction = Right;
-	}
-
-	if (isWalk)
+	if (AnimetionKnock == false)
 	{
-		fbxPlayer_Run->SetRotation({ 0,rote + cameraAngle,0 });
-		fbxPlayer_Damage->SetRotation({ 0,rote + cameraAngle,0 });
-		fbxPlayer_Wait->SetRotation({ 0,rote + cameraAngle,0 });
+		if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
+			position.z += speedZ.m128_f32[2];
+			position.x += speedZ.m128_f32[0];
+			//camera->MoveVector({ 0,0,forvardvec.m128_f32[2] });
+			rote = 0;
+			isWalk = true;
+			defence_direction = Previous;
+
+		}
+		if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
+			position.z -= speedZ.m128_f32[2];
+			position.x -= speedZ.m128_f32[0];
+			//camera->MoveVector({ 0,0,-forvardvec.m128_f32[2] });
+			rote = 180;
+			isWalk = true;
+			defence_direction = Back;
+		}
+		if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
+			position.x -= speedX.m128_f32[0];
+			position.z -= speedX.m128_f32[2];
+			//camera->MoveVector({ -forvardvec.m128_f32[0],0,0 });
+			rote = -90;
+			isWalk = true;
+			defence_direction = Left;
+		}
+		if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
+			position.x += speedX.m128_f32[0];
+			position.z += speedX.m128_f32[2];
+			//camera->MoveVector({ forvardvec.m128_f32[0],0,0 });
+			rote = 90;
+			isWalk = true;
+			defence_direction = Right;
+		}
+
+		if (isWalk)
+		{
+			fbxPlayer_Run->SetRotation({ 0,rote + cameraAngle,0 });
+			fbxPlayer_Damage->SetRotation({ 0,rote + cameraAngle,0 });
+			fbxPlayer_Wait->SetRotation({ 0,rote + cameraAngle,0 });
+		}
 	}
+	
+
+	
 	
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
@@ -170,7 +176,7 @@ void Player::defenseKey()
 
 void Player::defense()
 {
-	if (Input::GetInstance()->TriggerKey(DIK_1) && defenceFlag == false)
+	if (Input::GetInstance()->TriggerKey(DIK_1) && defenceFlag == false && AnimetionKnock == false)
 	{
 		time = 0;
 		distance = { 0,0,0 };
@@ -210,7 +216,7 @@ void Player::defenseMove(XMFLOAT3 FinalPos)
 
 void Player::Jump()
 {
-	if (Input::GetInstance()->TriggerKey(DIK_2) && jumpFlag == false)
+	if (Input::GetInstance()->TriggerKey(DIK_2) && jumpFlag == false && AnimetionKnock == false)
 	{
 		jumpFlag = true;
 	}

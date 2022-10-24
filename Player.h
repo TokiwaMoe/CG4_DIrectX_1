@@ -51,6 +51,8 @@ public:
 
 	XMVECTOR GetTransform() { return transform; }
 
+	bool GetIsKnock() { return isKnock; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;

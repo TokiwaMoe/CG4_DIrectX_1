@@ -24,6 +24,8 @@ public:
 
 	void Update(Player* player);
 
+	void ResourceUpdate();
+
 	void Move();
 
 	void Target(Player* player);
