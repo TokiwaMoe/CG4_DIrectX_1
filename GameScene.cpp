@@ -109,6 +109,8 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	camera->SetTarget({ 0,0,0 });
 	camera->SetEye({ 0,2.5f,-7.0f });
 
+	effects->Initialize(dxc);
+
 }
 
 //void GameScene::Object3dCreate()

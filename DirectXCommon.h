@@ -29,6 +29,8 @@ public://メンバ関数
 	ID3D12Device* GetDev() { return dev.Get(); }
 	//コマンドリスト取得
 	ID3D12GraphicsCommandList* GetCmdList() { return cmdList.Get(); }
+	//コマンドキュー取得
+	ID3D12CommandQueue* GetCmdQueue() { return cmdQueue.Get(); }
 private:
 	Microsoft::WRL::ComPtr<ID3D12Device> dev;
 	Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory;

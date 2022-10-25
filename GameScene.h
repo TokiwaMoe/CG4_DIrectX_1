@@ -25,12 +25,7 @@
 #include"Enemy.h"
 #include"Sword.h"
 #include"Skill.h"
-#include<Effekseer.h>
-#include<EffekseerRendererDX12.h>
-
-#pragma comment(lib, "EffekseerRendererDX12.lib")
-#pragma comment(lib, "Effekseer.lib")
-#pragma comment(lib, "LLGI.lib")
+#include"Effects.h"
 
 
 using namespace Microsoft::WRL;
@@ -67,6 +62,7 @@ private:
 	DebugText debugText;
 	Camera* camera = nullptr;
 	Light* light = nullptr;
+	Effects* effects = nullptr;
 
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
