@@ -76,7 +76,7 @@ void Enemy::Initialize()
 
 	speed = 0.5f;
 	boundHeight = 5.0f;
-	HP = 10;
+	HP = 5;
 
 	/*for (int i = 0; i < 10; i++)
 	{
@@ -84,13 +84,8 @@ void Enemy::Initialize()
 	}*/
 }
 
-void Enemy::Update(Player* player)
+void Enemy::ResourceUpdate()
 {
-	Assault(player);
-	BoundBullet(player);
-	HomingBullet(player);
-	PlayerenemyCollision(player);
-	//AirfoilBullet(player);
 	objEnemy->Update();
 	objBoundBullet->Update();
 	objHomingBullet->Update();
@@ -104,6 +99,16 @@ void Enemy::Update(Player* player)
 	{
 		objplayerSp[i]->Update();
 	}
+}
+
+void Enemy::Update(Player* player)
+{
+	Assault(player);
+	BoundBullet(player);
+	HomingBullet(player);
+	PlayerenemyCollision(player);
+	//AirfoilBullet(player);
+	
 	
 	/*for (int y = 0; y < 10; y++)
 	{

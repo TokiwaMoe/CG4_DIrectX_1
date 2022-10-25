@@ -91,11 +91,16 @@ private://3Dƒ‚ƒfƒ‹
 	int sceneNo = 0;
 
 private://FBXƒ‚ƒfƒ‹
-	FbxModel* model1 = nullptr;
+	std::unique_ptr<FbxModel> model1 = nullptr;
 	FbxObject3d* object1 = nullptr;
 
+	std::unique_ptr<FbxModel> model_Praying = nullptr;
+	FbxObject3d* fbxPraying = nullptr;
+
 private://2D
-	Sprite* background = nullptr;
+	Sprite* title = nullptr;
+	Sprite* clear = nullptr;
+	Sprite* gameover = nullptr;
 
 public:
 	XMFLOAT3 playerPosition = { 1,0,0 };

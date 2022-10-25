@@ -1,5 +1,6 @@
 #include "FBX.hlsli"
 
+
 //スキニング計算
 SkinOutput ComputeSkin(VSInput input)
 {

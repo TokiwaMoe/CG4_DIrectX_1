@@ -347,7 +347,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		postEffect->PreDrawScene(dxCommon->GetCmdList());
 #pragma region 3D描画
 		
-		Object3d::PreDraw(dxCommon->GetCmdList());
+		//Object3d::PreDraw(dxCommon->GetCmdList());
 		/*player->Draw();
 		enemy->Draw();
 		objSkydome->Draw();
@@ -359,7 +359,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//objSphere2->Draw();
 		//object1->Draw(dxCommon->GetCmdList());
 
-		Object3d::PostDraw();
+		//Object3d::PostDraw();
 		// パーティクルの描画
 		//particleMan->Draw(dxCommon->GetCmdList());
 #pragma endregion

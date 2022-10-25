@@ -5,6 +5,10 @@
 #include"Object3d.h"
 #include"Object3dModel.h"
 #include"Easing.h"
+#include"fbxsdk.h"
+#include"FbxLoader.h"
+#include"FbxObject3d.h"
+#include"DirectXCommon.h"
 
 class Player {
 private:
@@ -20,6 +24,8 @@ public:
 
 	void Update(Camera* camera);
 
+	void ResourceUpdate();
+
 	void Move(Camera* camera);
 
 	void defense();
@@ -32,7 +38,7 @@ public:
 
 	void knockBack();
 
-	void Draw();
+	void Draw(DirectXCommon* dxCommon);
 
 	const XMFLOAT3& GetPosition() { return position; }
 
@@ -45,10 +51,20 @@ public:
 
 	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
+	XMVECTOR GetTransform() { return transform; }
+
+	bool GetIsKnock() { return isKnock; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;
 	Object3d* objPlayer = nullptr;
+	std::unique_ptr<FbxModel> player_RunFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Run = nullptr;
+	std::unique_ptr<FbxModel> player_DamageFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Damage = nullptr;
+	std::unique_ptr<FbxModel> player_WaitFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Wait = nullptr;
 	Easing* easing = nullptr;
 
 	// ローカルスケール
@@ -123,5 +139,14 @@ public:
 	XMFLOAT3 knock_OldPos = { 0,0,0 };
 	bool isKnock;
 	int HP;
+	FbxTime AnimationTime = 0;
+	bool AnimetionKnock = false;
+
+	//
+	bool isWalk = false;
+	float rote = 0;
+
+	XMVECTOR transform;
+	XMVECTOR matBone = { 0,0,0,0 };
 
 };

@@ -177,6 +177,7 @@ void FbxObject3d::CreateGraphicsPipline()
 
 	// グラフィックスパイプラインの生成
 	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
+	pipelinestate->SetName(L"FBX");
 }
 
 void FbxObject3d::Update()
@@ -237,19 +238,23 @@ void FbxObject3d::Update()
 	{
 		constMapSkin->bones[i] = XMMatrixIdentity();
 	}
+	//auto a = bones.size();
+	assert(bones.size() <= MAX_BONES);
 	for (int i = 0; i < bones.size(); i++)
 	{
-		//今の姿勢行列
-		XMMATRIX matCurrentPose;
 		//今の姿勢行列を取得
 		FbxMatrix fbxCurrentPose =
 			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
+		FbxMatrix fbxNowPose =
+			bones[9].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		//XMMATRIXに変換
 		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose, fbxCurrentPose);
+		FbxLoader::ConvertMatrixFromFbx(&matNowPose, fbxNowPose);
 
-		XMMATRIX globalTrans = model->GetModelTransform();
+		auto &globalTrans = model->GetModelTransform();
+		auto inverseBindMatrix = XMMatrixInverse(nullptr, globalTrans);
 		//合成してスキニング行列に
-		constMapSkin->bones[i] = globalTrans * bones[i].invInitialPose * matCurrentPose * XMMatrixInverse(nullptr, globalTrans);
+		constMapSkin->bones[i] = globalTrans * bones[i].invInitialPose * matCurrentPose * inverseBindMatrix;
 	}
 	constBuffSkin->Unmap(0, nullptr);
 }

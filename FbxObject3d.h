@@ -23,7 +23,7 @@ protected://エイリアス
 
 public://定数
 	//ボーンの最大数
-	static const int MAX_BONES = 32;
+	static const int MAX_BONES = 128;
 
 public://サブクラス
 	//定数バッファ用データ構造体(座標変換行列用)
@@ -81,6 +81,13 @@ public://メンバ変数
 	void SetPosition(XMFLOAT3 position) { this->position = position; }
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
+	XMFLOAT3 GetRotation() { return rotation; }
+	FbxTime GetStartTime() { return startTime; }
+	FbxTime GetEndTime() { return endTime; }
+	FbxTime GetFrame() { return frameTime; }
+	FbxTime GetNowTime() { return currentTime; }
+	void SetNowTime(FbxTime nowTime) { this->currentTime = nowTime; }
+	XMMATRIX GetMatNowPose() { return matNowPose; }
 
 protected://メンバ変数
 	//定数バッファ
@@ -122,4 +129,7 @@ protected://メンバ変数
 	bool isPlay = false;
 
 	Node* node = nullptr;
+	//今の姿勢行列
+	XMMATRIX matCurrentPose;
+	XMMATRIX matNowPose;
 };

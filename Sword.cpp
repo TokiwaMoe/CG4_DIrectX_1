@@ -15,7 +15,7 @@ void Sword::Initialize(Enemy *enemy)
 	objSword->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 	objSword->SetObject3dModel(swordModel);
 	objSword->SetScale({ 0.02,0.02,0.02 });
-	objSword->SetRotation({ 90,0,0 });
+	objSword->SetRotation({ -90,0,0 });
 
 	sphereModel = Object3dModel::LoadFromOBJ("sphere");
 	for (int i = 0; i < 13; i++)
@@ -60,9 +60,24 @@ void Sword::Update(Player* player, Enemy *enemy)
 
 void Sword::Move(Player* player)
 {
-	position = player->GetPosition();
+	position = { 
+		player->GetPosition().x + player->GetTransform().m128_f32[0] / 8,
+		player->GetPosition().y + player->GetTransform().m128_f32[1] / 8,
+		player->GetPosition().z + player->GetTransform().m128_f32[2] / 8
+	};
 
-	if (Input::GetInstance()->TriggerKey(DIK_4))
+	XMVECTOR distanse = { 0.3f, 1.0f, 0 };
+	//angleÉâÉWÉAÉìÇæÇØyé≤Ç‹ÇÌÇËÇ…âÒì]ÅBîºåaÇÕ-100
+	XMMATRIX rotM = DirectX::XMMatrixIdentity();
+	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->objPlayer->GetRotation().y + player->GetAngle()));
+	XMVECTOR v = XMVector3TransformNormal(distanse, rotM);
+	XMVECTOR f3 = { position.x, position.y, position.z };
+	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };
+	sword3 = { swordVec.m128_f32[0], swordVec.m128_f32[1], swordVec.m128_f32[2] };
+
+	rotation = { Angle, player->fbxPlayer_Run->GetRotation().y, 0 };
+
+	if (Input::GetInstance()->TriggerKey(DIK_L) && player->GetIsKnock() == false)
 	{
 		isRote = true;
 	}
@@ -95,7 +110,8 @@ void Sword::Move(Player* player)
 		objSword->SetRotation({ Angle,90,0 });
 	}
 	
-	objSword->SetPosition(position);
+	objSword->SetPosition(sword3);
+	objSword->SetRotation(rotation);
 	
 }
 
@@ -124,9 +140,9 @@ void Sword::SwordEnemyCollision(Enemy *enemy)
 		//angleÉâÉWÉAÉìÇæÇØyé≤Ç‹ÇÌÇËÇ…âÒì]ÅBîºåaÇÕ-100
 		XMMATRIX rotM_Sword = DirectX::XMMatrixIdentity();
 		rotM_Sword *= DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(Angle));
-		XMVECTOR v = XMVector3TransformNormal(v0_Sword, rotM_Sword);
-		XMVECTOR swordVec = { position.x, position.y, position.z };
-		XMVECTOR swordPos = { swordVec.m128_f32[0] + v.m128_f32[0], swordVec.m128_f32[1] + v.m128_f32[1], swordVec.m128_f32[2] + v.m128_f32[2] };
+		XMVECTOR v_sowrd = XMVector3TransformNormal(v0_Sword, rotM_Sword);
+		XMVECTOR swordVec = { sword3.x, sword3.y, sword3.z };
+		XMVECTOR swordPos = { swordVec.m128_f32[0] + v_sowrd.m128_f32[0], swordVec.m128_f32[1] + v_sowrd.m128_f32[1], swordVec.m128_f32[2] + v_sowrd.m128_f32[2] };
 
 		swordSphere[i].center = swordPos;
 		swordSphere[i].radius = swordRadius;
