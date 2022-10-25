@@ -45,7 +45,7 @@ void FbxLoader::Initiallize(ID3D12Device* device)
     fbxImporter = FbxImporter::Create(fbxManager, "");
 }
 
-FbxModel* FbxLoader::LoadMadelFromFile(
+std::unique_ptr<FbxModel> FbxLoader::LoadMadelFromFile(
     const string& modelName)
 {
     //モデルと同じ名前のフォルダから読み込む
@@ -80,7 +80,7 @@ FbxModel* FbxLoader::LoadMadelFromFile(
     //バッファ生成
     model->CreateBuffers(device);
 
-    return model;
+    return std::unique_ptr<FbxModel>(model);
 }
 
 void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent)

@@ -11,15 +11,20 @@
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
+
 #pragma comment(lib, "EffekseerRendererDX12.lib")
 #pragma comment(lib, "Effekseer.lib")
 #pragma comment(lib, "LLGI.lib")
 
 class Effects {
 public:
-	void Initialize(DirectXCommon *dxCommon);
+	Effects();
+	~Effects();
+	void Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue);
 
-	void Update();
+	void Update(ID3D12GraphicsCommandList *cmdList);
+
+	void Draw();
 public:
 	//エフェクトレンダラー
 	EffekseerRenderer::RendererRef _efkRenderer = nullptr;
