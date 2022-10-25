@@ -55,6 +55,14 @@ void Player::Initialize()
 	AnimationTime = 0;
 }
 
+void Player::ResourceUpdate()
+{
+	objPlayer->Update();
+	fbxPlayer_Run->Update();
+	fbxPlayer_Damage->Update();
+	fbxPlayer_Wait->Update();
+}
+
 void Player::Update(Camera *camera)
 {
 	if (isWalk)
@@ -73,10 +81,7 @@ void Player::Update(Camera *camera)
 	Jump();
 	defense();
 	knockBack();
-	objPlayer->Update();
-	fbxPlayer_Run->Update();
-	fbxPlayer_Damage->Update();
-	fbxPlayer_Wait->Update();
+
 	
 }
 
@@ -280,7 +285,7 @@ void Player::knockBack()
 
 	if (AnimetionKnock)
 	{
-		AnimationTime = fbxPlayer_Damage->GetNowTime() + fbxPlayer_Damage->GetFrame();
+		AnimationTime = fbxPlayer_Damage->GetNowTime() + (fbxPlayer_Damage->GetFrame() * 2);
 		if (AnimationTime >= fbxPlayer_Damage->GetEndTime())
 		{
 				AnimetionKnock = false;

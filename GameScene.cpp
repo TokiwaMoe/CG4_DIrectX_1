@@ -69,6 +69,14 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	FbxObject3d::CreateGraphicsPipline();
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
+	model_Praying = FbxLoader::GetInstance()->LoadMadelFromFile("player_Praying");
+	fbxPraying = new FbxObject3d;
+	fbxPraying->Initialize();
+	fbxPraying->SetModel(model_Praying.get());
+	fbxPraying->PlayAnimation();
+	fbxPraying->SetScale({ 0.3,0.3,0.3 });
+	fbxPraying->SetRotation({ 0,140,0 });
+	fbxPraying->SetPosition({ -10,-27,0 });
 #pragma endregion
 
 #pragma region スプライト
@@ -227,6 +235,9 @@ void GameScene::Update()
 	}
 	ResourcesUpdate();
 	enemy->ResourceUpdate();
+	fbxPraying->SetRotation({ 0,140,0 });
+	fbxPraying->SetPosition({ -10,-27,0 });
+	player->ResourceUpdate();
 }
 
 void GameScene::ResourcesUpdate()
@@ -237,6 +248,7 @@ void GameScene::ResourcesUpdate()
 	objScene4->Update();
 	objSphere->Update();
 	objSphere2->Update();
+	fbxPraying->Update();
 }
 
 void GameScene::GameUpdate()
@@ -274,6 +286,12 @@ void GameScene::Draw()
 		skill->Draw();
 		player->Draw(dxCommon);
 	}
+
+	if (sceneNo == 0)
+	{
+		fbxPraying->Draw(dxCommon->GetCmdList());
+	}
+	
 	
 	
 	//objFighter->Draw();

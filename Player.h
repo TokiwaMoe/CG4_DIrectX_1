@@ -24,6 +24,8 @@ public:
 
 	void Update(Camera* camera);
 
+	void ResourceUpdate();
+
 	void Move(Camera* camera);
 
 	void defense();

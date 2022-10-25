@@ -66,7 +66,7 @@ void Sword::Move(Player* player)
 		player->GetPosition().z + player->GetTransform().m128_f32[2] / 8
 	};
 
-	XMVECTOR distanse = { 0.15f, 1.0f, 0 };
+	XMVECTOR distanse = { 0.3f, 1.0f, 0 };
 	//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
 	XMMATRIX rotM = DirectX::XMMatrixIdentity();
 	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->objPlayer->GetRotation().y + player->GetAngle()));
