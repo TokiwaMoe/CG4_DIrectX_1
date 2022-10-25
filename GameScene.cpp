@@ -69,15 +69,6 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	FbxObject3d::CreateGraphicsPipline();
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
-	//モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadMadelFromFile("Left_arm_Press");
-	object1 = new FbxObject3d;
-	object1->Initialize();
-	object1->SetModel(model1);
-	object1->PlayAnimation();
-	object1->SetRotation({ 0, 0, 0 });
-	object1->SetScale({ 0.1,0.1,0.1 });
-	//object1->SetPosition({ 10,-20, 0 });
 #pragma endregion
 
 #pragma region スプライト
@@ -107,7 +98,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 
 	// カメラ注視点をセット
 	camera->SetTarget({ 0,0,0 });
-	camera->SetEye({ 0,2.5f,-7.0f });
+	camera->SetEye({ 0,2.0f,-7.0f });
 
 }
 
@@ -119,9 +110,13 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 void GameScene::Resource2dCreate()
 {
 	Sprite::LoadTexture(debugTextTexNumber, L"Resource/debugfon.png");
-	Sprite::LoadTexture(1, L"Resource/back.png");
+	Sprite::LoadTexture(1, L"Resource/title.png");
+	Sprite::LoadTexture(2, L"Resource/clear.png");
+	Sprite::LoadTexture(3, L"Resource/over.png");
 
-	background = Sprite::Create(1, { 0.0f,0.0f });
+	title = Sprite::Create(1, { 0.0f,0.0f });
+	clear = Sprite::Create(2, { 0.0f,0.0f });
+	gameover = Sprite::Create(3, { 0.0f,0.0f });
 }
 
 void GameScene::GameInitialize()
@@ -152,7 +147,7 @@ void GameScene::Update()
 		{
 			GameInitialize();
 			camera->SetTarget({ 0,0,0 });
-			camera->SetEye({ 0,2.5f,-7.0f });
+			camera->SetEye({ 0,2.0f,-7.0f });
 		}
 	}
 	//DirectX毎フレーム処理　ここから
@@ -194,14 +189,15 @@ void GameScene::Update()
 			player->SetAngle(cameraAngle);
 		}
 		
-		camera->TargetRot({ 0,1.5f,-7.0f }, player->GetPosition(), cameraAngle);
+		camera->TargetRot({ 0,1.5f,-5.0f }, player->GetPosition(), cameraAngle);
 		camera->SetTarget(player->GetPosition());
 
 		camera->Update();
 		particleMan->Update();
 		light->Update();
-		ResourcesUpdate();
 		GameUpdate();
+		/*ResourcesUpdate();
+		GameUpdate();*/
 
 		if (enemy->GetHP() == 0)
 		{
@@ -229,17 +225,18 @@ void GameScene::Update()
 		//background->Update();
 		
 	}
+	ResourcesUpdate();
+	enemy->ResourceUpdate();
 }
 
 void GameScene::ResourcesUpdate()
 {
-	/*objScene1->Update();
+	objScene1->Update();
 	objScene3->Update();
 	objScene2->Update();
-	objScene4->Update();*/
+	objScene4->Update();
 	objSphere->Update();
 	objSphere2->Update();
-	object1->Update();
 }
 
 void GameScene::GameUpdate()
@@ -275,14 +272,13 @@ void GameScene::Draw()
 		objScene4->Draw();
 		enemy->Draw();
 		skill->Draw();
-		player->Draw();
+		player->Draw(dxCommon);
 	}
 	
 	
 	//objFighter->Draw();
 	//objSphere->Draw();
 	//objSphere2->Draw();
-	object1->Draw(dxCommon->GetCmdList());
 
 	Object3d::PostDraw();
 
@@ -312,43 +308,46 @@ void GameScene::Draw()
 		char str5[256];
 		sprintf_s(str5, "Hit");
 		debugText.Print(str5, 0, 70, 1.0f);
-	}
+	}*/
 
-	char str2[256];
-	sprintf_s(str2, "x : %f y : %f z : %f", sword->GetCenter().m128_f32[0], sword->GetCenter().m128_f32[1], sword->GetCenter().m128_f32[2]);
-	debugText.Print(str2, 0, 10, 1.0f);
+	/*char str2[256];
+	sprintf_s(str2, "x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
+	debugText.Print(str2, 0, 90, 1.0f);
 
 	char str3[256];
-	sprintf_s(str3, "x : %f y : %f z : %f", sword->GetCenter_enemy().x, sword->GetCenter_enemy().y, sword->GetCenter_enemy().z);
-	debugText.Print(str3, 0, 25, 1.0f);*/
+	sprintf_s(str3, "transfom x : %f y : %f z : %f", player->GetTransform().m128_f32[0], player->GetTransform().m128_f32[1], player->GetTransform().m128_f32[2]);
+	debugText.Print(str3, 0, 50, 1.0f);*/
 
-	char str6[256];
-	sprintf_s(str6, "enemyHP : %d", enemy->GetHP());
-	debugText.Print(str6, 0, 10, 1.0f);
+	
 
-	char str5[256];
-	sprintf_s(str5, "playerHP : %d", player->GetHP());
-	debugText.Print(str5, 0, 30, 1.0f);
+	/*char str7[256];
+	sprintf_s(str7, "playerHP : %f", player->GetAngle());
+	debugText.Print(str7, 0, 0, 1.0f);*/
 
 	if (sceneNo == 0)
 	{
-		char str7[256];
-		sprintf_s(str7, "Title");
-		debugText.Print(str7, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
+		title->Draw();
+	}
+
+	if (sceneNo == 1)
+	{
+		char str6[256];
+		sprintf_s(str6, "enemyHP : %d", enemy->GetHP());
+		debugText.Print(str6, 0, 10, 1.0f);
+
+		char str5[256];
+		sprintf_s(str5, "playerHP : %d", player->GetHP());
+		debugText.Print(str5, 0, 30, 1.0f);
 	}
 
 	if (sceneNo == 2)
 	{
-		char str8[256];
-		sprintf_s(str8, "over");
-		debugText.Print(str8, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
+		gameover->Draw();
 	}
 
 	if (sceneNo == 3)
 	{
-		char str9[256];
-		sprintf_s(str9, "clear");
-		debugText.Print(str9, WinApp::window_width / 2, WinApp::window_height / 2, 1.0f);
+		clear->Draw();
 	}
 	
 	debugText.DrawAll(dxCommon->GetCmdList());

@@ -6,6 +6,7 @@
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <string>
+#include <memory>
 
 class FbxLoader
 {
@@ -54,7 +55,7 @@ public:
 	///ファイルからFBXモデル読み込み
 	///</summary>
 	///<param name="modelName">モデル名</param>
-	FbxModel* LoadMadelFromFile(const string& modelName);
+	std::unique_ptr<FbxModel> LoadMadelFromFile(const string& modelName);
 
 	///<summary>
 	///再帰的にノード構成を解析
@@ -95,4 +96,6 @@ private:
 	FbxManager* fbxManager = nullptr;
 	//FBXインポータ
 	FbxImporter* fbxImporter = nullptr;
+	// コントロールポイントのデータ
+	std::vector<std::vector<int>> controlPointsData;
 };
