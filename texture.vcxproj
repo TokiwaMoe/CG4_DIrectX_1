@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDIr)DirectXTex;$(solutionDir)Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12;C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\Effekseer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDIr)DirectXTex;C:\K020G1385\CG4\CG4_1\lib\efk_sdk\include\EffekseerRendererDX12;C:\K020G1385\CG4\CG4_1\lib\efk_sdk\include\Effekseer</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -129,7 +129,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libfbxsdk-md.lib;libxml2-md.lib;zlib-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDIr)Effect\Effekseer\Dev\Cpp\Effekseer\Debug;$(solutionDir)Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\Debug;$(solutionDIr)\Effect\Effekseer\3rdParty\LLGI\src\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\K020G1385\CG4\CG4_1\lib\efk_sdk\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,7 +140,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDIr)DirectXTex;$(solutionDir)Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12;C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\Effekseer</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDIr)DirectXTex;C:\K020G1385\CG4\CG4_1\lib\efk_sdk\include\EffekseerRendererDX12;C:\K020G1385\CG4\CG4_1\lib\efk_sdk\include\Effekseer</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libfbxsdk-mt.lib;libxml2-mt.lib;zlib-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDIr)Effect\Effekseer\Dev\Cpp\Effekseer\Debug;$(solutionDir)Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\Debug;$(solutionDIr)\Effect\Effekseer\3rdParty\LLGI\src\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\K020G1385\CG4\CG4_1\lib\efk_sdk\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

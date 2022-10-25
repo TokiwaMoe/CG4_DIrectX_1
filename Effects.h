@@ -28,9 +28,9 @@ public:
 
 	//-----DX12やVulkan,metalなどコマンドリストを使うライブラリに対応するもの-----
 	//メモリプール
-	Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> _efkMemoryPool;
+	Effekseer::RefPtr<EffekseerRenderer::SingleFrameMemoryPool> _efkMemoryPool = nullptr;
 	//コマンドリスト(DirectX12やVulkanへの対応のため)
-	Effekseer::RefPtr<EffekseerRenderer::CommandList> _efkCmdList;
+	Effekseer::RefPtr<EffekseerRenderer::CommandList> _efkCmdList = nullptr;
 
 	//-----エフェクト再生に必要なもの-----
 	//エフェクト本体(エフェクトファイルに対応)

@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.cpp">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\EffekseerRendererDX12.Renderer.cpp">
+      <Filter>EffekseerRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerMaterialCompiler\DirectX12\EffekseerMaterialCompilerDX12.cpp">
+      <Filter>..\EffekseerMaterialCompiler\DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerMaterialCompiler\HLSLGenerator\ShaderGenerator.cpp">
+      <Filter>..\EffekseerMaterialCompiler\HLSLGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerMaterialCompiler\Common\ShaderGeneratorCommon.cpp">
+      <Filter>..\EffekseerMaterialCompiler\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\Common.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.DeviceObject.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.IndexBuffer.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.MaterialLoader.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.ModelRenderer.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.RenderState.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.Renderer.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.Shader.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.VertexBuffer.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\GraphicsDevice.cpp">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.CommonUtils.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.DDSTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.IndexBufferBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ModelRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.PngTextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RenderStateBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.Renderer_Impl.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RibbonRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.RingRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.ShaderBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.SpriteRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.StandardRenderer.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TGATextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.TrackRendererBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\EffekseerRenderer.VertexBufferBase.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\ModelLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererCommon\TextureLoader.h">
+      <Filter>EffekseerRendererCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\EffekseerRendererDX12.Base.Pre.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\EffekseerRendererDX12.Base.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\EffekseerRendererDX12.Renderer.h">
+      <Filter>EffekseerRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_model_distortion_ps.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_model_distortion_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_model_lit_ps.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_model_lit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_model_unlit_ps.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_model_unlit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_sprite_distortion_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_sprite_lit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\ad_sprite_unlit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\model_distortion_ps.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\model_distortion_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\model_lit_ps.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\model_lit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\model_unlit_ps.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\model_unlit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\sprite_distortion_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\sprite_lit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRenderer\ShaderHeader\sprite_unlit_vs.h">
+      <Filter>EffekseerRenderer\ShaderHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\EffekseerRendererDX12.h" />
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerMaterialCompiler\DirectX12\EffekseerMaterialCompilerDX12.h">
+      <Filter>..\EffekseerMaterialCompiler\DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerMaterialCompiler\HLSLGenerator\ShaderGenerator.h">
+      <Filter>..\EffekseerMaterialCompiler\HLSLGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerMaterialCompiler\Common\ShaderGeneratorCommon.h">
+      <Filter>..\EffekseerMaterialCompiler\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\Common.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.Base.Pre.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.Base.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.DeviceObject.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.IndexBuffer.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.MaterialLoader.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.ModelRenderer.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.RenderState.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.Renderer.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.RendererImplemented.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.Shader.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\EffekseerRendererLLGI.VertexBuffer.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererLLGI\GraphicsDevice.h">
+      <Filter>EffekseerRendererLLGI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\K020G1385\CG4\CG4_1\Effect\Effekseer\Dev\Cpp\EffekseerRendererDX12\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{AAE049D5-656E-335D-9FF3-A628668026B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\EffekseerMaterialCompiler">
+      <UniqueIdentifier>{E5031912-672E-33CE-B642-1B83266C630A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\EffekseerMaterialCompiler\Common">
+      <UniqueIdentifier>{2F851BEB-1B15-37AD-9973-96C7DC99A7DC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\EffekseerMaterialCompiler\DirectX12">
+      <UniqueIdentifier>{B3BCF711-D652-3454-9509-4ADADD5720E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\EffekseerMaterialCompiler\HLSLGenerator">
+      <UniqueIdentifier>{068797DD-9D70-3FA6-A75C-2038C95B5671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRenderer">
+      <UniqueIdentifier>{BDCB32FB-ED2B-37B6-9A7E-159AD5899C0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRendererCommon">
+      <UniqueIdentifier>{D95AF6D0-3F8D-3CFE-9E2E-55CBD75FB9B2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRendererLLGI">
+      <UniqueIdentifier>{015ADE08-1793-34BB-8209-DD7AE3367A2C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffekseerRenderer\ShaderHeader">
+      <UniqueIdentifier>{9910CC6E-28CE-387D-AD95-4DC7089BA710}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
