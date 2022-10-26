@@ -277,7 +277,7 @@ void Player::knockBack(DirectXCommon* dxCommon, Camera* camera)
 	if (isKnock)
 	{
 		effects->Play();
-		//effects->Update(dxCommon->GetCmdList(), camera);
+		effects->Update(dxCommon->GetCmdList(), camera);
 		knockTime += 0.1f;
 		position = easing->ease(knock_OldPos, knock_EndPos, knockTime);
 		AnimetionKnock = true;

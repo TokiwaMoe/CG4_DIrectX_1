@@ -1,4 +1,5 @@
 #include "Effects.h"
+
 Effects::Effects(){}
 Effects::~Effects(){}
 
@@ -16,12 +17,12 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 		1,	//レンダーターゲット数
 		DXGI_FORMAT_UNKNOWN,	//デプスフォーマット
 		false,	//デプスがあるか
-		1000);	//最大パーティクルの数
+		100);	//最大パーティクルの数
 
 	
 
 	//マネージャー初期化
-	_efkManager = Effekseer::Manager::Create(1000);	//最大インスタンス数
+	_efkManager = Effekseer::Manager::Create(100);	//最大インスタンス数
 	//座標系を左手系にする(クライアント側の系に合わせる)
 	_efkManager->SetCoordinateSystem(Effekseer::CoordinateSystem::LH);
 	//描画用インスタンスから描画機能を設定
@@ -54,7 +55,7 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 
 	_effect1 = Effekseer::Effect::Create(
 		_efkManager,
-		(const EFK_CHAR*)L"effectsTest/10/firework.efk",	//エフェクトファイル
+		(const EFK_CHAR*)L"effectsTest/10/fireflower.efk",	//エフェクトファイル
 		1.0f,	//スケーリング値
 		(const EFK_CHAR*)L"effectsTest/Textures"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
 	);
@@ -64,15 +65,15 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 
 void Effects::Play()
 {
-	_efkHandle1 = _efkManager->Play(_effect1, 3, 0, 0);
+	_efkHandle1 = _efkManager->Play(_effect1, 0, 0, 0);
 }
 
 void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera)
 {
 	//エフェクトの再生
 	//_efkHandle = _efkManager->Play(_effect1, 0, 0, 0);
-	_efkManager->SetScale(_efkHandle, 1, 1, 1);
-	_efkManager->SetRotation(_efkHandle1, { 0,0,0 }, 180);
+	//_efkManager->SetScale(_efkHandle, 0.1, 0.1, 0.1);
+	//_efkManager->SetRotation(_efkHandle1, { 0,0,0 }, 180);
 	
 	//カメラ設定
 	SetCamera(camera);

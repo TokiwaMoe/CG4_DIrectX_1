@@ -248,7 +248,7 @@ void GameScene::Update()
 	ResourcesUpdate();
 	enemy->ResourceUpdate();
 	player->ResourceUpdate();
-	effects->Update(dxCommon->GetCmdList(), camera);
+	//effects->Update(dxCommon->GetCmdList(), camera);
 }
 
 void GameScene::ResourcesUpdate()
