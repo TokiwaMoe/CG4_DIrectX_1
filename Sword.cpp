@@ -69,7 +69,7 @@ void Sword::Move(Player* player)
 	XMVECTOR distanse = { 0.15f, 1.0f, 0 };
 	//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
 	XMMATRIX rotM = DirectX::XMMatrixIdentity();
-	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->objPlayer->GetRotation().y + player->GetAngle()));
+	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->fbxPlayer_Run->GetRotation().y + player->GetAngle()));
 	XMVECTOR v = XMVector3TransformNormal(distanse, rotM);
 	XMVECTOR f3 = { position.x, position.y, position.z };
 	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };

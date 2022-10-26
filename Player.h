@@ -55,8 +55,6 @@ public:
 
 
 public:
-	Object3dModel* playerModel = nullptr;
-	Object3d* objPlayer = nullptr;
 	std::unique_ptr<FbxModel> player_RunFbxModel = nullptr;
 	FbxObject3d* fbxPlayer_Run = nullptr;
 	std::unique_ptr<FbxModel> player_DamageFbxModel = nullptr;

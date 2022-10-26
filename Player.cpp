@@ -9,13 +9,6 @@ using namespace DirectX;
 void Player::Initialize()
 {
 
-	playerModel = Object3dModel::LoadFromOBJ("player");
-	objPlayer = Object3d::Create();
-	objPlayer->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
-
-	objPlayer->SetObject3dModel(playerModel);
-	objPlayer->SetScale({ 0.05,0.05,0.05 });
-
 	player_RunFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
 	fbxPlayer_Run = new FbxObject3d;
 	fbxPlayer_Run->Initialize();
@@ -73,7 +66,6 @@ void Player::Update(Camera *camera)
 	Jump();
 	defense();
 	knockBack();
-	objPlayer->Update();
 	fbxPlayer_Run->Update();
 	fbxPlayer_Damage->Update();
 	fbxPlayer_Wait->Update();
@@ -181,7 +173,7 @@ void Player::defense()
 		time = 0;
 		distance = { 0,0,0 };
 		defenceFlag = true;
-		oldPos = objPlayer->GetPosition();
+		oldPos = position;
 	}
 
 
@@ -191,8 +183,6 @@ void Player::defense()
 
 	}
 
-
-	objPlayer->SetPosition(position);
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
@@ -239,9 +229,7 @@ void Player::Jump()
 		{
 			gravityFlag = false;
 		}
-	}
-
-	objPlayer->SetPosition(position);
+	};
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
