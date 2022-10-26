@@ -174,13 +174,13 @@ void InstanceContainer::Update(bool recursive, bool shown)
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-void InstanceContainer::ApplyBaseMatrix(bool recursive, const SIMD::Mat43f& mat)
+void InstanceContainer::SetBaseMatrix(bool recursive, const SIMD::Mat43f& mat)
 {
 	if (m_pEffectNode->GetType() != eEffectNodeType::Root)
 	{
 		for (InstanceGroup* group = m_headGroups; group != nullptr; group = group->NextUsedByContainer)
 		{
-			group->ApplyBaseMatrix(mat);
+			group->SetBaseMatrix(mat);
 		}
 	}
 
@@ -188,7 +188,7 @@ void InstanceContainer::ApplyBaseMatrix(bool recursive, const SIMD::Mat43f& mat)
 	{
 		for (auto child : m_Children)
 		{
-			child->ApplyBaseMatrix(recursive, mat);
+			child->SetBaseMatrix(recursive, mat);
 		}
 	}
 }
@@ -237,7 +237,8 @@ void InstanceContainer::Draw(bool recursive)
 			}
 		}
 
-		if ((count > 0 && m_pEffectNode->IsRendered && (m_pGlobal->CurrentLevelOfDetails & m_pEffectNode->LODsParam.MatchingLODs) > 0) || m_pEffectNode->CanDrawWithNonMatchingLOD())
+		if (count > 0 && m_pEffectNode->IsRendered && (m_pGlobal->CurrentLevelOfDetails & m_pEffectNode->LODsParam.MatchingLODs) > 0
+			|| m_pEffectNode->CanDrawWithNonMatchingLOD())
 		{
 			void* userData = m_pGlobal->GetUserData();
 

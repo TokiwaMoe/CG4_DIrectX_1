@@ -53,7 +53,6 @@ endif()
 add_library(Effekseer STATIC IMPORTED)
 
 set_target_properties(Effekseer PROPERTIES
-  INTERFACE_COMPILE_DEFINITIONS "__EFFEKSEER_NETWORK_ENABLED__"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
 )
 

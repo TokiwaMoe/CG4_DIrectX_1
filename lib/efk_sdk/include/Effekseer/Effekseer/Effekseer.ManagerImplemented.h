@@ -53,6 +53,8 @@ private:
 		bool IsPreupdated = false;
 		int32_t StartFrame = 0;
 
+		int32_t Layer = 0;
+
 		//! a time (by 1/60) to progress an effect when Update is called
 		float NextUpdateFrame = 0.0f;
 
@@ -108,7 +110,7 @@ private:
 
 		void SetGlobalMatrix(const SIMD::Mat43f& mat);
 
-		void UpdateLevelOfDetails(const LayerParameter& loadParameter);
+		void UpdateLevelOfDetails(const Vector3D& viewerPosition, float lodDistanceBias);
 
 	private:
 		SIMD::Mat43f GlobalMatrix;
@@ -182,9 +184,16 @@ private:
 
 	SoundPlayerRef m_soundPlayer;
 
+	MallocFunc m_MallocFunc;
+
+	FreeFunc m_FreeFunc;
+
 	RandFunc m_randFunc;
 
-	std::array<LayerParameter, LayerCount> m_layerParameters;
+	int m_randMax;
+
+	Vector3D m_ViewerPosition;
+	float m_LodDistanceBias = 0.0F;
 
 	std::queue<std::pair<SoundTag, SoundPlayer::InstanceParameter>> m_requestedSounds;
 	std::mutex m_soundMutex;
@@ -196,7 +205,11 @@ private:
 	//! GC Draw sets
 	void GCDrawSet(bool isRemovingManager);
 
-	static int Rand();
+	static void* EFK_STDCALL Malloc(unsigned int size);
+
+	static void EFK_STDCALL Free(void* p, unsigned int size);
+
+	static int EFK_STDCALL Rand();
 
 	void ExecuteEvents();
 
@@ -226,9 +239,21 @@ public:
 
 	uint32_t GetSequenceNumber() const;
 
+	MallocFunc GetMallocFunc() const override;
+
+	void SetMallocFunc(MallocFunc func) override;
+
+	FreeFunc GetFreeFunc() const override;
+
+	void SetFreeFunc(FreeFunc func) override;
+
 	RandFunc GetRandFunc() const override;
 
 	void SetRandFunc(RandFunc func) override;
+
+	int GetRandMax() const override;
+
+	void SetRandMax(int max_) override;
 
 	CoordinateSystem GetCoordinateSystem() const override;
 
@@ -301,10 +326,10 @@ public:
 	int32_t GetTotalInstanceCount() const override;
 
 	int GetCurrentLOD(Handle handle) override;
-
-	const LayerParameter& GetLayerParameter(int32_t layer) const override;
-
-	void SetLayerParameter(int32_t layer, const LayerParameter& layerParameter) override;
+	
+	float GetLODDistanceBias() const override;
+	
+	void SetLODDistanceBias(float distanceBias) override;
 
 	Matrix43 GetMatrix(Handle handle) override;
 
@@ -351,8 +376,8 @@ public:
 	void SetSpawnDisabled(Handle handle, bool spawnDisabled) override;
 
 	bool GetSpawnDisabled(Handle handle) override;
-
-	int32_t GetLayer(Handle handle) override;
+	
+	int GetLayer(Handle handle) override;
 
 	void SetLayer(Handle handle, int32_t layer) override;
 
@@ -382,7 +407,7 @@ public:
 
 	void DoUpdate(const UpdateParameter& parameter);
 
-	void BeginUpdate() override;
+	void BeginUpdate(const Vector3D& ViewerPosition = Vector3D(0.0, 0.0, 0.0)) override;
 
 	void EndUpdate() override;
 

@@ -2,7 +2,7 @@
 Effects::Effects(){}
 Effects::~Effects(){}
 
-void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue)
+void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera)
 {
 	DXGI_FORMAT bbFormats[] = { DXGI_FORMAT_R8G8B8A8_UNORM };
 	_efkRenderer = EffekseerRendererDX12::Create(
@@ -13,10 +13,10 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue)
 		1,	//レンダーターゲット数
 		DXGI_FORMAT_UNKNOWN,	//デプスフォーマット
 		false,	//デプスがあるか
-		10000);	//最大パーティクルの数
+		1000);	//最大パーティクルの数
 
 	//マネージャー初期化
-	_efkManager = Effekseer::Manager::Create(10000);	//最大インスタンス数
+	_efkManager = Effekseer::Manager::Create(1000);	//最大インスタンス数
 	//座標系を左手系にする(クライアント側の系に合わせる)
 	_efkManager->SetCoordinateSystem(Effekseer::CoordinateSystem::LH);
 	//描画用インスタンスから描画機能を設定
@@ -37,6 +37,8 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue)
 
 	_efkRenderer->SetCommandList(_efkCmdList);
 
+	
+
 	//エフェクトの読み込み
 	_effect = Effekseer::Effect::Create(
 		_efkManager,
@@ -46,23 +48,40 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue)
 	);
 
 	//エフェクトの再生
-	_efkHandle = _efkManager->Play(_effect, 0, 0, 0);
+	_efkHandle = _efkManager->Play(_effect, 0, -1, 0);
 }
 
-void Effects::Update(ID3D12GraphicsCommandList *cmdList)
+void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera)
+{
+	//カメラ設定
+	SetCamera(camera);
+}
+
+void Effects::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	//エフェクト描画
 	_efkManager->Update();	//マネージャーの更新(時間更新)
 	_efkMemoryPool->NewFrame();	//描画すべきレンダーターゲットを選択
 	EffekseerRendererDX12::BeginCommandList(_efkCmdList, cmdList);
-	
-}
-
-void Effects::Draw()
-{
 	_efkRenderer->BeginRendering();	//描画前処理
 	_efkManager->Draw();	//エフェクト描画
 	_efkRenderer->EndRendering();	//描画後処理
 
 	EffekseerRendererDX12::EndCommandList(_efkCmdList);
+}
+
+void Effects::SetCamera(Camera* camera)
+{
+	Effekseer::Matrix44 fkViewMat;
+	Effekseer::Matrix44 fkProjMat;
+	auto view = camera->GetViewMatrix();//カメラのセット
+	auto proj = camera->GetProjectionMatrix();//射影、透視投影を代入
+	for (int i = 0; i < 4; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			fkViewMat.Values[i][j] = view.r[i].m128_f32[j];
+			fkProjMat.Values[i][j] = proj.r[i].m128_f32[j];
+		}
+	}
+	_efkRenderer->SetCameraMatrix(fkViewMat);
+	_efkRenderer->SetProjectionMatrix(fkProjMat);
 }

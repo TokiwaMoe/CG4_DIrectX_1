@@ -6,8 +6,10 @@
 #include <cstdlib>
 #include<cassert>
 #include<Effekseer.h>
+#include <DirectXMath.h>
 #include<EffekseerRendererDX12.h>
 #include"DirectXCommon.h"
+#include"Camera.h"
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -20,11 +22,13 @@ class Effects {
 public:
 	Effects();
 	~Effects();
-	void Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue);
+	void Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera);
 
-	void Update(ID3D12GraphicsCommandList *cmdList);
+	void Update(ID3D12GraphicsCommandList *cmdList, Camera *camera);
 
-	void Draw();
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	void SetCamera(Camera* camera);
 public:
 	//エフェクトレンダラー
 	EffekseerRenderer::RendererRef _efkRenderer = nullptr;

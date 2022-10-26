@@ -109,7 +109,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	camera->SetEye({ 0,2.0f,-7.0f });
 
 	effects = new Effects();
-	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue());
+	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
 
 }
 
@@ -210,7 +210,7 @@ void GameScene::Update()
 		/*ResourcesUpdate();
 		GameUpdate();*/
 
-		if (enemy->GetHP() == 0)
+		/*if (enemy->GetHP() == 0)
 		{
 			sceneNo = 3;
 		}
@@ -218,7 +218,7 @@ void GameScene::Update()
 		if (player->GetHP() == 0)
 		{
 			sceneNo = 2;
-		}
+		}*/
 
 		//std::ostringstream debugstr;
 
@@ -241,6 +241,7 @@ void GameScene::Update()
 	fbxPraying->SetRotation({ 0,140,0 });
 	fbxPraying->SetPosition({ -10,-27,0 });
 	player->ResourceUpdate();
+	effects->Update(dxCommon->GetCmdList(), camera);
 }
 
 void GameScene::ResourcesUpdate()
@@ -281,10 +282,10 @@ void GameScene::Draw()
 	if (sceneNo == 1)
 	{
 		sword->Draw();
-		objScene1->Draw();
+		/*objScene1->Draw();
 		objScene3->Draw();
 		objScene2->Draw();
-		objScene4->Draw();
+		objScene4->Draw();*/
 		enemy->Draw();
 		skill->Draw();
 		player->Draw(dxCommon);
@@ -295,7 +296,7 @@ void GameScene::Draw()
 		fbxPraying->Draw(dxCommon->GetCmdList());
 	}
 	
-	
+	effects->Draw(dxCommon->GetCmdList());
 	
 	//objFighter->Draw();
 	//objSphere->Draw();

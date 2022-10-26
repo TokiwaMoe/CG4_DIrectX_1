@@ -14,77 +14,6 @@
 namespace Effekseer
 {
 
-void TimeSeriesMatrix::Reset(const SIMD::Mat43f& matrix, float time)
-{
-	previous_ = matrix;
-	current_ = matrix;
-	previousTime_ = 0.0f;
-	currentTime_ = 0.0f;
-	isCurrentMatrixSpecified_ = true;
-}
-
-void TimeSeriesMatrix::Step(const SIMD::Mat43f& matrix, float time)
-{
-	if (isCurrentMatrixSpecified_)
-	{
-		previous_ = current_;
-	}
-	else
-	{
-		previous_ = matrix;
-	}
-
-	current_ = matrix;
-	previousTime_ = currentTime_;
-	currentTime_ = time;
-	isCurrentMatrixSpecified_ = true;
-}
-
-const SIMD::Mat43f& TimeSeriesMatrix::GetPrevious() const
-{
-	return previous_;
-}
-
-const SIMD::Mat43f& TimeSeriesMatrix::GetCurrent() const
-{
-	return current_;
-}
-
-SIMD::Mat43f TimeSeriesMatrix::Get(float time) const
-{
-	if (time >= currentTime_)
-	{
-		return GetCurrent();
-	}
-	else if (time <= previousTime_)
-	{
-		return GetPrevious();
-	}
-
-	SIMD::Vec3f s_previous;
-	SIMD::Mat43f r_previous;
-	SIMD::Vec3f t_previous;
-
-	previous_.GetSRT(s_previous, r_previous, t_previous);
-
-	SIMD::Vec3f s_current;
-	SIMD::Mat43f r_current;
-	SIMD::Vec3f t_current;
-
-	current_.GetSRT(s_current, r_current, t_current);
-
-	const auto q_previous = SIMD::Quaternionf::FromMatrix(r_previous);
-	const auto q_current = SIMD::Quaternionf::FromMatrix(r_current);
-
-	const auto alpha = (time - previousTime_) / (currentTime_ - previousTime_);
-
-	const auto t = t_current * alpha + t_previous * (1.0f - alpha);
-	const auto s = s_current * alpha + s_previous * (1.0f - alpha);
-	const auto q = SIMD::Quaternionf::Slerp(q_previous, q_current, alpha);
-
-	return SIMD::Mat43f::SRT(s, q.ToMatrix(), t);
-}
-
 Instance::Instance(ManagerImplemented* pManager, EffectNodeImplemented* pEffectNode, InstanceContainer* pContainer, InstanceGroup* pGroup)
 	: m_pManager(pManager)
 	, m_pEffectNode(pEffectNode)
@@ -148,7 +77,7 @@ void Instance::UpdateChildrenGroupMatrix()
 {
 	for (InstanceGroup* group = childrenGroups_; group != nullptr; group = group->NextUsedByInstance)
 	{
-		group->SetParentMatrix(globalMatrix_.GetCurrent());
+		group->SetParentMatrix(m_GlobalMatrix43);
 	}
 }
 
@@ -162,49 +91,24 @@ eInstanceState Instance::GetState() const
 	return m_State;
 }
 
-const TimeSeriesMatrix& Instance::GetGlobalMatrix() const
+const SIMD::Mat43f& Instance::GetGlobalMatrix43() const
 {
-	return globalMatrix_;
+	return m_GlobalMatrix43;
 }
 
-const SIMD::Mat43f& Instance::GetRenderedGlobalMatrix() const
+void Instance::SetGlobalMatrix(const SIMD::Mat43f& mat)
 {
-	return globalMatrix_rendered;
-}
-
-void Instance::ResetGlobalMatrix(const SIMD::Mat43f& mat)
-{
-	if (globalMatrix_.GetCurrent() == mat)
+	if (m_GlobalMatrix43 == mat)
 	{
 		return;
 	}
 
 	m_sequenceNumber = m_pManager->GetSequenceNumber();
-	globalMatrix_.Reset(mat, m_LivingTime);
-	UpdateChildrenGroupMatrix();
+	m_GlobalMatrix43 = mat;
 	m_GlobalMatrix43Calculated = true;
 }
 
-void Instance::UpdateGlobalMatrix(const SIMD::Mat43f& mat)
-{
-	if (globalMatrix_.GetCurrent() == mat)
-	{
-		return;
-	}
-
-	m_sequenceNumber = m_pManager->GetSequenceNumber();
-	globalMatrix_.Step(mat, m_LivingTime);
-	UpdateChildrenGroupMatrix();
-	m_GlobalMatrix43Calculated = true;
-}
-
-void Instance::ApplyBaseMatrix(const SIMD::Mat43f& baseMatrix)
-{
-	globalMatrix_rendered = globalMatrix_.GetCurrent() * baseMatrix;
-	assert(globalMatrix_rendered.IsValid());
-}
-
-void Instance::Initialize(Instance* parent, float spawnDeltaFrame, int32_t instanceNumber)
+void Instance::Initialize(Instance* parent, int32_t instanceNumber)
 {
 	assert(this->m_pContainer != nullptr);
 
@@ -214,11 +118,12 @@ void Instance::Initialize(Instance* parent, float spawnDeltaFrame, int32_t insta
 	// Initialize paramaters about a parent
 	m_pParent = parent;
 	m_ParentMatrix = SIMD::Mat43f::Identity;
+	m_GlobalMatrix43 = SIMD::Mat43f::Identity;
+	assert(m_GlobalMatrix43.IsValid());
+
 	m_LivingTime = 0.0f;
 	m_LivedTime = FLT_MAX;
 	m_RemovingTime = 0.0f;
-
-	spawnDeltaFrame_ = spawnDeltaFrame;
 
 	m_InstanceNumber = instanceNumber;
 
@@ -272,6 +177,7 @@ void Instance::FirstUpdate()
 	// calculate parent matrixt to get matrix
 	m_pParent->UpdateTransform(0);
 
+	const SIMD::Mat43f& parentMatrix = m_pParent->GetGlobalMatrix43();
 	forceField_.Reset();
 	m_GenerationLocation = SIMD::Mat43f::Identity;
 
@@ -283,18 +189,7 @@ void Instance::FirstUpdate()
 		 parameter->CommonValues.RotationBindType == BindType::Always &&
 		 parameter->CommonValues.ScalingBindType == BindType::Always))
 	{
-		if ((parameter->CommonValues.TranslationBindType == TranslationParentBindType::Always &&
-			 parameter->CommonValues.RotationBindType == BindType::Always &&
-			 parameter->CommonValues.ScalingBindType == BindType::Always) ||
-			!parameter->IsParticleSpawnedWithDecimal())
-		{
-			m_ParentMatrix = m_pParent->GetGlobalMatrix().GetCurrent();
-		}
-		else
-		{
-			m_ParentMatrix = m_pParent->GetGlobalMatrix().Get(spawnDeltaFrame_);
-		}
-
+		m_ParentMatrix = parentMatrix;
 		assert(m_ParentMatrix.IsValid());
 	}
 
@@ -396,9 +291,7 @@ void Instance::Update(float deltaFrame, bool shown)
 		isParentSequenceChanged = m_pParent->m_sequenceNumber >= m_sequenceNumber;
 	}
 
-	const bool isUpdateRequired = deltaFrame != 0.0f || m_pEffectNode->RotationParam.RotationType == ParameterRotationType::ParameterRotationType_RotateToViewpoint;
-
-	if (m_GlobalMatrix43Calculated && (m_ParentMatrix43Calculated || m_pParent == nullptr) && !isUpdateRequired && !isParentRemoving && !isParentSequenceChanged)
+	if (m_GlobalMatrix43Calculated && (m_ParentMatrix43Calculated || m_pParent == nullptr) && deltaFrame == 0.0F && !isParentRemoving && !isParentSequenceChanged)
 	{
 		return;
 	}
@@ -495,65 +388,6 @@ void Instance::Update(float deltaFrame, bool shown)
 				if (GetInstanceGlobal()->GetInputTriggerCount(m_pEffectNode->TriggerParam.ToRemove.index) > 0)
 				{
 					removed = true;
-				}
-			}
-
-			// checking kill rules
-			if (!removed && m_pEffectNode->KillParam.Type != KillType::None)
-			{
-				SIMD::Vec3f localPosition{};
-				if (m_pEffectNode->KillParam.IsScaleAndRotationApplied)
-				{
-					SIMD::Mat44f invertedGlobalMatrix = this->GetInstanceGlobal()->InvertedEffectGlobalMatrix;
-					localPosition = SIMD::Vec3f::Transform(this->prevGlobalPosition_, invertedGlobalMatrix);
-				}
-				else
-				{
-					SIMD::Mat44f globalMatrix = this->GetInstanceGlobal()->EffectGlobalMatrix;
-					localPosition = this->prevGlobalPosition_ - globalMatrix.GetTranslation();
-				}
-
-				if (m_pEffectNode->KillParam.Type == KillType::Box)
-				{
-					localPosition = localPosition - m_pEffectNode->KillParam.Box.Center;
-					localPosition = SIMD::Vec3f::Abs(localPosition);
-					SIMD::Vec3f size = m_pEffectNode->KillParam.Box.Size;
-					bool isWithin = localPosition.GetX() <= size.GetX() && localPosition.GetY() <= size.GetY() && localPosition.GetZ() <= size.GetZ();
-
-					if (isWithin && m_pEffectNode->KillParam.Box.IsKillInside > 0)
-					{
-						removed = true;
-					}
-					else if (!isWithin && m_pEffectNode->KillParam.Box.IsKillInside == 0)
-					{
-						removed = true;
-					}
-				}
-				else if (m_pEffectNode->KillParam.Type == KillType::Plane)
-				{
-					SIMD::Vec3f planeNormal = m_pEffectNode->KillParam.Plane.PlaneAxis;
-					SIMD::Vec3f planePosition = planeNormal * m_pEffectNode->KillParam.Plane.PlaneOffset;
-					float planeW = -SIMD::Vec3f::Dot(planePosition, planeNormal);
-					float factor = SIMD::Vec3f::Dot(localPosition, planeNormal) + planeW;
-					if (factor > 0.0F)
-					{
-						removed = true;
-					}
-				}
-				else if (m_pEffectNode->KillParam.Type == KillType::Sphere)
-				{
-					SIMD::Vec3f delta = localPosition - m_pEffectNode->KillParam.Sphere.Center;
-					float distance = delta.GetSquaredLength();
-					float radius = m_pEffectNode->KillParam.Sphere.Radius;
-					bool isWithin = distance <= (radius * radius);
-					if (isWithin && m_pEffectNode->KillParam.Sphere.IsKillInside > 0)
-					{
-						removed = true;
-					}
-					else if (!isWithin && m_pEffectNode->KillParam.Sphere.IsKillInside == 0)
-					{
-						removed = true;
-					}
 				}
 			}
 		}
@@ -678,7 +512,7 @@ void Instance::UpdateTransform(float deltaFrame)
 
 		localPosition += localVelocity;
 
-		auto matRot = RotationFunctions::CalculateRotation(rotation_values, m_pEffectNode->RotationParam, m_randObject, m_pEffectNode->GetEffect(), m_pContainer->GetRootInstance(), m_LivingTime, m_LivedTime, m_pParent, m_pEffectNode->DynamicFactor, m_pManager->GetLayerParameter(GetInstanceGlobal()->GetLayer()).ViewerPosition);
+		auto matRot = RotationFunctions::CalculateRotation(rotation_values, m_pEffectNode->RotationParam, m_randObject, m_pEffectNode->GetEffect(), m_pContainer->GetRootInstance(), m_LivingTime, m_LivedTime, m_pParent, m_pEffectNode->DynamicFactor);
 		auto scaling = ScalingFunctions::UpdateScaling(scaling_values, m_pEffectNode->ScalingParam, m_randObject, m_pEffectNode->GetEffect(), m_pContainer->GetRootInstance(), m_LivingTime, m_LivedTime, m_pParent, m_pEffectNode->DynamicFactor);
 
 		// update local fields
@@ -694,23 +528,22 @@ void Instance::UpdateTransform(float deltaFrame)
 		m_pEffectNode->UpdateRenderedInstance(*this, *ownGroup_, m_pManager);
 
 		// Update matrix
-		SIMD::Mat43f calcMat;
 		if (m_pEffectNode->GenerationLocation.EffectsRotation)
 		{
 			matRot = matRot * m_GenerationLocation.Get3x3SubMatrix();
-			calcMat = SIMD::Mat43f::SRT(scaling, matRot, localPosition);
-			assert(calcMat.IsValid());
+			m_GlobalMatrix43 = SIMD::Mat43f::SRT(scaling, matRot, localPosition);
+			assert(m_GlobalMatrix43.IsValid());
 		}
 		else
 		{
-			calcMat = SIMD::Mat43f::SRT(scaling, matRot, localPosition);
-			assert(globalMatrix_.GetCurrent().IsValid());
+			m_GlobalMatrix43 = SIMD::Mat43f::SRT(scaling, matRot, localPosition);
+			assert(m_GlobalMatrix43.IsValid());
 		}
 
 		if (m_pEffectNode->TranslationParam.TranslationType != ParameterTranslationType_ViewOffset)
 		{
-			calcMat = calcMat * m_ParentMatrix;
-			assert(calcMat.IsValid());
+			m_GlobalMatrix43 *= m_ParentMatrix;
+			assert(m_GlobalMatrix43.IsValid());
 		}
 
 		if (m_pEffectNode->LocalForceField.IsGlobalEnabled)
@@ -718,14 +551,10 @@ void Instance::UpdateTransform(float deltaFrame)
 			InstanceGlobal* instanceGlobal = m_pContainer->GetRootInstance();
 			forceField_.UpdateGlobal(m_pEffectNode->LocalForceField, prevGlobalPosition_, m_pEffectNode->GetEffect()->GetMaginification(), instanceGlobal->GetTargetLocation(), deltaFrame, m_pEffectNode->GetEffect()->GetSetting()->GetCoordinateSystem());
 			SIMD::Mat43f MatTraGlobal = SIMD::Mat43f::Translation(forceField_.GlobalModifyLocation);
-			calcMat *= MatTraGlobal;
+			m_GlobalMatrix43 *= MatTraGlobal;
 		}
 
-		globalMatrix_.Step(calcMat, m_LivingTime);
-
-		prevGlobalPosition_ = globalMatrix_.GetCurrent().GetTranslation();
-
-		globalMatrix_rendered = calcMat;
+		prevGlobalPosition_ = m_GlobalMatrix43.GetTranslation();
 	}
 
 	m_GlobalMatrix43Calculated = true;
@@ -740,7 +569,7 @@ void Instance::UpdateParentMatrix(float deltaFrame)
 	// 親の行列を計算
 	m_pParent->UpdateTransform(deltaFrame);
 
-	parentPosition_ = m_pParent->GetGlobalMatrix().GetCurrent().GetTranslation();
+	parentPosition_ = m_pParent->GetGlobalMatrix43().GetTranslation();
 
 	if (m_pEffectNode->GetType() != eEffectNodeType::Root)
 	{
@@ -849,7 +678,8 @@ void Instance::Draw(Instance* next, int32_t index, void* userData)
 	if (!m_pEffectNode->IsRendered)
 		return;
 
-	if ((GetInstanceGlobal()->CurrentLevelOfDetails & m_pEffectNode->LODsParam.MatchingLODs) == 0 && !m_pEffectNode->CanDrawWithNonMatchingLOD())
+	if ((GetInstanceGlobal()->CurrentLevelOfDetails & m_pEffectNode->LODsParam.MatchingLODs) == 0
+	    && !m_pEffectNode->CanDrawWithNonMatchingLOD())
 		return;
 
 	if (m_sequenceNumber != ((ManagerImplemented*)m_pManager)->GetSequenceNumber())

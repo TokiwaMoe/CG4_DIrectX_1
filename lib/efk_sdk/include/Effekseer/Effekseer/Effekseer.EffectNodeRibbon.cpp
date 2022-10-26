@@ -222,7 +222,7 @@ void EffectNodeRibbon::Rendering(const Instance& instance, const Instance* next_
 		}
 
 		m_instanceParameter.AllColor = _color;
-		m_instanceParameter.SRTMatrix43 = instance.GetRenderedGlobalMatrix();
+		m_instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
 
 		Color color_l = _color;
 		Color color_r = _color;

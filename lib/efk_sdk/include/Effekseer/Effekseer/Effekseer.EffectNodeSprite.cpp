@@ -155,7 +155,7 @@ void EffectNodeSprite::Rendering(const Instance& instance, const Instance* next_
 		SpriteRenderer::InstanceParameter instanceParameter;
 		instanceParameter.AllColor = instValues._color;
 
-		instanceParameter.SRTMatrix43 = instance.GetRenderedGlobalMatrix();
+		instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
 
 		// Inherit Color
 		Color _color;
