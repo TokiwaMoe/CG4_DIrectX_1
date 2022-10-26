@@ -75,8 +75,7 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	fbxPraying->SetModel(model_Praying.get());
 	fbxPraying->PlayAnimation();
 	fbxPraying->SetScale({ 0.3,0.3,0.3 });
-	fbxPraying->SetRotation({ 0,140,0 });
-	fbxPraying->SetPosition({ -10,-27,0 });
+	
 #pragma endregion
 
 #pragma region スプライト
@@ -111,6 +110,8 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	effects = new Effects();
 	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
 
+	fbxPraying->SetRotation({ 0,140,0 });
+	fbxPraying->SetPosition({ -10,-27,0 });
 }
 
 //void GameScene::Object3dCreate()
@@ -148,17 +149,18 @@ void GameScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
 		sceneNo++;
-
+		camera->SetEye({ 0,2.0f,-7.0f });
+		camera->SetTarget({ 0,0,0 });
 		if (sceneNo > 2)
 		{
 			sceneNo = 0;
+			
 		}
 
 		if (sceneNo == 0)
 		{
-			GameInitialize();
-			camera->SetTarget({ 0,0,0 });
 			camera->SetEye({ 0,2.0f,-7.0f });
+			camera->SetTarget({ 0,0,0 });
 		}
 	}
 	//DirectX毎フレーム処理　ここから
@@ -238,8 +240,7 @@ void GameScene::Update()
 	}
 	ResourcesUpdate();
 	enemy->ResourceUpdate();
-	fbxPraying->SetRotation({ 0,140,0 });
-	fbxPraying->SetPosition({ -10,-27,0 });
+	
 	player->ResourceUpdate();
 	effects->Update(dxCommon->GetCmdList(), camera);
 }
@@ -282,10 +283,10 @@ void GameScene::Draw()
 	if (sceneNo == 1)
 	{
 		sword->Draw();
-		/*objScene1->Draw();
+		objScene1->Draw();
 		objScene3->Draw();
 		objScene2->Draw();
-		objScene4->Draw();*/
+		objScene4->Draw();
 		enemy->Draw();
 		skill->Draw();
 		player->Draw(dxCommon);

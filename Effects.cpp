@@ -47,12 +47,21 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 		(const EFK_CHAR*)L"effectsTest/10"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
 	);
 
-	//エフェクトの再生
-	_efkHandle = _efkManager->Play(_effect, 0, -1, 0);
+	_effect1 = Effekseer::Effect::Create(
+		_efkManager,
+		(const EFK_CHAR*)L"effectsTest/10/fire.efk",	//エフェクトファイル
+		1.0f,	//スケーリング値
+		(const EFK_CHAR*)L"effectsTest/10"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
+	);
+
+	//_efkHandle1 = _efkManager->Play(_effect1, 3, 0, 0);
 }
 
 void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera)
 {
+	//エフェクトの再生
+	_efkHandle = _efkManager->Play(_effect1, 0, -1, 0);
+	
 	//カメラ設定
 	SetCamera(camera);
 }

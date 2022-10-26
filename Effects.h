@@ -44,7 +44,9 @@ public:
 	//-----エフェクト再生に必要なもの-----
 	//エフェクト本体(エフェクトファイルに対応)
 	Effekseer::EffectRef _effect = nullptr;
+	Effekseer::EffectRef _effect1 = nullptr;
 	//エフェクトハンドル(再生中のエフェクトに対応)
 	Effekseer::Handle _efkHandle;
+	Effekseer::Handle _efkHandle1;
 	
 };
