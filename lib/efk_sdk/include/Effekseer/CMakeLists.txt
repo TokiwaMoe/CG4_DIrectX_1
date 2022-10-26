@@ -26,10 +26,11 @@ file(GLOB effekseer_h
     Effekseer/Model/Model.h
     Effekseer/Model/ModelLoader.h
     Effekseer/Model/SplineGenerator.h
+    Effekseer/Network/*.h
+    Effekseer/Network/data/*.h
 )
 
 set(effekseer_src
-    Effekseer/Effekseer.Client.cpp
     Effekseer/Effekseer.Color.cpp
     Effekseer/Effekseer.CurveLoader.cpp
     Effekseer/Effekseer.DefaultEffectLoader.cpp
@@ -57,8 +58,6 @@ set(effekseer_src
     Effekseer/Effekseer.Resource.cpp
     Effekseer/Effekseer.ResourceManager.cpp
     Effekseer/Effekseer.Setting.cpp
-    Effekseer/Effekseer.Server.cpp
-    Effekseer/Effekseer.Socket.cpp
     Effekseer/Effekseer.Vector2D.cpp
     Effekseer/Effekseer.Vector3D.cpp
     Effekseer/Effekseer.WorkerThread.cpp
@@ -68,6 +67,7 @@ set(effekseer_src
     Effekseer/IO/Effekseer.EfkEfcFactory.cpp
     Effekseer/Parameter/Easing.cpp
     Effekseer/Parameter/Effekseer.Parameters.cpp
+    Effekseer/Parameter/Rotation.cpp
     Effekseer/Utils/Effekseer.CustomAllocator.cpp
     Effekseer/SIMD/Mat43f.cpp
     Effekseer/SIMD/Mat44f.cpp
@@ -78,6 +78,10 @@ set(effekseer_src
     Effekseer/Model/Model.cpp
     Effekseer/Model/ModelLoader.cpp
     Effekseer/Model/SplineGenerator.cpp
+    Effekseer/Network/Effekseer.Client.cpp
+    Effekseer/Network/Effekseer.Server.cpp
+    Effekseer/Network/Effekseer.Session.cpp
+    Effekseer/Network/Effekseer.Socket.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC
@@ -88,11 +92,16 @@ set(files
     ${effekseer_h}
     ${effekseer_src})
 
+target_include_directories(Effekseer PRIVATE ${EFK_THIRDPARTY_INCLUDES})
 target_link_libraries(Effekseer PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
 FilterFolder("${files}")
 if(CLANG_FORMAT_ENABLED)
     clang_format(Effekseer)
+endif()
+
+if(NETWORK_ENABLED)
+    target_compile_definitions(Effekseer PUBLIC __EFFEKSEER_NETWORK_ENABLED__)
 endif()
 
 if(BUILD_WITH_EASY_PROFILER)

@@ -26,6 +26,8 @@ public:
 
 	void Update(ID3D12GraphicsCommandList *cmdList, Camera *camera);
 
+	void Play();
+
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	void SetCamera(Camera* camera);

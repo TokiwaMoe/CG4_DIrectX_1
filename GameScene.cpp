@@ -75,6 +75,8 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	fbxPraying->SetModel(model_Praying.get());
 	fbxPraying->PlayAnimation();
 	fbxPraying->SetScale({ 0.3,0.3,0.3 });
+	fbxPraying->SetRotation({ 0,130,0 });
+	fbxPraying->SetPosition({ -13,-29,15 });
 	
 #pragma endregion
 
@@ -107,17 +109,17 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	camera->SetTarget({ 0,0,0 });
 	camera->SetEye({ 0,2.0f,-7.0f });
 
-	effects = new Effects();
-	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
+	/*effects = new Effects();
+	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);*/
 
 	player = new Player();
-	player->Initialize();
+	player->Initialize(dxCommon, camera);
 	enemy = new Enemy();
+	enemy->Initialize();
 	sword = new Sword();
 	skill = new Skill();
 
-	fbxPraying->SetRotation({ 0,140,0 });
-	fbxPraying->SetPosition({ -10,-27,0 });
+	
 }
 
 //void GameScene::Object3dCreate()
@@ -141,10 +143,10 @@ void GameScene::GameInitialize()
 {
 	
 	player->Init();
-	enemy->Initialize();
+	enemy->Init();
 	sword->Initialize(enemy);
 	skill->Initialize();
-	cameraAngle = 0;
+	
 }
 
 void GameScene::Update()
@@ -156,8 +158,8 @@ void GameScene::Update()
 		{
 			sceneNo = 0;
 			cameraAngle = 0;
-			camera->TargetRot({ 0,1.5f,-5.0f }, player->GetPosition(), cameraAngle);
-			camera->SetTarget(player->GetPosition());
+			camera->SetTarget({ 0,0,0 });
+			camera->SetEye({ 0,2.0f,-7.0f });
 		}
 
 		if (sceneNo == 0)
@@ -209,7 +211,7 @@ void GameScene::Update()
 		camera->TargetRot({ 0,1.5f,-5.0f }, player->GetPosition(), cameraAngle);
 		camera->SetTarget(player->GetPosition());
 
-		camera->Update();
+		
 		particleMan->Update();
 		light->Update();
 		GameUpdate();
@@ -242,6 +244,7 @@ void GameScene::Update()
 		//background->Update();
 		
 	}
+	camera->Update();
 	ResourcesUpdate();
 	enemy->ResourceUpdate();
 	player->ResourceUpdate();
@@ -262,7 +265,7 @@ void GameScene::ResourcesUpdate()
 void GameScene::GameUpdate()
 {
 	enemy->Update(player);
-	player->Update(camera);
+	player->Update(dxCommon,camera);
 	sword->Update(player, enemy);
 	skill->Update(player, enemy);
 }
@@ -300,7 +303,7 @@ void GameScene::Draw()
 		fbxPraying->Draw(dxCommon->GetCmdList());
 	}
 	
-	effects->Draw(dxCommon->GetCmdList());
+	//effects->Draw(dxCommon->GetCmdList());
 	
 	//objFighter->Draw();
 	//objSphere->Draw();
@@ -336,11 +339,11 @@ void GameScene::Draw()
 		debugText.Print(str5, 0, 70, 1.0f);
 	}*/
 
-	/*char str2[256];
-	sprintf_s(str2, "x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
+	char str2[256];
+	sprintf_s(str2, "x : %f y : %f z : %f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText.Print(str2, 0, 90, 1.0f);
 
-	char str3[256];
+	/*char str3[256];
 	sprintf_s(str3, "transfom x : %f y : %f z : %f", player->GetTransform().m128_f32[0], player->GetTransform().m128_f32[1], player->GetTransform().m128_f32[2]);
 	debugText.Print(str3, 0, 50, 1.0f);*/
 

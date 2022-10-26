@@ -6,6 +6,7 @@
 
 #include "SIMD/Mat43f.h"
 #include "SIMD/Mat44f.h"
+#include "SIMD/Quaternionf.h"
 #include "SIMD/Vec2f.h"
 #include "SIMD/Vec3f.h"
 #include "SIMD/Vec4f.h"
@@ -35,6 +36,26 @@ namespace Effekseer
 struct InstanceSoundState
 {
 	int32_t delay;
+};
+
+class TimeSeriesMatrix
+{
+	SIMD::Mat43f previous_ = SIMD::Mat43f::Identity;
+	SIMD::Mat43f current_ = SIMD::Mat43f::Identity;
+	float previousTime_ = 0;
+	float currentTime_ = 0;
+	bool isCurrentMatrixSpecified_ = false;
+
+public:
+	void Reset(const SIMD::Mat43f& matrix, float time);
+
+	void Step(const SIMD::Mat43f& matrix, float time);
+
+	const SIMD::Mat43f& GetPrevious() const;
+
+	const SIMD::Mat43f& GetCurrent() const;
+
+	SIMD::Mat43f Get(float time) const;
 };
 
 class alignas(16) Instance : public IntrusiveList<Instance>::Node
@@ -72,6 +93,8 @@ public:
 
 	// Random generator
 	RandObject m_randObject;
+
+	float spawnDeltaFrame_ = 0.0f;
 
 	LocalForceFieldInstance forceField_;
 
@@ -122,7 +145,9 @@ public:
 	SIMD::Mat43f m_GenerationLocation;
 
 	// a transform matrix in the world coordinate
-	SIMD::Mat43f m_GlobalMatrix43;
+	TimeSeriesMatrix globalMatrix_;
+
+	SIMD::Mat43f globalMatrix_rendered;
 
 	// parent's transform matrix
 	SIMD::Mat43f m_ParentMatrix;
@@ -158,12 +183,11 @@ public:
 	InstanceGlobal* GetInstanceGlobal();
 
 public:
-
 	float GetNormalizedLivetime() const
 	{
 		return Clamp(m_LivingTime / m_LivedTime, 1.0f, 0.0f);
 	}
-	
+
 	bool IsFirstTime() const
 	{
 		return m_IsFirstTime;
@@ -176,11 +200,17 @@ public:
 		return m_State <= eInstanceState::INSTANCE_STATE_REMOVING;
 	}
 
-	const SIMD::Mat43f& GetGlobalMatrix43() const;
+	const TimeSeriesMatrix& GetGlobalMatrix() const;
 
-	void SetGlobalMatrix(const SIMD::Mat43f& mat);
+	const SIMD::Mat43f& GetRenderedGlobalMatrix() const;
 
-	void Initialize(Instance* parent, int32_t instanceNumber);
+	void ResetGlobalMatrix(const SIMD::Mat43f& mat);
+
+	void UpdateGlobalMatrix(const SIMD::Mat43f& mat);
+
+	void ApplyBaseMatrix(const SIMD::Mat43f& baseMatrix);
+
+	void Initialize(Instance* parent, float spawnDeltaFrame, int32_t instanceNumber);
 
 	void FirstUpdate();
 

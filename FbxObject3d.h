@@ -82,6 +82,7 @@ public://ƒƒ“ƒo•Ï”
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 	XMFLOAT3 GetRotation() { return rotation; }
+	XMFLOAT3 GetPosition() { return position; }
 	FbxTime GetStartTime() { return startTime; }
 	FbxTime GetEndTime() { return endTime; }
 	FbxTime GetFrame() { return frameTime; }

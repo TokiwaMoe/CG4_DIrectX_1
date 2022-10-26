@@ -22,6 +22,8 @@ public:
 	~Enemy();
 	void Initialize();
 
+	void Init();
+
 	void Update(Player* player);
 
 	void ResourceUpdate();

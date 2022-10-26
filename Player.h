@@ -9,6 +9,7 @@
 #include"FbxLoader.h"
 #include"FbxObject3d.h"
 #include"DirectXCommon.h"
+#include"Effects.h"
 
 class Player {
 private:
@@ -20,11 +21,11 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
-	void Initialize();
+	void Initialize(DirectXCommon *dxCommon, Camera *camera);
 
 	void Init();
 
-	void Update(Camera* camera);
+	void Update(DirectXCommon* dxCommon, Camera* camera);
 
 	void ResourceUpdate();
 
@@ -38,7 +39,7 @@ public:
 
 	void Jump();
 
-	void knockBack();
+	void knockBack(DirectXCommon* dxCommon, Camera* camera);
 
 	void Draw(DirectXCommon* dxCommon);
 
@@ -67,7 +68,9 @@ public:
 	FbxObject3d* fbxPlayer_Damage = nullptr;
 	std::unique_ptr<FbxModel> player_WaitFbxModel = nullptr;
 	FbxObject3d* fbxPlayer_Wait = nullptr;
+
 	Easing* easing = nullptr;
+	Effects* effects = nullptr;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };

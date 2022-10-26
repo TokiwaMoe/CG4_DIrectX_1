@@ -118,6 +118,60 @@ struct ParameterLODs
 	NonMatchingLODBehaviour LODBehaviour = NonMatchingLODBehaviour::Hide;
 };
 
+enum class KillType : int32_t
+{
+	None = 0,
+	Box = 1,
+	Plane = 2,
+	Sphere = 3
+};
+
+struct KillRulesParameter
+{
+
+	KillType Type = KillType::None;
+	int IsScaleAndRotationApplied = 1;
+
+	union
+	{
+		struct
+		{
+			vector3d Center; // In local space
+			vector3d Size;	 // In local space
+			int IsKillInside;
+		} Box;
+
+		struct
+		{
+			vector3d PlaneAxis; // in local space
+			float PlaneOffset;	// in the direction of plane axis
+		} Plane;
+
+		struct
+		{
+			vector3d Center; // in local space
+			float Radius;
+			int IsKillInside;
+		} Sphere;
+	};
+
+	void MakeCoordinateSystemLH()
+	{
+		if (Type == KillType::Box)
+		{
+			Box.Center.z *= -1.0F;
+		}
+		else if (Type == KillType::Plane)
+		{
+			Plane.PlaneAxis.z *= -1.0F;
+		}
+		else if (Type == KillType::Sphere)
+		{
+			Sphere.Center.z *= -1.0F;
+		}
+	}
+};
+
 struct ParameterDepthValues
 {
 	float DepthOffset;
@@ -555,15 +609,7 @@ struct ParameterRendererCommon
 
 		if (UVs[0].Type == UVAnimationType::Animation)
 		{
-			BasicParameter.EnableInterpolation = (UVs[0].Animation.InterpolationType != UVs[0].Animation.NONE);
-			BasicParameter.UVLoopType = UVs[0].Animation.LoopType;
-			BasicParameter.InterpolationType = UVs[0].Animation.InterpolationType;
-			BasicParameter.FlipbookDivideX = UVs[0].Animation.FrameCountX;
-			BasicParameter.FlipbookDivideY = UVs[0].Animation.FrameCountY;
-		}
-		else
-		{
-			BasicParameter.EnableInterpolation = false;
+			BasicParameter.Flipbook = UVFunctions::ToFlipbookParameter(UVs[0]);
 		}
 
 		BasicParameter.EmissiveScaling = EmissiveScaling;
@@ -648,17 +694,15 @@ protected:
 	Effect* m_effect;
 
 	//! a generation in the node tree
-	int generation_;
+	int generation_ = 0;
 
 	// 子ノード
 	std::vector<EffectNodeImplemented*> m_Nodes;
 
 	RefPtr<RenderingUserData> renderingUserData_;
 
-	// コンストラクタ
 	EffectNodeImplemented(Effect* effect, unsigned char*& pos);
 
-	// デストラクタ
 	virtual ~EffectNodeImplemented();
 
 	void LoadParameter(unsigned char*& pos, EffectNode* parent, const SettingRef& setting);
@@ -677,12 +721,13 @@ public:
 	\~japanese For nodes that are not normally rendered, the rendering type is changed to become a node that does not render. However, when
 	color inheritance is done, it becomes a node which does not perform drawing only.
 	*/
-	bool IsRendered;
+	bool IsRendered = true;
 
 	ParameterCommonValues CommonValues;
 	SteeringBehaviorParameter SteeringBehaviorParam;
 	TriggerParameter TriggerParam;
 	ParameterLODs LODsParam;
+	KillRulesParameter KillParam;
 
 	TranslationParameter TranslationParam;
 
@@ -703,10 +748,10 @@ public:
 	bool EnableFalloff = false;
 	FalloffParameter FalloffParam{};
 
-	ParameterSoundType SoundType;
+	ParameterSoundType SoundType = ParameterSoundType_None;
 	ParameterSound Sound;
 
-	eRenderingOrder RenderingOrder;
+	eRenderingOrder RenderingOrder = RenderingOrder_FirstCreatedInstanceIsFirst;
 
 	int32_t RenderingPriority = -1;
 
@@ -722,7 +767,7 @@ public:
 
 	EffectNode* GetChild(int index) const override;
 
-	EffectBasicRenderParameter GetBasicRenderParameter() override;
+	EffectBasicRenderParameter GetBasicRenderParameter() const override;
 
 	void SetBasicRenderParameter(EffectBasicRenderParameter param) override;
 
@@ -796,6 +841,11 @@ public:
 	void SetRenderingUserData(const RefPtr<RenderingUserData>& renderingUserData) override
 	{
 		renderingUserData_ = renderingUserData;
+	}
+
+	bool IsParticleSpawnedWithDecimal() const
+	{
+		return m_effect->GetVersion() >= Version17Alpha6;
 	}
 };
 //----------------------------------------------------------------------------------

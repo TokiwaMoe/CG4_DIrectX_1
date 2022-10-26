@@ -6,7 +6,7 @@
 
 using namespace DirectX;
 
-void Player::Initialize()
+void Player::Initialize(DirectXCommon* dxCommon, Camera* camera)
 {
 
 	playerModel = Object3dModel::LoadFromOBJ("player");
@@ -43,7 +43,8 @@ void Player::Initialize()
 	easing = new Easing();
 	easing->Initialize();
 
-	
+	effects = new Effects();
+	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
 }
 
 void Player::Init()
@@ -58,6 +59,7 @@ void Player::Init()
 	isWalk = false;
 	rote = 0;
 	AnimationTime = 0;
+	position = { 0,0,0 };
 }
 
 void Player::ResourceUpdate()
@@ -68,7 +70,7 @@ void Player::ResourceUpdate()
 	fbxPlayer_Wait->Update();
 }
 
-void Player::Update(Camera *camera)
+void Player::Update(DirectXCommon* dxCommon, Camera* camera)
 {
 	if (isWalk)
 	{
@@ -85,7 +87,7 @@ void Player::Update(Camera *camera)
 	Move(camera);
 	Jump();
 	defense();
-	knockBack();
+	knockBack(dxCommon, camera);
 
 	
 }
@@ -257,7 +259,7 @@ void Player::Jump()
 	fbxPlayer_Wait->SetPosition(position);
 }
 
-void Player::knockBack()
+void Player::knockBack(DirectXCommon* dxCommon, Camera* camera)
 {
 	XMVECTOR v0_Player = { 0, 0, 0.5f };
 	//angleラジアンだけy軸まわりに回転。半径は-100
@@ -274,6 +276,8 @@ void Player::knockBack()
 	
 	if (isKnock)
 	{
+		effects->Play();
+		//effects->Update(dxCommon->GetCmdList(), camera);
 		knockTime += 0.1f;
 		position = easing->ease(knock_OldPos, knock_EndPos, knockTime);
 		AnimetionKnock = true;
@@ -326,6 +330,10 @@ void Player::Draw(DirectXCommon* dxCommon)
 		fbxPlayer_Wait->Draw(dxCommon->GetCmdList());
 	}
 
+	if (isKnock)
+	{
+		effects->Draw(dxCommon->GetCmdList());
+	}
 	
 	
 }

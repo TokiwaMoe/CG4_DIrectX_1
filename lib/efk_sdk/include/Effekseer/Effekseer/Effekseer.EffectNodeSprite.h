@@ -96,7 +96,6 @@ public:
 	SpriteColorParameter SpriteColor;
 	SpritePositionParameter SpritePosition;
 
-
 	EffectNodeSprite(Effect* effect, unsigned char*& pos)
 		: EffectNodeImplemented(effect, pos)
 	{
