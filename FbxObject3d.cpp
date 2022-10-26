@@ -232,7 +232,6 @@ void FbxObject3d::Update()
 	std::vector<FbxModel::Bone>& bones = model->GetBones();
 
 	//定数バッファへデータ転送
-	ConstBufferDataSkin* constMapSkin = nullptr;
 	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
 	for (int i = 0; i < MAX_BONES; i++)
 	{

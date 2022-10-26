@@ -258,7 +258,7 @@ void DirectXCommon::ClearRenderTarget()
 			dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 
 	//画面クリア           　　R     G     B    A
-	float clearColor[] = { 0.0, 0.0, 0.0, 0.0f };
+	float clearColor[] = { 0.2, 0.2, 0.5, 0.0f };
 	cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
 }
 

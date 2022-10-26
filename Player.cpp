@@ -43,6 +43,11 @@ void Player::Initialize()
 	easing = new Easing();
 	easing->Initialize();
 
+	
+}
+
+void Player::Init()
+{
 	time = 0;
 	defence_direction = Previous;
 	distance = { 0,0,0 };

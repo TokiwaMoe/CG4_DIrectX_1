@@ -110,6 +110,12 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	effects = new Effects();
 	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
 
+	player = new Player();
+	player->Initialize();
+	enemy = new Enemy();
+	sword = new Sword();
+	skill = new Skill();
+
 	fbxPraying->SetRotation({ 0,140,0 });
 	fbxPraying->SetPosition({ -10,-27,0 });
 }
@@ -133,13 +139,10 @@ void GameScene::Resource2dCreate()
 
 void GameScene::GameInitialize()
 {
-	player = new Player();
-	player->Initialize();
-	enemy = new Enemy();
+	
+	player->Init();
 	enemy->Initialize();
-	sword = new Sword();
 	sword->Initialize(enemy);
-	skill = new Skill();
 	skill->Initialize();
 	cameraAngle = 0;
 }
@@ -149,18 +152,19 @@ void GameScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
 		sceneNo++;
-		camera->SetEye({ 0,2.0f,-7.0f });
-		camera->SetTarget({ 0,0,0 });
 		if (sceneNo > 2)
 		{
 			sceneNo = 0;
-			
+			cameraAngle = 0;
+			camera->TargetRot({ 0,1.5f,-5.0f }, player->GetPosition(), cameraAngle);
+			camera->SetTarget(player->GetPosition());
 		}
 
 		if (sceneNo == 0)
 		{
-			camera->SetEye({ 0,2.0f,-7.0f });
-			camera->SetTarget({ 0,0,0 });
+			GameInitialize();
+			/*camera->SetEye({ 0,2.0f,-7.0f });
+			camera->SetTarget({ 0,0,0 });*/
 		}
 	}
 	//DirectX–ˆƒtƒŒ[ƒ€ˆ—@‚±‚±‚©‚ç
@@ -240,7 +244,6 @@ void GameScene::Update()
 	}
 	ResourcesUpdate();
 	enemy->ResourceUpdate();
-	
 	player->ResourceUpdate();
 	effects->Update(dxCommon->GetCmdList(), camera);
 }

@@ -22,6 +22,8 @@ private:
 public:
 	void Initialize();
 
+	void Init();
+
 	void Update(Camera* camera);
 
 	void ResourceUpdate();

@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="Resource\shaders\bloomPS.hlsl" />
-    <FxCompile Include="Resource\shaders\BloomVS.hlsl" />
     <FxCompile Include="Resource\shaders\DepthPS.hlsl" />
     <FxCompile Include="Resource\shaders\DepthVS.hlsl" />
     <FxCompile Include="Resource\shaders\FBXPS.hlsl" />
@@ -42,6 +40,12 @@
     <FxCompile Include="Resource\shaders\VignetteVS.hlsl" />
     <FxCompile Include="Resource\shaders\WhiteNoizePS.hlsl" />
     <FxCompile Include="Resource\shaders\WhiteNoizeVS.hlsl" />
+    <FxCompile Include="Resource\shaders\bloomPS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\BloomVS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
@@ -116,7 +120,6 @@
     <ClInclude Include="WinApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\shaders\bloom.hlsli" />
     <None Include="Resource\shaders\Depth.hlsli" />
     <None Include="Resource\shaders\FBX.hlsli" />
     <None Include="Resource\shaders\Gaussian.hlsli" />
@@ -136,5 +139,13 @@
     <None Include="Resource\shaders\Toon.hlsli" />
     <None Include="Resource\shaders\Vignette.hlsli" />
     <None Include="Resource\shaders\WhiteNoize.hlsli" />
+    <None Include="Resource\shaders\bloom.hlsli">
+      <Filter>hlsl</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="hlsl">
+      <UniqueIdentifier>{c273ac28-e53d-4b1e-a014-4c76f2f9984d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

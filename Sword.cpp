@@ -61,9 +61,9 @@ void Sword::Update(Player* player, Enemy *enemy)
 void Sword::Move(Player* player)
 {
 	position = { 
-		player->GetPosition().x + player->GetTransform().m128_f32[0] / 8,
-		player->GetPosition().y + player->GetTransform().m128_f32[1] / 8,
-		player->GetPosition().z + player->GetTransform().m128_f32[2] / 8
+		player->GetPosition().x + player->GetTransform().m128_f32[0],
+		player->GetPosition().y + player->GetTransform().m128_f32[1],
+		player->GetPosition().z + player->GetTransform().m128_f32[2]
 	};
 
 	XMVECTOR distanse = { 0.3f, 1.0f, 0 };
