@@ -3,7 +3,7 @@
 Effects::Effects(){}
 Effects::~Effects(){}
 
-void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera)
+void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera, Effekseer::EffectRef _effect)
 {
 	assert(device);
 	assert(cmdQueue);
@@ -53,7 +53,7 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 	//	(const EFK_CHAR*)L"effectsTest/10"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
 	//);
 
-	_effect1 = Effekseer::Effect::Create(
+	_effect = Effekseer::Effect::Create(
 		_efkManager,
 		(const EFK_CHAR*)L"effectsTest/10/fireflower.efk",	//エフェクトファイル
 		1.0f,	//スケーリング値
@@ -63,17 +63,16 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 	
 }
 
-void Effects::Play()
+void Effects::Play(Effekseer::Handle handle, Effekseer::EffectRef _effect)
 {
-	_efkHandle1 = _efkManager->Play(_effect1, 0, 0, 0);
+	handle = _efkManager->Play(_effect, position.x, position.y, position.z);
 }
 
-void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera)
+void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera, Effekseer::Handle handle)
 {
-	//エフェクトの再生
-	//_efkHandle = _efkManager->Play(_effect1, 0, 0, 0);
-	//_efkManager->SetScale(_efkHandle, 0.1, 0.1, 0.1);
-	//_efkManager->SetRotation(_efkHandle1, { 0,0,0 }, 180);
+	_efkManager->SetScale(handle, scale.x, scale.y, scale.z);
+	_efkManager->SetRotation(handle, { rotation.x, rotation.y, rotation.z }, angle);
+	_efkManager->SetSpeed(handle, speed);
 	
 	//カメラ設定
 	SetCamera(camera);

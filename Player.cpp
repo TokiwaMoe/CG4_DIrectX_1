@@ -72,6 +72,8 @@ void Player::ResourceUpdate()
 
 void Player::Update(DirectXCommon* dxCommon, Camera* camera)
 {
+	effects->Play();
+	effects->Update(dxCommon->GetCmdList(), camera);
 	if (isWalk)
 	{
 		transform = { fbxPlayer_Run->GetMatNowPose().r->m128_f32[0], fbxPlayer_Run->GetMatNowPose().r->m128_f32[1], fbxPlayer_Run->GetMatNowPose().r->m128_f32[2] };
@@ -276,8 +278,8 @@ void Player::knockBack(DirectXCommon* dxCommon, Camera* camera)
 	
 	if (isKnock)
 	{
-		effects->Play();
-		effects->Update(dxCommon->GetCmdList(), camera);
+		/*effects->Play();
+		effects->Update(dxCommon->GetCmdList(), camera);*/
 		knockTime += 0.1f;
 		position = easing->ease(knock_OldPos, knock_EndPos, knockTime);
 		AnimetionKnock = true;
@@ -332,8 +334,8 @@ void Player::Draw(DirectXCommon* dxCommon)
 
 	if (isKnock)
 	{
-		effects->Draw(dxCommon->GetCmdList());
+		
 	}
 	
-	
+	effects->Draw(dxCommon->GetCmdList());
 }

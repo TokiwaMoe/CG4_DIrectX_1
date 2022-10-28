@@ -154,4 +154,8 @@ public:
 	XMVECTOR transform;
 	XMVECTOR matBone = { 0,0,0,0 };
 
+	Effekseer::EffectRef _effect = nullptr;
+	Effekseer::EffectRef _effect1 = nullptr;
+	Effekseer::Handle _efkHandle;
+	Effekseer::Handle _efkHandle1;
 };
