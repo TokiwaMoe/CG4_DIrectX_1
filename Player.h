@@ -41,7 +41,11 @@ public:
 
 	void knockBack(DirectXCommon* dxCommon, Camera* camera);
 
+	void Attack();
+
 	void Draw(DirectXCommon* dxCommon);
+
+	void Death();
 
 	const XMFLOAT3& GetPosition() { return position; }
 
@@ -58,6 +62,8 @@ public:
 
 	bool GetIsKnock() { return isKnock; }
 
+	bool GetIsDeath() { return isDeath; }
+
 
 public:
 	Object3dModel* playerModel = nullptr;
@@ -68,6 +74,10 @@ public:
 	FbxObject3d* fbxPlayer_Damage = nullptr;
 	std::unique_ptr<FbxModel> player_WaitFbxModel = nullptr;
 	FbxObject3d* fbxPlayer_Wait = nullptr;
+	std::unique_ptr<FbxModel> player_DeathFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Death = nullptr;
+	std::unique_ptr<FbxModel> player_AttackFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Attack = nullptr;
 
 	Easing* easing = nullptr;
 	Effects* effects = nullptr;
@@ -147,15 +157,17 @@ public:
 	FbxTime AnimationTime = 0;
 	bool AnimetionKnock = false;
 
-	//
+	//歩くfbx変数
 	bool isWalk = false;
 	float rote = 0;
-
+	//ボーン取得変数
 	XMVECTOR transform;
 	XMVECTOR matBone = { 0,0,0,0 };
-
-	Effekseer::EffectRef _effect = nullptr;
-	Effekseer::EffectRef _effect1 = nullptr;
-	Effekseer::Handle _efkHandle;
-	Effekseer::Handle _efkHandle1;
+	//ゲームオーバーfbx変数
+	bool isDeath = false;
+	FbxTime deathAnimationTime = 0;
+	bool deathAnime = false;
+	//アタックfbx変数
+	FbxTime attackAnimeTime = 0;
+	bool AnimetionAttack = false;
 };

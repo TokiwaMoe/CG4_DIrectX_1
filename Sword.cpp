@@ -8,7 +8,7 @@
 #include<string>
 #include<vector>
 
-void Sword::Initialize(Enemy *enemy)
+void Sword::Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 {
 	swordModel = Object3dModel::LoadFromOBJ("sword");
 	objSword = Object3d::Create();
@@ -38,9 +38,12 @@ void Sword::Initialize(Enemy *enemy)
 		objsphere_enemy[i]->SetScale({ enemyRadius,enemyRadius,enemyRadius });
 		enemySphere[i].radius = enemyRadius;
 	}
+
+	effects = new Effects();
+	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
 }
 
-void Sword::Update(Player* player, Enemy *enemy)
+void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 {
 	Move(player);
 	objSword->Update();
@@ -55,7 +58,7 @@ void Sword::Update(Player* player, Enemy *enemy)
 		objsphere_enemy[i]->Update();
 	}
 	
-	SwordEnemyCollision(enemy);
+	SwordEnemyCollision(enemy, dxCommon, camera);
 }
 
 void Sword::Move(Player* player)
@@ -115,7 +118,7 @@ void Sword::Move(Player* player)
 	
 }
 
-void Sword::SwordEnemyCollision(Enemy *enemy)
+void Sword::SwordEnemyCollision(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 {
 	
 
@@ -163,6 +166,8 @@ void Sword::SwordEnemyCollision(Enemy *enemy)
 			{
 				enemy->SetHP(enemy->GetHP() - 1);
 				Decrease = true;
+				isEffect = true;
+				
 			}
 		}
 		else
@@ -171,9 +176,25 @@ void Sword::SwordEnemyCollision(Enemy *enemy)
 		}
 		
 	}
+
+	if (isEffect)
+	{
+		effectTime += 0.1f;
+		effects->Play();
+		effects->SetPosition({ enemy->GetPosition().x,enemy->GetPosition().y,enemy->GetPosition().z });
+		effects->SetScale({ 0.3,0.3,0.3 });
+		effects->SetSpeed(5);
+		effects->Update(dxCommon->GetCmdList(), camera);
+		if (effectTime > effectMaxTime)
+		{
+			effects->Stop();
+			isEffect = false;
+			effectTime = 0;
+		}
+	}
 }
 
-void Sword::Draw()
+void Sword::Draw(DirectXCommon* dxCommon)
 {
 	objSword->Draw();
 	/*for (int i = 0; i < 13; i++)
@@ -185,6 +206,7 @@ void Sword::Draw()
 	{
 		objsphere_enemy[i]->Draw();
 	}*/
+	effects->Draw(dxCommon->GetCmdList());
 }
 
 void Sword::SetPosition(XMFLOAT3 pos)

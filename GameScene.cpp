@@ -144,7 +144,7 @@ void GameScene::GameInitialize()
 	
 	player->Init();
 	enemy->Init();
-	sword->Initialize(enemy);
+	sword->Initialize(enemy, dxCommon,camera);
 	skill->Initialize();
 	
 }
@@ -218,15 +218,15 @@ void GameScene::Update()
 		/*ResourcesUpdate();
 		GameUpdate();*/
 
-		/*if (enemy->GetHP() == 0)
+		if (enemy->GetHP() == 0)
 		{
 			sceneNo = 3;
 		}
 
-		if (player->GetHP() == 0)
+		if (player->GetIsDeath())
 		{
 			sceneNo = 2;
-		}*/
+		}
 
 		//std::ostringstream debugstr;
 
@@ -266,7 +266,7 @@ void GameScene::GameUpdate()
 {
 	enemy->Update(player);
 	player->Update(dxCommon,camera);
-	sword->Update(player, enemy);
+	sword->Update(player, enemy, dxCommon, camera);
 	skill->Update(player, enemy);
 }
 
@@ -288,7 +288,6 @@ void GameScene::Draw()
 
 	if (sceneNo == 1)
 	{
-		sword->Draw();
 		objScene1->Draw();
 		objScene3->Draw();
 		objScene2->Draw();
@@ -296,6 +295,7 @@ void GameScene::Draw()
 		enemy->Draw();
 		skill->Draw();
 		player->Draw(dxCommon);
+		sword->Draw(dxCommon);
 	}
 
 	if (sceneNo == 0)

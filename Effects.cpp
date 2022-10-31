@@ -3,7 +3,7 @@
 Effects::Effects(){}
 Effects::~Effects(){}
 
-void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera, Effekseer::EffectRef _effect)
+void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera)
 {
 	assert(device);
 	assert(cmdQueue);
@@ -53,7 +53,7 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 	//	(const EFK_CHAR*)L"effectsTest/10"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
 	//);
 
-	_effect = Effekseer::Effect::Create(
+	_effect1 = Effekseer::Effect::Create(
 		_efkManager,
 		(const EFK_CHAR*)L"effectsTest/10/fireflower.efk",	//エフェクトファイル
 		1.0f,	//スケーリング値
@@ -63,16 +63,21 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 	
 }
 
-void Effects::Play(Effekseer::Handle handle, Effekseer::EffectRef _effect)
+void Effects::Play()
 {
-	handle = _efkManager->Play(_effect, position.x, position.y, position.z);
+	_efkHandle1 = _efkManager->Play(_effect1, position.x, position.y, position.z);
 }
 
-void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera, Effekseer::Handle handle)
+void Effects::Stop()
 {
-	_efkManager->SetScale(handle, scale.x, scale.y, scale.z);
-	_efkManager->SetRotation(handle, { rotation.x, rotation.y, rotation.z }, angle);
-	_efkManager->SetSpeed(handle, speed);
+	_efkManager->StopEffect(_efkHandle1);
+}
+
+void Effects::Update(ID3D12GraphicsCommandList *cmdList, Camera *camera)
+{
+	_efkManager->SetScale(_efkHandle1, scale.x, scale.y, scale.z);
+	_efkManager->SetRotation(_efkHandle1, { rotation.x, rotation.y, rotation.z }, angle);
+	_efkManager->SetSpeed(_efkHandle1, speed);
 	
 	//カメラ設定
 	SetCamera(camera);

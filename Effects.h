@@ -22,21 +22,23 @@ class Effects {
 public:
 	Effects();
 	~Effects();
-	void Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera, Effekseer::EffectRef _effect);
+	void Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Camera *camera);
 
-	void Update(ID3D12GraphicsCommandList *cmdList, Camera *camera, Effekseer::Handle handle);
+	void Update(ID3D12GraphicsCommandList *cmdList, Camera *camera);
 
-	void Play(Effekseer::Handle handle, Effekseer::EffectRef _effect);
+	void Play();
+
+	void Stop();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	void SetCamera(Camera* camera);
 
-	DirectX::XMFLOAT3 SetPosition(DirectX::XMFLOAT3 position) { this->position = position; }
-	DirectX::XMFLOAT3 SetRotation(DirectX::XMFLOAT3 rotation) { this->rotation = rotation; }
-	DirectX::XMFLOAT3 SetScale(DirectX::XMFLOAT3 scale) { this->scale = scale; }
-	float SetSpeed(float speed) { this->speed = speed; }
-	float SetAngle(float angle) { this->angle = angle; }
+	void SetPosition(DirectX::XMFLOAT3 position) { this->position = position; }
+	void SetRotation(DirectX::XMFLOAT3 rotation) { this->rotation = rotation; }
+	void SetScale(DirectX::XMFLOAT3 scale) { this->scale = scale; }
+	void SetSpeed(float speed) { this->speed = speed; }
+	void SetAngle(float angle) { this->angle = angle; }
 
 public:
 	//エフェクトレンダラー
@@ -52,11 +54,11 @@ public:
 
 	//-----エフェクト再生に必要なもの-----
 	//エフェクト本体(エフェクトファイルに対応)
-	//Effekseer::EffectRef _effect = nullptr;
-	//Effekseer::EffectRef _effect1 = nullptr;
-	////エフェクトハンドル(再生中のエフェクトに対応)
-	//Effekseer::Handle _efkHandle;
-	//Effekseer::Handle _efkHandle1;
+	Effekseer::EffectRef _effect = nullptr;
+	Effekseer::EffectRef _effect1 = nullptr;
+	//エフェクトハンドル(再生中のエフェクトに対応)
+	Effekseer::Handle _efkHandle;
+	Effekseer::Handle _efkHandle1;
 
 protected:// メンバ変数
 	DirectX::XMFLOAT3 position = { 0,0,0 };
