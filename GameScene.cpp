@@ -288,13 +288,13 @@ void GameScene::Draw()
 
 	if (sceneNo == 1)
 	{
-		objScene1->Draw();
+		/*objScene1->Draw();
 		objScene3->Draw();
 		objScene2->Draw();
-		objScene4->Draw();
+		objScene4->Draw();*/
 		sword->Draw(dxCommon);
-		enemy->Draw();
-		skill->Draw();
+		/*enemy->Draw();
+		skill->Draw();*/
 		
 		player->Draw(dxCommon);
 	}
@@ -348,9 +348,17 @@ void GameScene::Draw()
 	sprintf_s(str3, "transfom x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
 	debugText.Print(str3, 0, 120, 1.0f);
 
+	char str6[256];
+	sprintf_s(str6, "Playertransform x : %f y : %f z : %f", player->GetTransform().r[3].m128_f32[0], player->GetTransform().r[3].m128_f32[1], player->GetTransform().r[3].m128_f32[2]);
+	debugText.Print(str6, 0, 150, 1.0f);
+
 	char str4[256];
 	sprintf_s(str4, "rotation x : %f y : %f z : %f", sword->GetRotation().x, sword->GetRotation().y, sword->GetRotation().z);
-	debugText.Print(str4, 0, 150, 1.0f);
+	debugText.Print(str4, 0, 180, 1.0f);
+
+	char str5[256];
+	sprintf_s(str5, "Playerrotation x : %f y : %f z : %f", player->GetTransform().r[2].m128_f32[0], player->GetTransform().r[2].m128_f32[1], player->GetTransform().r[2].m128_f32[2]);
+	debugText.Print(str5, 0, 210, 1.0f);
 
 	
 

@@ -90,9 +90,9 @@ void Sword::Move(Player* player)
 	//else
 	{
 		position = {
-		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
-		player->GetPosition().y + 0.5f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
-		player->GetPosition().z - 0.35f - player->GetTransform().r[3].m128_f32[2] / 100.0f
+		/*player->GetPosition().x - 0.3f - */player->GetTransform().r[3].m128_f32[0] / 100.0f,
+		/*player->GetPosition().y + 0.85f + */player->GetTransform().r[3].m128_f32[1] / 100.0f,
+		/*player->GetPosition().z + */player->GetTransform().r[3].m128_f32[2] / 100.0f
 		};
 	}
 	
@@ -106,9 +106,9 @@ void Sword::Move(Player* player)
 	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };
 	sword3 = { swordVec.m128_f32[0], swordVec.m128_f32[1], swordVec.m128_f32[2] };
 
-	rotation = {  player->GetTransform().r[2].m128_f32[0] * 100,
-				 player->GetTransform().r[2].m128_f32[1] * 100,
-				 player->GetTransform().r[2].m128_f32[2] * 100 };
+	rotation = {  player->GetTransform().r[2].m128_f32[0] * 100.0f,
+				  player->GetTransform().r[2].m128_f32[1] * 100.0f,
+				  player->GetTransform().r[2].m128_f32[2] * 100.0f };
 
 	if (Input::GetInstance()->TriggerKey(DIK_L) && player->GetIsKnock() == false)
 	{
@@ -132,7 +132,7 @@ void Sword::Move(Player* player)
 		objSword->SetRotation({ Angle,90,0 });
 	}
 	
-	objSword->SetPosition(sword3);
+	objSword->SetPosition(position);
 	objSword->SetRotation(rotation);
 	
 }
