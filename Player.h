@@ -9,6 +9,7 @@
 #include"FbxLoader.h"
 #include"FbxObject3d.h"
 #include"DirectXCommon.h"
+#include"Effects.h"
 
 class Player {
 private:
@@ -20,9 +21,13 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 	using XMVECTOR = DirectX::XMVECTOR;
 public:
-	void Initialize();
+	void Initialize(DirectXCommon *dxCommon, Camera *camera);
 
-	void Update(Camera* camera);
+	void Init();
+
+	void Update(DirectXCommon* dxCommon, Camera* camera);
+
+	void ResourceUpdate();
 
 	void Move(Camera* camera);
 
@@ -34,9 +39,13 @@ public:
 
 	void Jump();
 
-	void knockBack();
+	void knockBack(DirectXCommon* dxCommon, Camera* camera);
+
+	void Attack();
 
 	void Draw(DirectXCommon* dxCommon);
+
+	void Death();
 
 	const XMFLOAT3& GetPosition() { return position; }
 
@@ -49,9 +58,11 @@ public:
 
 	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
-	XMVECTOR GetTransform() { return transform; }
+	XMMATRIX GetTransform() { return transform; }
 
 	bool GetIsKnock() { return isKnock; }
+
+	bool GetIsDeath() { return isDeath; }
 
 
 public:
@@ -61,7 +72,13 @@ public:
 	FbxObject3d* fbxPlayer_Damage = nullptr;
 	std::unique_ptr<FbxModel> player_WaitFbxModel = nullptr;
 	FbxObject3d* fbxPlayer_Wait = nullptr;
+	std::unique_ptr<FbxModel> player_DeathFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Death = nullptr;
+	std::unique_ptr<FbxModel> player_AttackFbxModel = nullptr;
+	FbxObject3d* fbxPlayer_Attack = nullptr;
+
 	Easing* easing = nullptr;
+	Effects* effects = nullptr;
 
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
@@ -138,11 +155,17 @@ public:
 	FbxTime AnimationTime = 0;
 	bool AnimetionKnock = false;
 
-	//
+	//歩くfbx変数
 	bool isWalk = false;
 	float rote = 0;
-
-	XMVECTOR transform;
+	//ボーン取得変数
+	XMMATRIX transform;
 	XMVECTOR matBone = { 0,0,0,0 };
-
+	//ゲームオーバーfbx変数
+	bool isDeath = false;
+	FbxTime deathAnimationTime = 0;
+	bool deathAnime = false;
+	//アタックfbx変数
+	FbxTime attackAnimeTime = 0;
+	bool AnimetionAttack = false;
 };

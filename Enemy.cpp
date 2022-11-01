@@ -74,14 +74,20 @@ void Enemy::Initialize()
 	easing = new Easing();
 	easing->Initialize();
 
-	speed = 0.5f;
-	boundHeight = 5.0f;
-	HP = 5;
+	
 
 	/*for (int i = 0; i < 10; i++)
 	{
 		airfoilFlag[i] = false;
 	}*/
+}
+
+void Enemy::Init()
+{
+	speed = 0.5f;
+	boundHeight = 5.0f;
+	HP = 5;
+	position = { 0,1,0 };
 }
 
 void Enemy::ResourceUpdate()
@@ -103,10 +109,10 @@ void Enemy::ResourceUpdate()
 
 void Enemy::Update(Player* player)
 {
-	Assault(player);
+	/*Assault(player);
 	BoundBullet(player);
 	HomingBullet(player);
-	PlayerenemyCollision(player);
+	PlayerenemyCollision(player);*/
 	//AirfoilBullet(player);
 	
 	

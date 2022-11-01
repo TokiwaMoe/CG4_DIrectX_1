@@ -6,7 +6,7 @@
 
 using namespace DirectX;
 
-void Player::Initialize()
+void Player::Initialize(DirectXCommon* dxCommon, Camera* camera)
 {
 
 	player_RunFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
@@ -33,9 +33,31 @@ void Player::Initialize()
 	fbxPlayer_Wait->SetScale({ 0.01,0.01,0.01 });
 	fbxPlayer_Wait->SetPosition({ 0,0, 5.5 });
 
+	player_DeathFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Death");
+	fbxPlayer_Death = new FbxObject3d;
+	fbxPlayer_Death->Initialize();
+	fbxPlayer_Death->SetModel(player_DeathFbxModel.get());
+	fbxPlayer_Death->PlayAnimation();
+	fbxPlayer_Death->SetScale({ 0.01,0.01,0.01 });
+	fbxPlayer_Death->SetPosition({ 0,0, 5.5 });
+
+	player_AttackFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Attack");
+	fbxPlayer_Attack = new FbxObject3d;
+	fbxPlayer_Attack->Initialize();
+	fbxPlayer_Attack->SetModel(player_AttackFbxModel.get());
+	fbxPlayer_Attack->PlayAnimation();
+	fbxPlayer_Attack->SetScale({ 0.01,0.01,0.01 });
+	fbxPlayer_Attack->SetPosition({ 0,0, 5.5 });
+
 	easing = new Easing();
 	easing->Initialize();
 
+	effects = new Effects();
+	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
+}
+
+void Player::Init()
+{
 	time = 0;
 	defence_direction = Previous;
 	distance = { 0,0,0 };
@@ -46,29 +68,50 @@ void Player::Initialize()
 	isWalk = false;
 	rote = 0;
 	AnimationTime = 0;
+	position = { 0,0,0 };
+	isDeath = false;
+	deathAnime = false;
 }
 
-void Player::Update(Camera *camera)
+void Player::ResourceUpdate()
 {
+	objPlayer->Update();
+	fbxPlayer_Run->Update();
+	fbxPlayer_Damage->Update();
+	fbxPlayer_Wait->Update();
+	fbxPlayer_Death->Update();
+	fbxPlayer_Attack->Update();
+}
+
+void Player::Update(DirectXCommon* dxCommon, Camera* camera)
+{
+	effects->Play();
+	effects->SetPosition({ 0,0,0 });
+	effects->SetScale({ 0.3,0.3,0.3 });
+	effects->SetSpeed(5);
+	effects->Update(dxCommon->GetCmdList(), camera);
 	if (isWalk)
 	{
-		transform = { fbxPlayer_Run->GetMatNowPose().r->m128_f32[0], fbxPlayer_Run->GetMatNowPose().r->m128_f32[1], fbxPlayer_Run->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Run->GetMatNowPose();
 	}
 	else if (AnimetionKnock)
 	{
-		transform = { fbxPlayer_Damage->GetMatNowPose().r->m128_f32[0], fbxPlayer_Damage->GetMatNowPose().r->m128_f32[1], fbxPlayer_Damage->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Damage->GetMatNowPose();
+	}
+	else if (AnimetionAttack)
+	{
+		transform = fbxPlayer_Attack->GetMatNowPose();
 	}
 	else
 	{
-		transform = { fbxPlayer_Wait->GetMatNowPose().r->m128_f32[0], fbxPlayer_Wait->GetMatNowPose().r->m128_f32[1], fbxPlayer_Wait->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Wait->GetMatNowPose();
 	}
 	Move(camera);
 	Jump();
 	defense();
-	knockBack();
-	fbxPlayer_Run->Update();
-	fbxPlayer_Damage->Update();
-	fbxPlayer_Wait->Update();
+	knockBack(dxCommon, camera);
+	Death();
+	Attack();
 	
 }
 
@@ -82,7 +125,7 @@ void Player::Move(Camera* camera)
 
 	isWalk = false;
 
-	if (AnimetionKnock == false)
+	if (AnimetionKnock == false && deathAnime == false)
 	{
 		if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
 			position.z += speedZ.m128_f32[2];
@@ -123,6 +166,8 @@ void Player::Move(Camera* camera)
 			fbxPlayer_Run->SetRotation({ 0,rote + cameraAngle,0 });
 			fbxPlayer_Damage->SetRotation({ 0,rote + cameraAngle,0 });
 			fbxPlayer_Wait->SetRotation({ 0,rote + cameraAngle,0 });
+			fbxPlayer_Death->SetRotation({ 0,rote + cameraAngle,0 });
+			fbxPlayer_Attack->SetRotation({ 0,rote + cameraAngle,0 });
 		}
 	}
 	
@@ -132,6 +177,8 @@ void Player::Move(Camera* camera)
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
+	fbxPlayer_Death->SetPosition(position);
+	fbxPlayer_Attack->SetPosition(position);
 }
 
 void Player::defenseKey()
@@ -186,6 +233,8 @@ void Player::defense()
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
+	fbxPlayer_Death->SetPosition(position);
+	fbxPlayer_Attack->SetPosition(position);
 }
 
 void Player::defenseMove(XMFLOAT3 FinalPos)
@@ -233,9 +282,11 @@ void Player::Jump()
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
+	fbxPlayer_Death->SetPosition(position);
+	fbxPlayer_Attack->SetPosition(position);
 }
 
-void Player::knockBack()
+void Player::knockBack(DirectXCommon* dxCommon, Camera* camera)
 {
 	XMVECTOR v0_Player = { 0, 0, 0.5f };
 	//angleラジアンだけy軸まわりに回転。半径は-100
@@ -250,8 +301,10 @@ void Player::knockBack()
 	knock_EndPos = playerPos;
 	//isKnock = true;
 	
-	if (isKnock)
+	if (isKnock && HP > 0)
 	{
+		/*effects->Play();
+		effects->Update(dxCommon->GetCmdList(), camera);*/
 		knockTime += 0.1f;
 		position = easing->ease(knock_OldPos, knock_EndPos, knockTime);
 		AnimetionKnock = true;
@@ -268,7 +321,7 @@ void Player::knockBack()
 
 	if (AnimetionKnock)
 	{
-		AnimationTime = fbxPlayer_Damage->GetNowTime() + fbxPlayer_Damage->GetFrame();
+		AnimationTime = fbxPlayer_Damage->GetNowTime() + (fbxPlayer_Damage->GetFrame() * 2);
 		if (AnimationTime >= fbxPlayer_Damage->GetEndTime())
 		{
 				AnimetionKnock = false;
@@ -285,6 +338,57 @@ void Player::knockBack()
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
+	fbxPlayer_Death->SetPosition(position);
+	fbxPlayer_Attack->SetPosition(position);
+}
+
+void Player::Attack()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_L) && isKnock == false)
+	{
+		AnimetionAttack = true;
+	}
+	if (AnimetionAttack)
+	{
+		attackAnimeTime = fbxPlayer_Attack->GetNowTime() + (fbxPlayer_Attack->GetFrame() * 2);
+		if (attackAnimeTime >= fbxPlayer_Attack->GetEndTime())
+		{
+			AnimetionAttack = false;
+			fbxPlayer_Attack->SetNowTime(fbxPlayer_Attack->GetStartTime());
+			attackAnimeTime = fbxPlayer_Attack->GetStartTime();
+		}
+	}
+	else
+	{
+		attackAnimeTime = fbxPlayer_Attack->GetStartTime();
+		fbxPlayer_Attack->SetNowTime(fbxPlayer_Attack->GetStartTime());
+	}
+}
+
+void Player::Death()
+{
+	if (HP == 0)
+	{
+		deathAnime = true;
+		
+	}
+
+	if (deathAnime)
+	{
+		deathAnimationTime = fbxPlayer_Death->GetNowTime() + fbxPlayer_Death->GetFrame();
+		if (deathAnimationTime >= fbxPlayer_Death->GetEndTime())
+		{
+			isDeath = true;
+			deathAnime = false;
+			fbxPlayer_Death->SetNowTime(fbxPlayer_Death->GetStartTime());
+			deathAnimationTime = fbxPlayer_Death->GetStartTime();
+		}
+	}
+	else
+	{
+		deathAnimationTime = fbxPlayer_Death->GetStartTime();
+		fbxPlayer_Death->SetNowTime(fbxPlayer_Death->GetStartTime());
+	}
 }
 
 void Player::Draw(DirectXCommon* dxCommon)
@@ -299,11 +403,23 @@ void Player::Draw(DirectXCommon* dxCommon)
 	{
 		fbxPlayer_Damage->Draw(dxCommon->GetCmdList());
 	}
+	else if (deathAnime)
+	{
+		fbxPlayer_Death->Draw(dxCommon->GetCmdList());
+	}
+	else if (AnimetionAttack)
+	{
+		fbxPlayer_Attack->Draw(dxCommon->GetCmdList());
+	}
 	else
 	{
 		fbxPlayer_Wait->Draw(dxCommon->GetCmdList());
 	}
+	
+	
+	
+	//effects->Draw(dxCommon->GetCmdList());
 
-	
-	
 }
+
+

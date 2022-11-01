@@ -9,6 +9,7 @@
 #include"Enemy.h"
 #include"Collision.h"
 #include"CollisionPrimitive.h"
+#include"Effects.h"
 
 class Sword {
 private:
@@ -23,15 +24,15 @@ public:
 	/*Sword();
 	~Sword();*/
 
-	void Initialize(Enemy *enemy);
+	void Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera);
 
-	void Update(Player* player, Enemy *enemy);
+	void Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera* camera);
 
 	void Move(Player *player);
 
-	void SwordEnemyCollision(Enemy* enemy);
+	void SwordEnemyCollision(Enemy* enemy, DirectXCommon* dxCommon, Camera* camera);
 
-	void Draw();
+	void Draw(DirectXCommon* dxCommon);
 
 	void SetPosition(XMFLOAT3 pos);
 
@@ -51,6 +52,7 @@ public:
 	XMVECTOR GetPositionA() { return swordOBB.GetPos_W(); }
 	XMVECTOR GetPositionB() { return enemyOBB.GetPos_W(); }
 	float GetAngle() { return Angle; }
+	XMFLOAT3 GetRotation() { return rotation; }
 
 public:
 	Object3dModel* swordModel = nullptr;
@@ -58,6 +60,8 @@ public:
 	Object3dModel* sphereModel = nullptr;
 	Object3d* objsphere[13];
 	Object3d* objsphere_enemy[3];
+
+	Effects* effects = nullptr;
 
 	
 	// ローカルスケール
@@ -83,6 +87,10 @@ public:
 	bool isRote = false;
 	XMFLOAT3 pos[3];
 	XMFLOAT3 sword3 = { 0,0,0 };
+
+	float effectTime = 0;
+	const float effectMaxTime = 1;
+	bool isEffect = false;
 
 private:
 	bool Attack = false;

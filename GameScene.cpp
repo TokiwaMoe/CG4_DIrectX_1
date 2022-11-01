@@ -69,6 +69,15 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	FbxObject3d::CreateGraphicsPipline();
 	//FBX
 	FbxLoader::GetInstance()->Initiallize(dxCommon->GetDev());
+	model_Praying = FbxLoader::GetInstance()->LoadMadelFromFile("player_Praying");
+	fbxPraying = new FbxObject3d;
+	fbxPraying->Initialize();
+	fbxPraying->SetModel(model_Praying.get());
+	fbxPraying->PlayAnimation();
+	fbxPraying->SetScale({ 0.3,0.3,0.3 });
+	fbxPraying->SetRotation({ 0,130,0 });
+	fbxPraying->SetPosition({ -13,-29,15 });
+	
 #pragma endregion
 
 #pragma region スプライト
@@ -100,6 +109,17 @@ void GameScene::Initialize(DirectXCommon* dxc, Audio* sound)
 	camera->SetTarget({ 0,0,0 });
 	camera->SetEye({ 0,2.0f,-7.0f });
 
+	/*effects = new Effects();
+	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);*/
+
+	player = new Player();
+	player->Initialize(dxCommon, camera);
+	enemy = new Enemy();
+	enemy->Initialize();
+	sword = new Sword();
+	skill = new Skill();
+
+	
 }
 
 //void GameScene::Object3dCreate()
@@ -121,15 +141,12 @@ void GameScene::Resource2dCreate()
 
 void GameScene::GameInitialize()
 {
-	player = new Player();
-	player->Initialize();
-	enemy = new Enemy();
-	enemy->Initialize();
-	sword = new Sword();
-	sword->Initialize(enemy);
-	skill = new Skill();
+	
+	player->Init();
+	enemy->Init();
+	sword->Initialize(enemy, dxCommon,camera);
 	skill->Initialize();
-	cameraAngle = 0;
+	
 }
 
 void GameScene::Update()
@@ -137,17 +154,19 @@ void GameScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
 		sceneNo++;
-
 		if (sceneNo > 2)
 		{
 			sceneNo = 0;
+			cameraAngle = 0;
+			camera->SetTarget({ 0,0,0 });
+			camera->SetEye({ 0,2.0f,-7.0f });
 		}
 
 		if (sceneNo == 0)
 		{
 			GameInitialize();
-			camera->SetTarget({ 0,0,0 });
-			camera->SetEye({ 0,2.0f,-7.0f });
+			/*camera->SetEye({ 0,2.0f,-7.0f });
+			camera->SetTarget({ 0,0,0 });*/
 		}
 	}
 	//DirectX毎フレーム処理　ここから
@@ -192,7 +211,7 @@ void GameScene::Update()
 		camera->TargetRot({ 0,1.5f,-5.0f }, player->GetPosition(), cameraAngle);
 		camera->SetTarget(player->GetPosition());
 
-		camera->Update();
+		
 		particleMan->Update();
 		light->Update();
 		GameUpdate();
@@ -204,7 +223,7 @@ void GameScene::Update()
 			sceneNo = 3;
 		}
 
-		if (player->GetHP() == 0)
+		if (player->GetIsDeath())
 		{
 			sceneNo = 2;
 		}
@@ -225,8 +244,11 @@ void GameScene::Update()
 		//background->Update();
 		
 	}
+	camera->Update();
 	ResourcesUpdate();
 	enemy->ResourceUpdate();
+	player->ResourceUpdate();
+	//effects->Update(dxCommon->GetCmdList(), camera);
 }
 
 void GameScene::ResourcesUpdate()
@@ -237,13 +259,14 @@ void GameScene::ResourcesUpdate()
 	objScene4->Update();
 	objSphere->Update();
 	objSphere2->Update();
+	fbxPraying->Update();
 }
 
 void GameScene::GameUpdate()
 {
 	enemy->Update(player);
-	player->Update(camera);
-	sword->Update(player, enemy);
+	player->Update(dxCommon,camera);
+	sword->Update(player, enemy, dxCommon, camera);
 	skill->Update(player, enemy);
 }
 
@@ -265,16 +288,23 @@ void GameScene::Draw()
 
 	if (sceneNo == 1)
 	{
-		sword->Draw();
 		objScene1->Draw();
 		objScene3->Draw();
 		objScene2->Draw();
 		objScene4->Draw();
+		sword->Draw(dxCommon);
 		enemy->Draw();
 		skill->Draw();
+		
 		player->Draw(dxCommon);
 	}
+
+	if (sceneNo == 0)
+	{
+		fbxPraying->Draw(dxCommon->GetCmdList());
+	}
 	
+	//effects->Draw(dxCommon->GetCmdList());
 	
 	//objFighter->Draw();
 	//objSphere->Draw();
@@ -310,13 +340,17 @@ void GameScene::Draw()
 		debugText.Print(str5, 0, 70, 1.0f);
 	}*/
 
-	/*char str2[256];
-	sprintf_s(str2, "x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
+	char str2[256];
+	sprintf_s(str2, "x : %f y : %f z : %f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText.Print(str2, 0, 90, 1.0f);
 
 	char str3[256];
-	sprintf_s(str3, "transfom x : %f y : %f z : %f", player->GetTransform().m128_f32[0], player->GetTransform().m128_f32[1], player->GetTransform().m128_f32[2]);
-	debugText.Print(str3, 0, 50, 1.0f);*/
+	sprintf_s(str3, "transfom x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
+	debugText.Print(str3, 0, 120, 1.0f);
+
+	char str4[256];
+	sprintf_s(str4, "rotation x : %f y : %f z : %f", sword->GetRotation().x, sword->GetRotation().y, sword->GetRotation().z);
+	debugText.Print(str4, 0, 150, 1.0f);
 
 	
 

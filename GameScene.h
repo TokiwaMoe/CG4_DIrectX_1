@@ -25,6 +25,8 @@
 #include"Enemy.h"
 #include"Sword.h"
 #include"Skill.h"
+#include"Effects.h"
+
 
 using namespace Microsoft::WRL;
 using namespace DirectX;
@@ -60,6 +62,7 @@ private:
 	DebugText debugText;
 	Camera* camera = nullptr;
 	Light* light = nullptr;
+	Effects* effects = nullptr;
 
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
@@ -90,6 +93,9 @@ private://3Dƒ‚ƒfƒ‹
 private://FBXƒ‚ƒfƒ‹
 	std::unique_ptr<FbxModel> model1 = nullptr;
 	FbxObject3d* object1 = nullptr;
+
+	std::unique_ptr<FbxModel> model_Praying = nullptr;
+	FbxObject3d* fbxPraying = nullptr;
 
 private://2D
 	Sprite* title = nullptr;

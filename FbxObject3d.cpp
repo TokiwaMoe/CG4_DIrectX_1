@@ -232,7 +232,6 @@ void FbxObject3d::Update()
 	std::vector<FbxModel::Bone>& bones = model->GetBones();
 
 	//定数バッファへデータ転送
-	ConstBufferDataSkin* constMapSkin = nullptr;
 	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
 	for (int i = 0; i < MAX_BONES; i++)
 	{
@@ -245,11 +244,12 @@ void FbxObject3d::Update()
 		//今の姿勢行列を取得
 		FbxMatrix fbxCurrentPose =
 			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
-		FbxMatrix fbxNowPose =
-			bones[9].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		//XMMATRIXに変換
 		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose, fbxCurrentPose);
-		FbxLoader::ConvertMatrixFromFbx(&matNowPose, fbxNowPose);
+
+		//DirectX::XMVECTOR distanse = { 0.5,0.1,0.1 };
+		//matNowPose = DirectX::XMVector3TransformNormal(distanse, constMapSkin->bones[48]);
+		//constMapSkin->bones[48].r[3].m128_f32[0]
 
 		auto &globalTrans = model->GetModelTransform();
 		auto inverseBindMatrix = XMMatrixInverse(nullptr, globalTrans);

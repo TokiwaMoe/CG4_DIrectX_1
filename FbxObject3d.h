@@ -82,12 +82,13 @@ public://メンバ変数
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 	XMFLOAT3 GetRotation() { return rotation; }
+	XMFLOAT3 GetPosition() { return position; }
 	FbxTime GetStartTime() { return startTime; }
 	FbxTime GetEndTime() { return endTime; }
 	FbxTime GetFrame() { return frameTime; }
 	FbxTime GetNowTime() { return currentTime; }
 	void SetNowTime(FbxTime nowTime) { this->currentTime = nowTime; }
-	XMMATRIX GetMatNowPose() { return matNowPose; }
+	XMMATRIX GetMatNowPose() { return constMapSkin->bones[47]; }
 
 protected://メンバ変数
 	//定数バッファ
@@ -132,4 +133,5 @@ protected://メンバ変数
 	//今の姿勢行列
 	XMMATRIX matCurrentPose;
 	XMMATRIX matNowPose;
+	ConstBufferDataSkin* constMapSkin = nullptr;
 };
