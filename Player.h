@@ -58,7 +58,7 @@ public:
 
 	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
-	XMVECTOR GetTransform() { return transform; }
+	XMMATRIX GetTransform() { return transform; }
 
 	bool GetIsKnock() { return isKnock; }
 
@@ -161,7 +161,7 @@ public:
 	bool isWalk = false;
 	float rote = 0;
 	//ボーン取得変数
-	XMVECTOR transform;
+	XMMATRIX transform;
 	XMVECTOR matBone = { 0,0,0,0 };
 	//ゲームオーバーfbx変数
 	bool isDeath = false;

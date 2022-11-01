@@ -52,6 +52,7 @@ public:
 	XMVECTOR GetPositionA() { return swordOBB.GetPos_W(); }
 	XMVECTOR GetPositionB() { return enemyOBB.GetPos_W(); }
 	float GetAngle() { return Angle; }
+	XMFLOAT3 GetRotation() { return rotation; }
 
 public:
 	Object3dModel* swordModel = nullptr;

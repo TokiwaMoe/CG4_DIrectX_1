@@ -99,19 +99,19 @@ void Player::Update(DirectXCommon* dxCommon, Camera* camera)
 	effects->Update(dxCommon->GetCmdList(), camera);
 	if (isWalk)
 	{
-		transform = { fbxPlayer_Run->GetMatNowPose().r->m128_f32[0], fbxPlayer_Run->GetMatNowPose().r->m128_f32[1], fbxPlayer_Run->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Run->GetMatNowPose();
 	}
 	else if (AnimetionKnock)
 	{
-		transform = { fbxPlayer_Damage->GetMatNowPose().r->m128_f32[0], fbxPlayer_Damage->GetMatNowPose().r->m128_f32[1], fbxPlayer_Damage->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Damage->GetMatNowPose();
 	}
 	else if (AnimetionAttack)
 	{
-		transform = { fbxPlayer_Attack->GetMatNowPose().r->m128_f32[0], fbxPlayer_Attack->GetMatNowPose().r->m128_f32[1], fbxPlayer_Attack->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Attack->GetMatNowPose();
 	}
 	else
 	{
-		transform = { fbxPlayer_Wait->GetMatNowPose().r->m128_f32[0], fbxPlayer_Wait->GetMatNowPose().r->m128_f32[1], fbxPlayer_Wait->GetMatNowPose().r->m128_f32[2] };
+		transform = fbxPlayer_Wait->GetMatNowPose();
 	}
 	Move(camera);
 	Jump();
@@ -132,7 +132,7 @@ void Player::Move(Camera* camera)
 
 	isWalk = false;
 
-	if (AnimetionKnock == false)
+	if (AnimetionKnock == false && deathAnime == false)
 	{
 		if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
 			position.z += speedZ.m128_f32[2];

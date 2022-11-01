@@ -14,7 +14,7 @@ void Sword::Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 	objSword = Object3d::Create();
 	objSword->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 	objSword->SetObject3dModel(swordModel);
-	objSword->SetScale({ 0.02,0.02,0.02 });
+	objSword->SetScale({ 0.01,0.01,0.01 });
 	objSword->SetRotation({ -90,0,0 });
 
 	sphereModel = Object3dModel::LoadFromOBJ("sphere");
@@ -63,13 +63,41 @@ void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera
 
 void Sword::Move(Player* player)
 {
-	position = { 
-		player->GetPosition().x + player->GetTransform().m128_f32[0],
-		player->GetPosition().y + player->GetTransform().m128_f32[1],
-		player->GetPosition().z + player->GetTransform().m128_f32[2]
-	};
+	/*if (player->isWalk)
+	{
+		position = {
+		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
+		player->GetPosition().y + 0.7f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
+		player->GetPosition().z + 0.3f - player->GetTransform().r[3].m128_f32[2] / 100.0f
+		};
+	}
+	else if (player->AnimetionKnock)
+	{
+		position = {
+		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
+		player->GetPosition().y + 0.5f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
+		player->GetPosition().z + 0.3f - player->GetTransform().r[3].m128_f32[2] / 100.0f
+		};
+	}
+	else if (player->AnimetionAttack)
+	{
+		position = {
+		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
+		player->GetPosition().y + 0.7f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
+		player->GetPosition().z + 0.3f - player->GetTransform().r[3].m128_f32[2] / 100.0f
+		};
+	}*/
+	//else
+	{
+		position = {
+		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
+		player->GetPosition().y + 0.5f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
+		player->GetPosition().z - 0.35f - player->GetTransform().r[3].m128_f32[2] / 100.0f
+		};
+	}
+	
 
-	XMVECTOR distanse = { 0.3f, 1.0f, 0 };
+	XMVECTOR distanse = { 0.2f, 0.2f, -0.2f };
 	//angleƒ‰ƒWƒAƒ“‚¾‚¯yŽ²‚Ü‚í‚è‚É‰ñ“]B”¼Œa‚Í-100
 	XMMATRIX rotM = DirectX::XMMatrixIdentity();
 	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->objPlayer->GetRotation().y + player->GetAngle()));
@@ -78,22 +106,13 @@ void Sword::Move(Player* player)
 	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };
 	sword3 = { swordVec.m128_f32[0], swordVec.m128_f32[1], swordVec.m128_f32[2] };
 
-	rotation = { Angle, player->fbxPlayer_Run->GetRotation().y, 0 };
+	rotation = {  player->GetTransform().r[2].m128_f32[0] * 100,
+				 player->GetTransform().r[2].m128_f32[1] * 100,
+				 player->GetTransform().r[2].m128_f32[2] * 100 };
 
 	if (Input::GetInstance()->TriggerKey(DIK_L) && player->GetIsKnock() == false)
 	{
 		isRote = true;
-	}
-
-	if (isRote)
-	{
-		Angle += 5.0f;
-		
-		if (Angle >= 90)
-		{
-			Angle = 0;
-			isRote = false;
-		}
 	}
 	
 	if (player->defence_direction == player->Previous)
