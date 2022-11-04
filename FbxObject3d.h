@@ -88,7 +88,9 @@ public://メンバ変数
 	FbxTime GetFrame() { return frameTime; }
 	FbxTime GetNowTime() { return currentTime; }
 	void SetNowTime(FbxTime nowTime) { this->currentTime = nowTime; }
-	XMMATRIX GetMatNowPose() { return constMapSkin->bones[54]; }
+	XMMATRIX GetMatNowPose(int num) { return matCurrentPose[num]; }
+	int GetBoneName(std::string name);
+	XMMATRIX GetMatWorld() { return matWorld; }
 
 protected://メンバ変数
 	//定数バッファ
@@ -131,7 +133,9 @@ protected://メンバ変数
 
 	Node* node = nullptr;
 	//今の姿勢行列
-	XMMATRIX matCurrentPose;
+	XMMATRIX matCurrentPose[MAX_BONES];
 	XMMATRIX matNowPose;
 	ConstBufferDataSkin* constMapSkin = nullptr;
+
+	std::string name;
 };

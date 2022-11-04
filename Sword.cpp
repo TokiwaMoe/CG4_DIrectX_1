@@ -15,7 +15,7 @@ void Sword::Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 	objSword->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
 	objSword->SetObject3dModel(swordModel);
 	objSword->SetScale({ 0.01,0.01,0.01 });
-	objSword->SetRotation({ -90,0,0 });
+	objSword->SetRotation({ 0,0,0 });
 
 	sphereModel = Object3dModel::LoadFromOBJ("sphere");
 	for (int i = 0; i < 13; i++)
@@ -63,52 +63,22 @@ void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera
 
 void Sword::Move(Player* player)
 {
-	/*if (player->isWalk)
-	{
-		position = {
-		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
-		player->GetPosition().y + 0.7f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
-		player->GetPosition().z + 0.3f - player->GetTransform().r[3].m128_f32[2] / 100.0f
-		};
-	}
-	else if (player->AnimetionKnock)
-	{
-		position = {
-		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
-		player->GetPosition().y + 0.5f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
-		player->GetPosition().z + 0.3f - player->GetTransform().r[3].m128_f32[2] / 100.0f
-		};
-	}
-	else if (player->AnimetionAttack)
-	{
-		position = {
-		player->GetPosition().x + 0.1f + player->GetTransform().r[3].m128_f32[0] / 100.0f,
-		player->GetPosition().y + 0.7f - player->GetTransform().r[3].m128_f32[1] / 100.0f,
-		player->GetPosition().z + 0.3f - player->GetTransform().r[3].m128_f32[2] / 100.0f
-		};
-	}*/
-	//else
-	{
-		position = {
-		/*player->GetPosition().x - 0.3f - */player->GetTransform().r[3].m128_f32[0] / 100.0f,
-		/*player->GetPosition().y + 0.85f + */player->GetTransform().r[3].m128_f32[1] / 100.0f,
-		/*player->GetPosition().z + */player->GetTransform().r[3].m128_f32[2] / 100.0f
-		};
-	}
-	
+	// 剣が参照するボーン座標系での座標
+	XMVECTOR offset = { 0,0.5f,0,1 };
+	// ボーンの計算済みワールド行列（ボーンのローカル行列×プレイヤーのワールド行列）
+	XMMATRIX boneWorldMatrix = player->GetTransform() * player->GetMatWorld();
+	// ボーンローカル座標からワールド座標に変換
+	offset = DirectX::XMVector3Transform(offset, boneWorldMatrix);
 
-	XMVECTOR distanse = { 0.2f, 0.2f, -0.2f };
-	//angleラジアンだけy軸まわりに回転。半径は-100
-	XMMATRIX rotM = DirectX::XMMatrixIdentity();
-	rotM *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(player->objPlayer->GetRotation().y + player->GetAngle()));
-	XMVECTOR v = XMVector3TransformNormal(distanse, rotM);
-	XMVECTOR f3 = { position.x, position.y, position.z };
-	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };
-	sword3 = { swordVec.m128_f32[0], swordVec.m128_f32[1], swordVec.m128_f32[2] };
+	position = {
+		boneWorldMatrix.r[3].m128_f32[0],
+		boneWorldMatrix.r[3].m128_f32[1],
+		boneWorldMatrix.r[3].m128_f32[2]
+	};
 
-	rotation = {  player->GetTransform().r[2].m128_f32[0] * 100.0f,
-				  player->GetTransform().r[2].m128_f32[1] * 100.0f,
-				  player->GetTransform().r[2].m128_f32[2] * 100.0f };
+	rotation = { player->fbxPlayer_Attack->GetRotation().x,
+				 player->fbxPlayer_Attack->GetRotation().y,
+				 player->fbxPlayer_Attack->GetRotation().z };
 
 	if (Input::GetInstance()->TriggerKey(DIK_L) && player->GetIsKnock() == false)
 	{

@@ -245,7 +245,7 @@ void FbxObject3d::Update()
 		FbxMatrix fbxCurrentPose =
 			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		//XMMATRIXに変換
-		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose, fbxCurrentPose);
+		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose[i], fbxCurrentPose);
 
 		//DirectX::XMVECTOR distanse = { 0.5,0.1,0.1 };
 		//matNowPose = DirectX::XMVector3TransformNormal(distanse, constMapSkin->bones[48]);
@@ -254,7 +254,7 @@ void FbxObject3d::Update()
 		auto &globalTrans = model->GetModelTransform();
 		auto inverseBindMatrix = XMMatrixInverse(nullptr, globalTrans);
 		//合成してスキニング行列に
-		constMapSkin->bones[i] = globalTrans * bones[i].invInitialPose * matCurrentPose * inverseBindMatrix;
+		constMapSkin->bones[i] = globalTrans * bones[i].invInitialPose * matCurrentPose[i] * inverseBindMatrix;
 	}
 	constBuffSkin->Unmap(0, nullptr);
 }
@@ -299,4 +299,22 @@ void FbxObject3d::PlayAnimation()
 	currentTime = startTime;
 	//再生中状態にする
 	isPlay = true;
+}
+
+int FbxObject3d::GetBoneName(std::string name)
+{
+	//ボーン配列の参照
+	std::vector<FbxModel::Bone>& bones = model->GetBones();
+
+	//全てのボーンについて
+	for (int i = 0; i < bones.size(); i++)
+	{
+		if (bones[i].name == name)
+		{
+			return i;
+		}
+		//return -1;
+	}
+
+	
 }

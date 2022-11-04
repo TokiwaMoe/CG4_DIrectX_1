@@ -288,10 +288,10 @@ void GameScene::Draw()
 
 	if (sceneNo == 1)
 	{
-		/*objScene1->Draw();
+		objScene1->Draw();
 		objScene3->Draw();
 		objScene2->Draw();
-		objScene4->Draw();*/
+		objScene4->Draw();
 		sword->Draw(dxCommon);
 		/*enemy->Draw();
 		skill->Draw();*/
@@ -359,6 +359,14 @@ void GameScene::Draw()
 	char str5[256];
 	sprintf_s(str5, "Playerrotation x : %f y : %f z : %f", player->GetTransform().r[2].m128_f32[0], player->GetTransform().r[2].m128_f32[1], player->GetTransform().r[2].m128_f32[2]);
 	debugText.Print(str5, 0, 210, 1.0f);
+
+	/*char str8[256];
+	sprintf_s(str8, "matWorld x : %f y : %f z : %f", player->GetMatWorld().r[3].m128_f32[0], player->GetMatWorld().r[3].m128_f32[1], player->GetMatWorld().r[3].m128_f32[2]);
+	debugText.Print(str8, 0, 240, 1.0f);*/
+
+	char str7[256];
+	sprintf_s(str7, "%d", player->fbxPlayer_Wait->GetBoneName("Bip01_R_Hand"));
+	debugText.Print(str7, 0, 270, 1.0f);
 
 	
 

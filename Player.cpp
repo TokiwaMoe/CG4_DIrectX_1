@@ -99,20 +99,24 @@ void Player::Update(DirectXCommon* dxCommon, Camera* camera)
 	effects->Update(dxCommon->GetCmdList(), camera);
 	if (isWalk)
 	{
-		transform = fbxPlayer_Run->GetMatNowPose();
+		transform = fbxPlayer_Run->GetMatNowPose(fbxPlayer_Attack->GetBoneName("Bip01_R_Hand"));
 	}
 	else if (AnimetionKnock)
 	{
-		transform = fbxPlayer_Damage->GetMatNowPose();
+		transform = fbxPlayer_Damage->GetMatNowPose(fbxPlayer_Attack->GetBoneName("Bip01_R_Hand"));
 	}
 	else if (AnimetionAttack)
 	{
-		transform = fbxPlayer_Attack->GetMatNowPose();
+		transform = fbxPlayer_Attack->GetMatNowPose(fbxPlayer_Attack->GetBoneName("Bip01_R_Hand"));
 	}
 	else
 	{
-		transform = fbxPlayer_Wait->GetMatNowPose();
+		transform = fbxPlayer_Wait->GetMatNowPose(fbxPlayer_Attack->GetBoneName("Bip01_R_Hand"));
 	}
+
+	
+	matWorld = fbxPlayer_Attack->GetMatWorld();
+
 	Move(camera);
 	Jump();
 	defense();
@@ -177,9 +181,6 @@ void Player::Move(Camera* camera)
 			fbxPlayer_Attack->SetRotation({ 0,rote + cameraAngle,0 });
 		}
 	}
-	
-
-	
 	
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);

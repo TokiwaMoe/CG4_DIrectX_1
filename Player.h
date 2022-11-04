@@ -10,6 +10,7 @@
 #include"FbxObject3d.h"
 #include"DirectXCommon.h"
 #include"Effects.h"
+#include"FbxModel.h"
 
 class Player {
 private:
@@ -59,6 +60,7 @@ public:
 	bool SetIsKnock(bool knock) { return isKnock = knock; }
 
 	XMMATRIX GetTransform() { return transform; }
+	XMMATRIX GetMatWorld() { return matWorld; }
 
 	bool GetIsKnock() { return isKnock; }
 
@@ -162,6 +164,7 @@ public:
 	float rote = 0;
 	//ボーン取得変数
 	XMMATRIX transform;
+	XMMATRIX matWorld;
 	XMVECTOR matBone = { 0,0,0,0 };
 	//ゲームオーバーfbx変数
 	bool isDeath = false;
