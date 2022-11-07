@@ -30,15 +30,15 @@ public:
 
 	void Move(Player *player);
 
-	void SwordEnemyCollision(Enemy* enemy, DirectXCommon* dxCommon, Camera* camera);
+	void SwordEnemyCollision(Enemy* enemy, DirectXCommon* dxCommon, Camera* camera, Player *player);
 
 	void Draw(DirectXCommon* dxCommon);
 
 	void SetPosition(XMFLOAT3 pos);
 
-	bool GetIsHit1() { return isHit_enemy1[12]; }
-	bool GetIsHit2() { return isHit_enemy2[12]; }
-	bool GetIsHit3() { return isHit_enemy3[12]; }
+	bool GetIsHit1() { return isHit_enemy1[sword_Max]; }
+	bool GetIsHit2() { return isHit_enemy2[sword_Max]; }
+	bool GetIsHit3() { return isHit_enemy3[sword_Max]; }
 	XMVECTOR GetCenter() { return swordSphere[0].center; }
 	XMFLOAT3 GetCenter_enemy() { return pos[1]; }
 	bool GetIsDecrease() { return isDecrease; }
@@ -54,11 +54,14 @@ public:
 	float GetAngle() { return Angle; }
 	XMFLOAT3 GetRotation() { return rotation; }
 
+private:
+	static const int sword_Max = 10;
+
 public:
 	Object3dModel* swordModel = nullptr;
 	Object3d* objSword = nullptr;
 	Object3dModel* sphereModel = nullptr;
-	Object3d* objsphere[13];
+	Object3d* objsphere[sword_Max];
 	Object3d* objsphere_enemy[3];
 
 	Effects* effects = nullptr;
@@ -75,13 +78,13 @@ public:
 	OBB enemyOBB;
 	bool Decrease = false;
 
-	Sphere swordSphere[13];
+	Sphere swordSphere[sword_Max];
 	Sphere enemySphere[3];
 	const float swordRadius = 0.05f;
 	const float enemyRadius = 0.6f;
-	bool isHit_enemy1[13];
-	bool isHit_enemy2[13];
-	bool isHit_enemy3[13];
+	bool isHit_enemy1[sword_Max];
+	bool isHit_enemy2[sword_Max];
+	bool isHit_enemy3[sword_Max];
 	bool isDecrease = false;
 	float Angle;
 	bool isRote = false;
@@ -91,6 +94,8 @@ public:
 	float effectTime = 0;
 	const float effectMaxTime = 1;
 	bool isEffect = false;
+
+	XMMATRIX boneWorldMatrix;
 
 private:
 	bool Attack = false;

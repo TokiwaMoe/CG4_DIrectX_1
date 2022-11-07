@@ -61,6 +61,7 @@ void Player::Initialize(DirectXCommon* dxCommon, Camera* camera)
 
 	effects = new Effects();
 	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
+	effects->Load(L"effectsTest/10/boneEfk.efk");
 }
 
 void Player::Init()
@@ -124,6 +125,11 @@ void Player::Update(DirectXCommon* dxCommon, Camera* camera)
 	Death();
 	Attack();
 	
+	effects->Play();
+	/*effects->SetPosition({ 0,0,0 });
+	effects->SetScale({ 0.3,0.3,0.3 });
+	effects->SetSpeed(5);*/
+	effects->Update(dxCommon->GetCmdList(), camera);
 }
 
 void Player::Move(Camera* camera)
@@ -430,7 +436,7 @@ void Player::Draw(DirectXCommon* dxCommon)
 	
 	
 	
-	//effects->Draw(dxCommon->GetCmdList());
+	effects->Draw(dxCommon->GetCmdList());
 
 }
 

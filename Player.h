@@ -65,6 +65,7 @@ public:
 	bool GetIsKnock() { return isKnock; }
 
 	bool GetIsDeath() { return isDeath; }
+	bool GetIsAttack() { return AnimetionAttack; }
 
 
 public:

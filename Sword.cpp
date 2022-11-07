@@ -18,7 +18,7 @@ void Sword::Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 	objSword->SetRotation({ 0,0,0 });
 
 	sphereModel = Object3dModel::LoadFromOBJ("sphere");
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < sword_Max; i++)
 	{
 		objsphere[i] = Object3d::Create();
 		objsphere[i]->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
@@ -41,13 +41,14 @@ void Sword::Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 
 	effects = new Effects();
 	effects->Initialize(dxCommon->GetDev(), dxCommon->GetCmdQueue(), camera);
+	effects->Load(L"effectsTest/10/fireflower.efk");
 }
 
 void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
 {
 	Move(player);
 	objSword->Update();
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < sword_Max; i++)
 	{
 		objsphere[i]->Update();
 	}
@@ -58,17 +59,14 @@ void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera
 		objsphere_enemy[i]->Update();
 	}
 	
-	SwordEnemyCollision(enemy, dxCommon, camera);
+	SwordEnemyCollision(enemy, dxCommon, camera, player);
 }
 
 void Sword::Move(Player* player)
 {
-	// 剣が参照するボーン座標系での座標
-	XMVECTOR offset = { 0,0.5f,0,1 };
+	
 	// ボーンの計算済みワールド行列（ボーンのローカル行列×プレイヤーのワールド行列）
-	XMMATRIX boneWorldMatrix = player->GetTransform() * player->GetMatWorld();
-	// ボーンローカル座標からワールド座標に変換
-	offset = DirectX::XMVector3Transform(offset, boneWorldMatrix);
+	boneWorldMatrix = player->GetTransform() * player->GetMatWorld();
 
 	position = {
 		boneWorldMatrix.r[3].m128_f32[0],
@@ -79,11 +77,6 @@ void Sword::Move(Player* player)
 	rotation = { player->fbxPlayer_Attack->GetRotation().x,
 				 player->fbxPlayer_Attack->GetRotation().y,
 				 player->fbxPlayer_Attack->GetRotation().z };
-
-	if (Input::GetInstance()->TriggerKey(DIK_L) && player->GetIsKnock() == false)
-	{
-		isRote = true;
-	}
 	
 	if (player->defence_direction == player->Previous)
 	{
@@ -107,7 +100,7 @@ void Sword::Move(Player* player)
 	
 }
 
-void Sword::SwordEnemyCollision(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
+void Sword::SwordEnemyCollision(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera, Player *player)
 {
 	
 
@@ -126,14 +119,16 @@ void Sword::SwordEnemyCollision(Enemy *enemy, DirectXCommon* dxCommon, Camera* c
 	}
 	
 	
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < sword_Max; i++)
 	{
-		XMVECTOR v0_Sword = { 0, swordRadius * 2 * i - 0.5f, 0 };
+		XMVECTOR v0_Sword = { 0, 0.1f, swordRadius * 2 * i };
 		//angleラジアンだけy軸まわりに回転。半径は-100
 		XMMATRIX rotM_Sword = DirectX::XMMatrixIdentity();
-		rotM_Sword *= DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(Angle));
+		rotM_Sword *= DirectX::XMMatrixRotationX(DirectX::XMConvertToRadians(rotation.x));
+		rotM_Sword *= DirectX::XMMatrixRotationY(DirectX::XMConvertToRadians(rotation.y));
+		rotM_Sword *= DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(rotation.z));
 		XMVECTOR v_sowrd = XMVector3TransformNormal(v0_Sword, rotM_Sword);
-		XMVECTOR swordVec = { sword3.x, sword3.y, sword3.z };
+		XMVECTOR swordVec = { position.x, position.y, position.z };
 		XMVECTOR swordPos = { swordVec.m128_f32[0] + v_sowrd.m128_f32[0], swordVec.m128_f32[1] + v_sowrd.m128_f32[1], swordVec.m128_f32[2] + v_sowrd.m128_f32[2] };
 
 		swordSphere[i].center = swordPos;
@@ -143,13 +138,13 @@ void Sword::SwordEnemyCollision(Enemy *enemy, DirectXCommon* dxCommon, Camera* c
 
 	
 
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < sword_Max; i++)
 	{
 		isHit_enemy1[i] = Collision::CheckSphere2(swordSphere[i], enemySphere[0]);
 		isHit_enemy2[i] = Collision::CheckSphere2(swordSphere[i], enemySphere[1]);
 		isHit_enemy3[i] = Collision::CheckSphere2(swordSphere[i], enemySphere[2]);
 	
-		if (isRote)
+		if (player->GetIsAttack())
 		{
 			if (isHit_enemy1[i] && Decrease == false || isHit_enemy2[i] && Decrease == false || isHit_enemy3[i] && Decrease == false)
 			{
@@ -186,7 +181,7 @@ void Sword::SwordEnemyCollision(Enemy *enemy, DirectXCommon* dxCommon, Camera* c
 void Sword::Draw(DirectXCommon* dxCommon)
 {
 	objSword->Draw();
-	/*for (int i = 0; i < 13; i++)
+	for (int i = 0; i < 13; i++)
 	{
 		objsphere[i]->Draw();
 	}
@@ -194,7 +189,7 @@ void Sword::Draw(DirectXCommon* dxCommon)
 	for (int i = 0; i < 3; i++)
 	{
 		objsphere_enemy[i]->Draw();
-	}*/
+	}
 	effects->Draw(dxCommon->GetCmdList());
 }
 

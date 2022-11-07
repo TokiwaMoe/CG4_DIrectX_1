@@ -88,6 +88,7 @@ void Enemy::Init()
 	boundHeight = 5.0f;
 	HP = 5;
 	position = { 0,1,0 };
+	objEnemy->SetPosition(position);
 }
 
 void Enemy::ResourceUpdate()

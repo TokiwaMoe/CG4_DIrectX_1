@@ -293,8 +293,8 @@ void GameScene::Draw()
 		objScene2->Draw();
 		objScene4->Draw();
 		sword->Draw(dxCommon);
-		/*enemy->Draw();
-		skill->Draw();*/
+		enemy->Draw();
+		skill->Draw();
 		
 		player->Draw(dxCommon);
 	}
@@ -340,7 +340,7 @@ void GameScene::Draw()
 		debugText.Print(str5, 0, 70, 1.0f);
 	}*/
 
-	char str2[256];
+	/*char str2[256];
 	sprintf_s(str2, "x : %f y : %f z : %f", camera->GetTarget().x, camera->GetTarget().y, camera->GetTarget().z);
 	debugText.Print(str2, 0, 90, 1.0f);
 
@@ -358,15 +358,18 @@ void GameScene::Draw()
 
 	char str5[256];
 	sprintf_s(str5, "Playerrotation x : %f y : %f z : %f", player->GetTransform().r[2].m128_f32[0], player->GetTransform().r[2].m128_f32[1], player->GetTransform().r[2].m128_f32[2]);
-	debugText.Print(str5, 0, 210, 1.0f);
+	debugText.Print(str5, 0, 210, 1.0f);*/
 
 	/*char str8[256];
-	sprintf_s(str8, "matWorld x : %f y : %f z : %f", player->GetMatWorld().r[3].m128_f32[0], player->GetMatWorld().r[3].m128_f32[1], player->GetMatWorld().r[3].m128_f32[2]);
-	debugText.Print(str8, 0, 240, 1.0f);*/
+	sprintf_s(str8, "offset x : %f y : %f z : %f", sword->offset[1].m128_f32[0], sword->offset[1].m128_f32[1], sword->offset[1].m128_f32[2]);
+	debugText.Print(str8, 0, 240, 1.0f);
+	char str9[256];
+	sprintf_s(str9, "offset x : %f y : %f z : %f", sword->offset[2].m128_f32[0], sword->offset[2].m128_f32[1], sword->offset[2].m128_f32[2]);*/
+	//debugText.Print(str9, 0, 270, 1.0f);
 
-	char str7[256];
+	/*char str7[256];
 	sprintf_s(str7, "%d", player->fbxPlayer_Wait->GetBoneName("Bip01_R_Hand"));
-	debugText.Print(str7, 0, 270, 1.0f);
+	debugText.Print(str7, 0, 270, 1.0f);*/
 
 	
 

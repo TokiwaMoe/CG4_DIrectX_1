@@ -26,6 +26,8 @@ public:
 
 	void Update(ID3D12GraphicsCommandList *cmdList, Camera *camera);
 
+	void Load(const wchar_t* filename);
+
 	void Play();
 
 	void Stop();

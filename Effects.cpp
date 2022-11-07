@@ -53,14 +53,19 @@ void Effects::Initialize(ID3D12Device* device, ID3D12CommandQueue* cmdQueue, Cam
 	//	(const EFK_CHAR*)L"effectsTest/10"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
 	//);
 
+	
+
+	
+}
+
+void Effects::Load(const wchar_t* filename)
+{
 	_effect1 = Effekseer::Effect::Create(
 		_efkManager,
-		(const EFK_CHAR*)L"effectsTest/10/fireflower.efk",	//エフェクトファイル
+		(const EFK_CHAR*)filename,	//エフェクトファイル
 		1.0f,	//スケーリング値
 		(const EFK_CHAR*)L"effectsTest/Textures"	//エフェクト基準フォルダー(テクスチャを探すのに必要)
 	);
-
-	
 }
 
 void Effects::Play()
