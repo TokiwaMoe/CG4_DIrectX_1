@@ -8,7 +8,13 @@
 #include<string>
 #include<vector>
 
+<<<<<<< HEAD
 void Sword::Initialize(Enemy *enemy, DirectXCommon* dxCommon, Camera* camera)
+=======
+using namespace DirectX;
+
+void Sword::Initialize(Enemy *enemy)
+>>>>>>> OBB
 {
 	swordModel = Object3dModel::LoadFromOBJ("sword");
 	objSword = Object3d::Create();
@@ -47,6 +53,21 @@ void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera
 {
 	Move(player);
 	objSword->Update();
+
+	enemyOBB.m_Pos = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z + 1.5f };
+	for (int i = 0; i < 3; i++)
+	{
+		XMMATRIX enemy_vector = XMMatrixIdentity();
+		enemy_vector *= XMMatrixRotationY(XMConvertToRadians(enemy->objEnemy->GetRotation().y));
+		enemyOBB.m_NormaDirect[i]={ enemy_vector.r->m128_f32[0], enemy_vector.r->m128_f32[1], enemy_vector.r->m128_f32[2] };
+
+		enemyOBB.m_fLength[0] = 1.0f;
+		enemyOBB.m_fLength[1] = 1.0f;
+		enemyOBB.m_fLength[2] = 1.5f;
+	}
+
+	isHit = Collision::ColOBBs(swordOBB, enemyOBB);
+
 	for (int i = 0; i < 13; i++)
 	{
 		objsphere[i]->Update();
@@ -63,6 +84,7 @@ void Sword::Update(Player* player, Enemy *enemy, DirectXCommon* dxCommon, Camera
 
 void Sword::Move(Player* player)
 {
+<<<<<<< HEAD
 	/*if (player->isWalk)
 	{
 		position = {
@@ -105,6 +127,15 @@ void Sword::Move(Player* player)
 	XMVECTOR f3 = { position.x, position.y, position.z };
 	XMVECTOR swordVec = { f3.m128_f32[0] + v.m128_f32[0], f3.m128_f32[1] + v.m128_f32[1], f3.m128_f32[2] + v.m128_f32[2] };
 	sword3 = { swordVec.m128_f32[0], swordVec.m128_f32[1], swordVec.m128_f32[2] };
+=======
+	position = { player->GetPosition().x, player->GetPosition().y, player->GetPosition().z };
+	XMVECTOR v = { 0,0,0,0 };
+	XMVECTOR sword_vector = { 0,0.1,0,0 };//x
+	XMMATRIX matRot_Sword = XMMatrixIdentity();
+	matRot_Sword *= XMMatrixRotationX(XMConvertToRadians(Angle));//y軸を中心に回転するマトリックスを作成
+	v = XMVector3TransformNormal(sword_vector, matRot_Sword);
+	XMVECTOR v3 = { 0,0,0,0 };
+>>>>>>> OBB
 
 	rotation = {  player->GetTransform().r[2].m128_f32[0] * 100,
 				 player->GetTransform().r[2].m128_f32[1] * 100,
@@ -117,6 +148,7 @@ void Sword::Move(Player* player)
 	
 	if (player->defence_direction == player->Previous)
 	{
+<<<<<<< HEAD
 		objSword->SetRotation({ Angle,0,0 });
 	}
 	else if (player->defence_direction == player->Back)
@@ -130,6 +162,30 @@ void Sword::Move(Player* player)
 	else if (player->defence_direction == player->Right)
 	{
 		objSword->SetRotation({ Angle,90,0 });
+=======
+		Angle += 5.0f;
+		v3 = v + swordOBB.m_Pos;
+		if (Angle >= 90)
+		{
+			Angle = 0;
+			isRote = false;
+		}
+>>>>>>> OBB
+	}
+	else
+	{
+		v3 = { position.x, position.y, position.z };
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		//swordOBB.m_Pos = { position.x, position.y, position.z };
+		swordOBB.m_Pos = v3;
+		swordOBB.m_NormaDirect[i] = v + swordOBB.m_Pos;
+
+		swordOBB.m_fLength[0] = 0.5f;
+		swordOBB.m_fLength[1] = 1.0f;
+		swordOBB.m_fLength[2] = 2.0f;
 	}
 	
 	objSword->SetPosition(sword3);

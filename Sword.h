@@ -35,7 +35,8 @@ public:
 	void Draw(DirectXCommon* dxCommon);
 
 	void SetPosition(XMFLOAT3 pos);
-
+	
+	bool GetIsHit() { return isHit; }
 	bool GetIsHit1() { return isHit_enemy1[12]; }
 	bool GetIsHit2() { return isHit_enemy2[12]; }
 	bool GetIsHit3() { return isHit_enemy3[12]; }
@@ -86,11 +87,15 @@ public:
 	float Angle;
 	bool isRote = false;
 	XMFLOAT3 pos[3];
+<<<<<<< HEAD
 	XMFLOAT3 sword3 = { 0,0,0 };
 
 	float effectTime = 0;
 	const float effectMaxTime = 1;
 	bool isEffect = false;
+=======
+	bool isHit = false;
+>>>>>>> OBB
 
 private:
 	bool Attack = false;

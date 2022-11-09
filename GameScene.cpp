@@ -321,7 +321,11 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(dxCommon->GetCmdList());
 
+<<<<<<< HEAD
 	/*if (sword->GetIsHit1())
+=======
+	/*if (sword->GetIsHit())
+>>>>>>> OBB
 	{
 		char str[256];
 		sprintf_s(str, "Hit");
@@ -348,6 +352,7 @@ void GameScene::Draw()
 	sprintf_s(str3, "transfom x : %f y : %f z : %f", sword->objSword->GetPosition().x, sword->objSword->GetPosition().y, sword->objSword->GetPosition().z);
 	debugText.Print(str3, 0, 120, 1.0f);
 
+<<<<<<< HEAD
 	char str4[256];
 	sprintf_s(str4, "rotation x : %f y : %f z : %f", sword->GetRotation().x, sword->GetRotation().y, sword->GetRotation().z);
 	debugText.Print(str4, 0, 150, 1.0f);
@@ -357,6 +362,19 @@ void GameScene::Draw()
 	/*char str7[256];
 	sprintf_s(str7, "playerHP : %f", player->GetAngle());
 	debugText.Print(str7, 0, 0, 1.0f);*/
+=======
+	char str6[256];
+	sprintf_s(str6, "%f", sword->GetAngle());
+	debugText.Print(str6, 0, 90, 1.0f);*/
+
+	char str7[256];
+	sprintf_s(str7, "%f %f %f", sword->GetPositionA().m128_f32[0], sword->GetPositionA().m128_f32[1], sword->GetPositionA().m128_f32[2]);
+	debugText.Print(str7, 0, 10, 1.0f);
+
+	char str6[256];
+	sprintf_s(str6, "%f", sword->GetNormalDirect_SwordB().m128_f32[1]);
+	debugText.Print(str6, 0, 30, 1.0f);
+>>>>>>> OBB
 
 	if (sceneNo == 0)
 	{
