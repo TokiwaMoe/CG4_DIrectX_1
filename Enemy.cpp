@@ -84,12 +84,27 @@ void Enemy::Initialize()
 
 void Enemy::Init()
 {
+<<<<<<< HEAD
 	speed = 0.5f;
 	boundHeight = 5.0f;
 	HP = 5;
 	position = { 0,1,0 };
 	objEnemy->SetPosition(position);
 }
+=======
+	//Target(player);
+	//Assault(player);
+	//BoundBullet(player);
+	//HomingBullet(player);
+
+	objplayerSp->SetPosition(player->GetPosition());
+	XMFLOAT3 pos = { position.x, position.y, position.z + 0.5f };
+	objenemySp->SetPosition(pos);
+	playerSphere.center = { player->GetPosition().x,player->GetPosition().y,player->GetPosition().z };
+	playerSphere.radius = 0.3f;
+	enemySphere.center = { position.x,position.y,position.z };
+	enemySphere.radius = 0.5f;
+>>>>>>> OBB
 
 void Enemy::ResourceUpdate()
 {

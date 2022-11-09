@@ -9,13 +9,6 @@ using namespace DirectX;
 void Player::Initialize(DirectXCommon* dxCommon, Camera* camera)
 {
 
-	playerModel = Object3dModel::LoadFromOBJ("player");
-	objPlayer = Object3d::Create();
-	objPlayer->InitializeGraphicsPipeline(L"Resource/shaders/OBJVS_Light.hlsl", L"Resource/shaders/OBJPS_Light.hlsl");
-
-	objPlayer->SetObject3dModel(playerModel);
-	objPlayer->SetScale({ 0.05,0.05,0.05 });
-
 	player_RunFbxModel = FbxLoader::GetInstance()->LoadMadelFromFile("player_Run");
 	fbxPlayer_Run = new FbxObject3d;
 	fbxPlayer_Run->Initialize();
@@ -140,6 +133,7 @@ void Player::Move(Camera* camera)
 	speedZ = XMVector3TransformNormal(speedZ, matRot);
 	speedX = XMVector3TransformNormal(speedX, matRot);
 
+<<<<<<< HEAD
 	isWalk = false;
 
 	if (AnimetionKnock == false && deathAnime == false)
@@ -188,6 +182,40 @@ void Player::Move(Camera* camera)
 		}
 	}
 	
+<<<<<<< HEAD
+=======
+=======
+	if (Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->StickTilt(Input::Stick_Up)) {
+		position.z += speedZ.m128_f32[2];
+		position.x += speedZ.m128_f32[0];
+		objPlayer->SetRotation({ 0,0,0 });
+		defence_direction = Previous;
+	}
+	if (Input::GetInstance()->PushKey(DIK_S) || Input::GetInstance()->StickTilt(Input::Stick_Down)) {
+		position.z -= speedZ.m128_f32[2];
+		position.x -= speedZ.m128_f32[0];
+		objPlayer->SetRotation({ 0,180,0 });
+		defence_direction = Back;
+	}
+	if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->StickTilt(Input::Stick_Left)) {
+		position.x -= speedX.m128_f32[0];
+		position.z -= speedX.m128_f32[2];
+		objPlayer->SetRotation({ 0,-90,0 });
+		defence_direction = Left;
+	}
+	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->StickTilt(Input::Stick_Right)) {
+		position.x += speedX.m128_f32[0];
+		position.z += speedX.m128_f32[2];
+		objPlayer->SetRotation({ 0,90,0 });
+		defence_direction = Right;
+	}
+
+	objPlayer->SetPosition(position);
+>>>>>>> OBB
+
+	
+	
+>>>>>>> 5399056b55443f793de1dd2d3c84aaf0a9e80bd7
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
@@ -234,7 +262,7 @@ void Player::defense()
 		time = 0;
 		distance = { 0,0,0 };
 		defenceFlag = true;
-		oldPos = objPlayer->GetPosition();
+		oldPos = position;
 	}
 
 
@@ -244,8 +272,6 @@ void Player::defense()
 
 	}
 
-
-	objPlayer->SetPosition(position);
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);
@@ -294,9 +320,7 @@ void Player::Jump()
 		{
 			gravityFlag = false;
 		}
-	}
-
-	objPlayer->SetPosition(position);
+	};
 	fbxPlayer_Run->SetPosition(position);
 	fbxPlayer_Damage->SetPosition(position);
 	fbxPlayer_Wait->SetPosition(position);

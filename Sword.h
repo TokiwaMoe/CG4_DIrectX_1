@@ -35,10 +35,18 @@ public:
 	void Draw(DirectXCommon* dxCommon);
 
 	void SetPosition(XMFLOAT3 pos);
+<<<<<<< HEAD
 
 	bool GetIsHit1() { return isHit_enemy1[sword_Max]; }
 	bool GetIsHit2() { return isHit_enemy2[sword_Max]; }
 	bool GetIsHit3() { return isHit_enemy3[sword_Max]; }
+=======
+	
+	bool GetIsHit() { return isHit; }
+	bool GetIsHit1() { return isHit_enemy1[12]; }
+	bool GetIsHit2() { return isHit_enemy2[12]; }
+	bool GetIsHit3() { return isHit_enemy3[12]; }
+>>>>>>> 5399056b55443f793de1dd2d3c84aaf0a9e80bd7
 	XMVECTOR GetCenter() { return swordSphere[0].center; }
 	XMFLOAT3 GetCenter_enemy() { return pos[1]; }
 	bool GetIsDecrease() { return isDecrease; }
@@ -89,11 +97,15 @@ public:
 	float Angle;
 	bool isRote = false;
 	XMFLOAT3 pos[3];
+<<<<<<< HEAD
 	XMFLOAT3 sword3 = { 0,0,0 };
 
 	float effectTime = 0;
 	const float effectMaxTime = 1;
 	bool isEffect = false;
+=======
+	bool isHit = false;
+>>>>>>> OBB
 
 	XMMATRIX boneWorldMatrix;
 
